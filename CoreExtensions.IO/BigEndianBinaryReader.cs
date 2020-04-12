@@ -1,9 +1,10 @@
 ﻿using System.IO;
 using System.Text;
+using CoreExtensions.Native;
 
 
 
-namespace CoreExtensions.Native
+namespace CoreExtensions.IO
 {
     /// <summary>
     /// Reads primitive data types as binary values in a specific encoding using big-endian methods.

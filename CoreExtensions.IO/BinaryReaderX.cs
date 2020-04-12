@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 
 
-namespace CoreExtensions.Native
+namespace CoreExtensions.IO
 {
     /// <summary>
     /// Provides all major extensions for <see cref="BinaryReader"/>

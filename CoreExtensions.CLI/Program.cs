@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using CoreExtensions.Native;
+using CoreExtensions.IO;
 
 
 namespace CoreExtensions.CLI

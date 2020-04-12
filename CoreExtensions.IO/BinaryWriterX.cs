@@ -5,7 +5,7 @@ using CoreExtensions.Conversions;
 
 
 
-namespace CoreExtensions.Native
+namespace CoreExtensions.IO
 {
 	/// <summary>
 	/// Provides all major extensions for <see cref="BinaryWriter"/>
