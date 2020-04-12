@@ -110,7 +110,7 @@ namespace CoreExtensions.Native
         /// Reads the <see cref="Enum"/> of type <typeparamref name="TypeID"/> and advances 
         /// the current position by the size of the underlying type of the <see cref="Enum"/>.
         /// </summary>
-        /// <typeparam name="TypeID">Typeo of the <see cref="Enum"/> to read.</typeparam>
+        /// <typeparam name="TypeID">Type of the <see cref="Enum"/> to read.</typeparam>
         /// <returns>Value of the <see cref="Enum"/> passed. If value could not be parsed, 
         /// or if the type passed is not Enum, exception might be thrown.</returns>
         public static TypeID ReadEnum<TypeID>(this BinaryReader br) where TypeID : IConvertible
@@ -130,6 +130,10 @@ namespace CoreExtensions.Native
                     return (TypeID)Enum.ToObject(t, br.ReadInt32());
                 case TypeCode.UInt32:
                     return (TypeID)Enum.ToObject(t, br.ReadUInt32());
+                case TypeCode.Int64:
+                    return (TypeID)Enum.ToObject(t, br.ReadInt64());
+                case TypeCode.UInt64:
+                    return (TypeID)Enum.ToObject(t, br.ReadUInt64());
                 default:
                     throw new InvalidCastException($"Unable to read enum of type {t}.");
             }
@@ -162,7 +166,7 @@ namespace CoreExtensions.Native
         /// <summary>
         /// Reads a C-Style null-terminated string that using UTF8 encoding.
         /// </summary>
-        /// <param name="length">Max length of the string to be read.</param>
+        /// <param name="length">Max length of the string to read.</param>
         /// <returns>String with UTF8 style encoding.</returns>
         public static string ReadNullTermUTF8(this BinaryReader br, int length)
         {
@@ -175,7 +179,7 @@ namespace CoreExtensions.Native
         /// <summary>
         /// Reads a C-Style null-terminated string that using UTF16 encoding.
         /// </summary>
-        /// <param name="length">Max length of the string to be read.</param>
+        /// <param name="length">Max length of the string to read.</param>
         /// <returns>String with UTF16 style encoding.</returns>
         public static string ReadNullTermUTF16(this BinaryReader br, int length)
         {
@@ -191,7 +195,7 @@ namespace CoreExtensions.Native
         /// </summary>
         /// <typeparam name="TypeID">Type of struct to read.</typeparam>
         /// <param name="result">Result struct of type <typeparamref name="TypeID"/> that was read.</param>
-        /// <returns>Struct of type <typeparamref name="TypeID"/>.</returns>
+        /// <returns>True on success; false otherwise.</returns>
         public static bool ReadStruct<TypeID>(this BinaryReader br, out TypeID result) where TypeID : struct
         {
             result = default;
@@ -208,7 +212,7 @@ namespace CoreExtensions.Native
                     }
                 }
             }
-            catch (Exception e) { return false; }
+            catch (Exception) { return false; }
         }
     
         /// <summary>
