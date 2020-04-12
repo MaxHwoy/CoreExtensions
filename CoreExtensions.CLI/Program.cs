@@ -57,18 +57,10 @@ namespace CoreExtensions.CLI
 			long timern = 0;
 			long timery = 0;
 
-			var watch = new Stopwatch();
-			using (var ms = new MemoryStream(arr))
-			using (var br = new BigEndianBinaryReader(ms))
-			{
 
+			int oof = 4;
 
-			}
-
-			using (var sw = new StreamWriter(File.Open("Data.txt", FileMode.Create)))
-			{
-				sw.Write($"{timern}\n{timery}\n");
-			}
+			
 
 			int dd = 0;
 		}
