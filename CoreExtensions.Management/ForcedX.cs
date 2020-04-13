@@ -2,6 +2,9 @@
 
 namespace CoreExtensions.Management
 {
+	/// <summary>
+	/// Provides all major helper methods to force system thread.
+	/// </summary>
 	public static class ForcedX
 	{
 		/// <summary>

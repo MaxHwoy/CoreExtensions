@@ -4,6 +4,9 @@
 
 namespace CoreExtensions.Management
 {
+	/// <summary>
+	/// Provides all major extensions for <see cref="Exception"/>.
+	/// </summary>
 	public static class ExceptionX
 	{
 		/// <summary>
