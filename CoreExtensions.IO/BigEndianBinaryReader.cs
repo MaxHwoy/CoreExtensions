@@ -16,7 +16,7 @@ namespace CoreExtensions.IO
         /// the specified stream and using UTF-8 encoding.
         /// </summary>
         /// <param name="input">The input stream.</param>
-        public BigEndianBinaryReader(Stream input) : base(input) { }
+        public BigEndianBinaryReader(Stream input) : base(input, Encoding.BigEndianUnicode) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BigEndianBinaryReader"/> class based on 
@@ -28,7 +28,7 @@ namespace CoreExtensions.IO
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BigEndianBinaryReader"/> class based on 
-        /// the specified stream and using UTF-8 encoding.
+        /// the specified stream and character encoding, and optionally leaves the stream open.
         /// </summary>
         /// <param name="input">The input stream.</param>
         /// <param name="encoding">The character encoding to use.</param>

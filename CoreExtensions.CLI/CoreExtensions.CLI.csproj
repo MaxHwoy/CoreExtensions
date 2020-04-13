@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CoreExtensions.Conversions\CoreExtensions.Conversions.csproj" />
+    <ProjectReference Include="..\CoreExtensions.IO\CoreExtensions.IO.csproj" />
+    <ProjectReference Include="..\CoreExtensions.Management\CoreExtensions.Management.csproj" />
     <ProjectReference Include="..\CoreExtensions.Native\CoreExtensions.Native.csproj" />
   </ItemGroup>
 

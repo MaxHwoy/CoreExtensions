@@ -52,17 +52,11 @@ namespace CoreExtensions.CLI
 	{
 		static void Main(string[] args)
 		{
-			var arr = File.ReadAllBytes("GlobalB.lzc");
-
-			long timern = 0;
-			long timery = 0;
 
 
-			int oof = 4;
 
-			
 
-			int dd = 0;
+
 		}
 	}
 }
