@@ -1,7 +1,7 @@
 ﻿namespace CoreExtensions.Native
 {
 	/// <summary>
-	/// Class to reverse (endian-swap) primitive values.
+	/// Provides all major extensions for reversing (endian-swapping) primitive values.
 	/// </summary>
 	public static class ReverseX
 	{

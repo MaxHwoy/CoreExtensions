@@ -1,7 +1,7 @@
 ﻿namespace CoreExtensions.Native
 {
     /// <summary>
-    /// Class to invert bits of integer values.
+    /// Provides all major extensions for inverting bits of integer values.
     /// </summary>
 	public static class InvertX
 	{
