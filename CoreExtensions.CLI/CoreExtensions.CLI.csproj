@@ -14,6 +14,7 @@
     <ProjectReference Include="..\CoreExtensions.IO\CoreExtensions.IO.csproj" />
     <ProjectReference Include="..\CoreExtensions.Management\CoreExtensions.Management.csproj" />
     <ProjectReference Include="..\CoreExtensions.Native\CoreExtensions.Native.csproj" />
+    <ProjectReference Include="..\CoreExtensions.Reflection\CoreExtensions.Reflection.csproj" />
   </ItemGroup>
 
 </Project>

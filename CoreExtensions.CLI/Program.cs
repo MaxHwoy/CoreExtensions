@@ -2,9 +2,12 @@
 using System.IO;
 using System.Text;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CoreExtensions.IO;
 using CoreExtensions.Native;
+using CoreExtensions.Reflection;
+using CoreExtensions.Management;
 using CoreExtensions.Conversions;
 
 
@@ -54,7 +57,8 @@ namespace CoreExtensions.CLI
 	{
 		static void Main(string[] args)
 		{
-			
+			var arr = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
+			var list = arr.GetArrayCopy<byte, int>();
 
 
 			int aa = 0;
