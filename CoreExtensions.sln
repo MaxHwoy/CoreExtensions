@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreExtensions.Management",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreExtensions.CLI", "CoreExtensions.CLI\CoreExtensions.CLI.csproj", "{1E144828-ABBB-41B3-A347-3809E0169DA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreExtensions.Conversions", "CoreExtensions.Conversions\CoreExtensions.Conversions.csproj", "{87EDC2FE-F78E-488A-899B-C2C6232ADC18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreExtensions.Conversions", "CoreExtensions.Conversions\CoreExtensions.Conversions.csproj", "{87EDC2FE-F78E-488A-899B-C2C6232ADC18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreExtensions.IO", "CoreExtensions.IO\CoreExtensions.IO.csproj", "{32C8ED54-B10E-482B-A9C7-F0AEFB8B7601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreExtensions.IO", "CoreExtensions.IO\CoreExtensions.IO.csproj", "{32C8ED54-B10E-482B-A9C7-F0AEFB8B7601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreExtensions.Reflection", "CoreExtensions.Reflection\CoreExtensions.Reflection.csproj", "{51B5AAD5-3C76-4720-BEA6-19E9CBBF5FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{32C8ED54-B10E-482B-A9C7-F0AEFB8B7601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32C8ED54-B10E-482B-A9C7-F0AEFB8B7601}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32C8ED54-B10E-482B-A9C7-F0AEFB8B7601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51B5AAD5-3C76-4720-BEA6-19E9CBBF5FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B5AAD5-3C76-4720-BEA6-19E9CBBF5FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B5AAD5-3C76-4720-BEA6-19E9CBBF5FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B5AAD5-3C76-4720-BEA6-19E9CBBF5FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
