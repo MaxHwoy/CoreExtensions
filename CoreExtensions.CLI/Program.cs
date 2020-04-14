@@ -58,10 +58,25 @@ namespace CoreExtensions.CLI
 	{
 		static void Main(string[] args)
 		{
-			string str = "0x89193856BBAACC";
-			var quote = str.IsHexString();
+			long noX = 0;
+			long yesX = 0;
+			var arr = new byte[4] { 0x00, 0xEF, 0xCD, 0xAB };
 
+			var watch = new Stopwatch();
 
+			watch.Start();
+			for (int a1 = 0; a1 < 100000000; ++a1)
+				BitConverterX.ToInt32(arr, 0);
+			watch.Stop();
+			yesX = watch.ElapsedMilliseconds;
+			watch.Reset();
+
+			watch.Start();
+			for (int a1 = 0; a1 < 100000000; ++a1)
+				BitConverter.ToInt32(arr, 0);
+			watch.Stop();
+			noX = watch.ElapsedMilliseconds;
+			watch.Reset();
 			int aa = 0;
 		}
 	}
