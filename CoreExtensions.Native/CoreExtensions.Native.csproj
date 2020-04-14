@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CoreExtensions.Conversions\CoreExtensions.Conversions.csproj" />
     <ProjectReference Include="..\CoreExtensions.Management\CoreExtensions.Management.csproj" />
+    <ProjectReference Include="..\CoreExtensions.Text\CoreExtensions.Text.csproj" />
   </ItemGroup>
 
 </Project>
