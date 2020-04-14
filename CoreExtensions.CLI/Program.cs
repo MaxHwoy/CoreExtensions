@@ -58,25 +58,34 @@ namespace CoreExtensions.CLI
 	{
 		static void Main(string[] args)
 		{
-			long noX = 0;
-			long yesX = 0;
-			var arr = new byte[4] { 0x00, 0xEF, 0xCD, 0xAB };
+			var process = InjectorX.FindProcess("NFSC");
 
-			var watch = new Stopwatch();
+			/// Remove BARRIER_SPLINE_305
+			InjectorX.WriteMemory(process, 0x9d862c, 0x1);
 
-			watch.Start();
-			for (int a1 = 0; a1 < 100000000; ++a1)
-				BitConverterX.ToInt32(arr, 0);
-			watch.Stop();
-			yesX = watch.ElapsedMilliseconds;
-			watch.Reset();
+			/// Remove BARRIER_SPLINE_306
+			InjectorX.WriteMemory(process, 0x9d8618, 0x1);
 
-			watch.Start();
-			for (int a1 = 0; a1 < 100000000; ++a1)
-				BitConverter.ToInt32(arr, 0);
-			watch.Stop();
-			noX = watch.ElapsedMilliseconds;
-			watch.Reset();
+			/// Remove BARRIER_SPLINE_4090
+			InjectorX.WriteMemory(process, 0x9d8604, 0x1);
+
+			/// Remove BARRIER_SPLINE_4091
+			InjectorX.WriteMemory(process, 0x9d85f0, 0x1);
+
+			/// Remove BARRIER_SPLINE_4500
+			InjectorX.WriteMemory(process, 0x9d85dc, 0x1);
+
+			/// Remove BARRIER_SPLINE_4501
+			InjectorX.WriteMemory(process, 0x9d85c8, 0x1);
+
+			// Career Start Cash Given
+			InjectorX.WriteMemory(process, 0x4C4CC7, 100000);
+			InjectorX.WriteMemory(process, 0x4C4CD7, 100000);
+
+
+
+
+
 			int aa = 0;
 		}
 	}

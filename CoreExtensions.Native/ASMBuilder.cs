@@ -1,60 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+
+
 
 namespace CoreExtensions.Native
 {
-	public class ASMBuilder
-	{
-		private static class ASMInstr
-		{
-			// Increment registers
-			public static readonly byte INC_EAX = 0x40;
-			public static readonly byte INC_ECX = 0x41;
-			public static readonly byte INC_EDX = 0x42;
-			public static readonly byte INC_EBX = 0x43;
-			public static readonly byte INC_ESP = 0x44;
-			public static readonly byte INC_EBP = 0x45;
-			public static readonly byte INC_ESI = 0x46;
-			public static readonly byte INC_EDI = 0x47;
+    /// <summary>
+    /// Class to build ASM code based on operations given.
+    /// </summary>
+    public class ASMBuilder
+    {
+        /// <summary>
+        /// Class with all main opcodes used in ASM.
+        /// </summary>
+        private static class ASMInstr
+        {
+            // Increment registers
+            public static readonly byte INC_EAX = 0x40;
+            public static readonly byte INC_ECX = 0x41;
+            public static readonly byte INC_EDX = 0x42;
+            public static readonly byte INC_EBX = 0x43;
+            public static readonly byte INC_ESP = 0x44;
+            public static readonly byte INC_EBP = 0x45;
+            public static readonly byte INC_ESI = 0x46;
+            public static readonly byte INC_EDI = 0x47;
 
-			// Decrement registers
-			public static readonly byte DEC_EAX = 0x48;
-			public static readonly byte DEC_ECX = 0x49;
-			public static readonly byte DEC_EDX = 0x4A;
-			public static readonly byte DEC_EBX = 0x4B;
-			public static readonly byte DEC_ESP = 0x4C;
-			public static readonly byte DEC_EBP = 0x4D;
-			public static readonly byte DEC_ESI = 0x4E;
-			public static readonly byte DEC_EDI = 0x4F;
+            // Decrement registers
+            public static readonly byte DEC_EAX = 0x48;
+            public static readonly byte DEC_ECX = 0x49;
+            public static readonly byte DEC_EDX = 0x4A;
+            public static readonly byte DEC_EBX = 0x4B;
+            public static readonly byte DEC_ESP = 0x4C;
+            public static readonly byte DEC_EBP = 0x4D;
+            public static readonly byte DEC_ESI = 0x4E;
+            public static readonly byte DEC_EDI = 0x4F;
 
-			// Push registers
-			public static readonly byte PUSH_EAX = 0x50;
-			public static readonly byte PUSH_ECX = 0x51;
-			public static readonly byte PUSH_EDX = 0x52;
-			public static readonly byte PUSH_EBX = 0x52;
-			public static readonly byte PUSH_ESP = 0x52;
-			public static readonly byte PUSH_EBP = 0x52;
-			public static readonly byte PUSH_ESI = 0x56;
-			public static readonly byte PUSH_EDI = 0x57;
+            // Push registers
+            public static readonly byte PUSH_EAX = 0x50;
+            public static readonly byte PUSH_ECX = 0x51;
+            public static readonly byte PUSH_EDX = 0x52;
+            public static readonly byte PUSH_EBX = 0x52;
+            public static readonly byte PUSH_ESP = 0x52;
+            public static readonly byte PUSH_EBP = 0x52;
+            public static readonly byte PUSH_ESI = 0x56;
+            public static readonly byte PUSH_EDI = 0x57;
 
-			// Pop registers
-			public static readonly byte POP_EAX = 0x58;
-			public static readonly byte POP_ECX = 0x59;
-			public static readonly byte POP_EDX = 0x5A;
-			public static readonly byte POP_EBX = 0x5B;
-			public static readonly byte POP_ESP = 0x5C;
-			public static readonly byte POP_EBP = 0x5D;
-			public static readonly byte POP_ESI = 0x5E;
-			public static readonly byte POP_EDI = 0x5F;
+            // Pop registers
+            public static readonly byte POP_EAX = 0x58;
+            public static readonly byte POP_ECX = 0x59;
+            public static readonly byte POP_EDX = 0x5A;
+            public static readonly byte POP_EBX = 0x5B;
+            public static readonly byte POP_ESP = 0x5C;
+            public static readonly byte POP_EBP = 0x5D;
+            public static readonly byte POP_ESI = 0x5E;
+            public static readonly byte POP_EDI = 0x5F;
 
 
-			public static readonly byte PUSH_WORD = 0x68;
-			public static readonly byte PUSH_BYTE = 0x6A;
-			public static readonly byte JL = 0x7C;
+            public static readonly byte PUSH_WORD = 0x68;
+            public static readonly byte PUSH_BYTE = 0x6A;
+            public static readonly byte JL = 0x7C;
 
-			public static readonly byte NOP = 0x90;
-			public static readonly byte MOV_EAX_TO_PTR = 0xA3;
+            public static readonly byte NOP = 0x90;
+            public static readonly byte MOV_EAX_TO_PTR = 0xA3;
 
             // Mov 8-bit registers
             public static readonly byte MOV_TO_AL = 0xB0;
@@ -72,27 +79,126 @@ namespace CoreExtensions.Native
             public static readonly byte MOV_TO_EDX = 0xBA;
             public static readonly byte MOV_TO_EBX = 0xBB;
             public static readonly byte MOV_TO_ESP = 0xBC;
-            public static readonly byte MOV_TO_EDP = 0xBD;
+            public static readonly byte MOV_TO_EBP = 0xBD;
             public static readonly byte MOV_TO_ESI = 0xBE;
-            public static readonly byte MOV_TO_EDO = 0xBF;
+            public static readonly byte MOV_TO_EDI = 0xBF;
 
 
 
             public static readonly byte RET_WORD = 0xC2;
-			public static readonly byte RET_N = 0xC3;
-			public static readonly byte CALL = 0xE8;
-			public static readonly byte JMP = 0xE9;
+            public static readonly byte RET_N = 0xC3;
+            public static readonly byte CALL = 0xE8;
+            public static readonly byte JMP = 0xE9;
 
-			public static readonly byte[] ADD_TO_ESP = new byte[] { 0x83, 0xC4 };
-			public static readonly byte[] PUSH_WORD_PTR_DS = new byte[] { 0xFF, 0x35 };
+            public static readonly byte[] ADD_TO_ESP = new byte[] { 0x83, 0xC4 };
+            public static readonly byte[] PUSH_WORD_PTR_DS = new byte[] { 0xFF, 0x35 };
+            public static readonly byte[] CALL_EAX = new byte[] { 0xFF, 0xD0 };
+        }
 
-			public static readonly byte[] CALL_EAX = new byte[] { 0xFF, 0xD0 };
-		}
+        /// <summary>
+        /// ASM code.
+        /// </summary>
+        private List<byte> _asm;
 
-		private List<byte> _asm;
+        /// <summary>
+        /// Writes ASM assembly.
+        /// </summary>
+        /// <param name="asm">ASM to write.</param>
+        public void Write(byte[] asm) => this._asm.AddRange(asm);
 
-		public void Write(byte[] asm) => this._asm.AddRange(asm);
+        /// <summary>
+        /// Gets generated ASM code.
+        /// </summary>
+        /// <returns>ASM as a byte array of opcodes.</returns>
+        public byte[] Get() => this._asm.ToArray();
 
+        #region Increment Registers
+
+        /// <summary>
+        /// Increments value at EAX registry.
+        /// </summary>
+        public void IncEAX() => this._asm.Add(ASMInstr.INC_EAX);
+
+        /// <summary>
+        /// Increments value at ECX registry.
+        /// </summary>
+        public void IncECX() => this._asm.Add(ASMInstr.INC_ECX);
+
+        /// <summary>
+        /// Increments value at EDX registry.
+        /// </summary>
+        public void IncEDX() => this._asm.Add(ASMInstr.INC_EDX);
+
+        /// <summary>
+        /// Increments value at EBX registry.
+        /// </summary>
+        public void IncEBX() => this._asm.Add(ASMInstr.INC_EBX);
+
+        /// <summary>
+        /// Increments value at ESP registry.
+        /// </summary>
+        public void IncESP() => this._asm.Add(ASMInstr.INC_ESP);
+
+        /// <summary>
+        /// Increments value at EBP registry.
+        /// </summary>
+        public void IncEBP() => this._asm.Add(ASMInstr.INC_EBP);
+
+        /// <summary>
+        /// Increments value at ESI registry.
+        /// </summary>
+        public void IncESI() => this._asm.Add(ASMInstr.INC_ESI);
+
+        /// <summary>
+        /// Increments value at EDI registry.
+        /// </summary>
+        public void IncEDI() => this._asm.Add(ASMInstr.INC_EDI);
+
+        #endregion
+
+        #region Decrement Registers
+
+        /// <summary>
+        /// Decrements value at EAX registry.
+        /// </summary>
+        public void DecEAX() => this._asm.Add(ASMInstr.DEC_EAX);
+
+        /// <summary>
+        /// Decrements value at ECX registry.
+        /// </summary>
+        public void DecECX() => this._asm.Add(ASMInstr.DEC_ECX);
+
+        /// <summary>
+        /// Decrements value at EDX registry.
+        /// </summary>
+        public void DecEDX() => this._asm.Add(ASMInstr.DEC_EDX);
+
+        /// <summary>
+        /// Decrements value at EBX registry.
+        /// </summary>
+        public void DecEBX() => this._asm.Add(ASMInstr.DEC_EBX);
+
+        /// <summary>
+        /// Decrements value at ESP registry.
+        /// </summary>
+        public void DecESP() => this._asm.Add(ASMInstr.DEC_ESP);
+
+        /// <summary>
+        /// Decrements value at EBP registry.
+        /// </summary>
+        public void DecEBP() => this._asm.Add(ASMInstr.DEC_EBP);
+
+        /// <summary>
+        /// Decrements value at ESI registry.
+        /// </summary>
+        public void DecESI() => this._asm.Add(ASMInstr.DEC_ESI);
+
+        /// <summary>
+        /// Decrements value at EDI registry.
+        /// </summary>
+        public void DecEDI() => this._asm.Add(ASMInstr.DEC_EDI);
+
+        #endregion
 
         #region Push Registers
 
@@ -248,15 +354,147 @@ namespace CoreExtensions.Native
             this._asm.AddRange(BitConverter.GetBytes(value));
         }
 
-		#endregion
+        #endregion
 
-		#region Mov 16/32 Registers
+        #region Mov 8 Registers
 
-		/// <summary>
-		/// Movie a value to the EAX registry.
-		/// </summary>
-		/// <param name="value">Value to move.</param>
-		public void MovToEAX(int value) => this.MovToEAX((uint)value);
+        /// <summary>
+        /// Move a value to the AL registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToAL(sbyte value) => this.MovToAL((byte)value);
+
+        /// <summary>
+        /// Move a value to the AL registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToAL(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_AL);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the CL registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToCL(sbyte value) => this.MovToCL((byte)value);
+
+        /// <summary>
+        /// Move a value to the CL registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToCL(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_CL);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the DL registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToDL(sbyte value) => this.MovToDL((byte)value);
+
+        /// <summary>
+        /// Move a value to the DL registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToDL(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_DL);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the BL registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToBL(sbyte value) => this.MovToBL((byte)value);
+
+        /// <summary>
+        /// Move a value to the BL registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToBL(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_BL);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the AH registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToAH(sbyte value) => this.MovToAH((byte)value);
+
+        /// <summary>
+        /// Move a value to the AH registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToAH(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_AH);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the CH registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToCH(sbyte value) => this.MovToCH((byte)value);
+
+        /// <summary>
+        /// Move a value to the CH registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToCH(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_CH);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the DH registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToDH(sbyte value) => this.MovToDH((byte)value);
+
+        /// <summary>
+        /// Move a value to the DH registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToDH(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_DH);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Move a value to the BH registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToBH(sbyte value) => this.MovToBH((byte)value);
+
+        /// <summary>
+        /// Move a value to the BH registry
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToBH(byte value)
+        {
+            this._asm.Add(ASMInstr.MOV_TO_BH);
+            this._asm.AddRange(BitConverter.GetBytes(value));
+        }
+
+        #endregion
+
+        #region Mov 16/32 Registers
+
+        /// <summary>
+        /// Move a value to the EAX registry.
+        /// </summary>
+        /// <param name="value">Value to move.</param>
+        public void MovToEAX(int value) => this.MovToEAX((uint)value);
 
         /// <summary>
         /// Move a value to the EAX registry
@@ -333,18 +571,18 @@ namespace CoreExtensions.Native
         }
 
         /// <summary>
-        /// Move a value to the EDP registry.
+        /// Move a value to the EBP registry.
         /// </summary>
         /// <param name="value">Value to move.</param>
-        public void MovToEDP(int value) => this.MovToEDP((uint)value);
+        public void MovToEBP(int value) => this.MovToEBP((uint)value);
 
         /// <summary>
-        /// Move a value to the EDP registry.
+        /// Move a value to the EBP registry.
         /// </summary>
         /// <param name="value">Value to move.</param>
-        public void MovToEDP(uint value)
+        public void MovToEBP(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_EDP);
+            this._asm.Add(ASMInstr.MOV_TO_EBP);
             this._asm.AddRange(BitConverter.GetBytes(value));
         }
 
@@ -380,8 +618,9 @@ namespace CoreExtensions.Native
             this._asm.AddRange(BitConverter.GetBytes(value));
         }
 
-        #endregion
+		#endregion
 
+		#region Misc Methods
 
 		/// <summary>
 		/// Calls EAX registry.
@@ -424,6 +663,21 @@ namespace CoreExtensions.Native
             this._asm.AddRange(BitConverter.GetBytes(value));
         }
 
+		#endregion
+
+		#region Conventional
+
+		/// <summary>
+		/// Makes ranged NOP of size specified.
+		/// </summary>
+		/// <param name="size">Size of NOP operations.</param>
+		public void NOP(int size)
+        {
+            var arr = new byte[size];
+            for (int a1 = 0; a1 < size; ++a1) arr[a1] = ASMInstr.NOP;
+            this._asm.AddRange(arr);
+        }
+
         /// <summary>
         /// JMP command.
         /// </summary>
@@ -461,5 +715,7 @@ namespace CoreExtensions.Native
             this._asm.Add(ASMInstr.RET_WORD);
             this._asm.AddRange(BitConverter.GetBytes(value));
         }
-    }
+
+		#endregion
+	}
 }
