@@ -14,10 +14,10 @@ namespace CoreExtensions.Native
         public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr address, byte[] buffer, uint size, out int bytes_written);
 
         [DllImport("kernel32.dll")]
-        internal static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr address, uint size, AllocationType alloc_type, MemoryProtection protect);
+        internal static extern IntPtr VirtualAlloc(IntPtr hProcess, IntPtr address, uint size, AllocationType alloc_type, MemoryProtection protect);
 
         [DllImport("kernel32.dll")]
-        internal static extern bool VirtualProtectEx(IntPtr hProcess, IntPtr address, UIntPtr size, uint new_protect, out uint old_protect);
+        internal static extern bool VirtualProtect(IntPtr hProcess, IntPtr address, UIntPtr size, uint new_protect, out uint old_protect);
 
         [DllImport("kernel32.dll")]
         public static extern int CloseHandle(IntPtr hProcess);
