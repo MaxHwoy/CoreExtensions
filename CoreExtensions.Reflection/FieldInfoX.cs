@@ -6,8 +6,16 @@ using System.Text;
 
 namespace CoreExtensions.Reflection
 {
+	/// <summary>
+	/// Represents all major extensions for <see cref="FieldInfo"/>.
+	/// </summary>
 	public static class FieldInfoX
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="field"></param>
+		/// <returns></returns>
 		public static bool IsEnumerableType(this FieldInfo field)
 		{
 			return (!typeof(string).Equals(field.FieldType) &&

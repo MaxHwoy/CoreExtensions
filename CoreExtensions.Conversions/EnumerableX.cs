@@ -59,5 +59,54 @@ namespace CoreExtensions.Conversions
 		public static T1[] GetArrayCopy<T1, T2>(this IEnumerable<T2> value)
 			where T1 : IConvertible where T2 : IConvertible
 			=> value.GetEnumerableCopy<T1, T2>().ToArray();
+
+		public static IEnumerable<string> FindAllWithSubstring(this IEnumerable<string> e, string match)
+		{
+			foreach (var str in e)
+				if (str.Contains(match))
+					yield return str;
+		}
+
+		public static TypeID PrimitiveAverage<TypeID>(this IEnumerable<TypeID> value) 
+			where TypeID : IConvertible
+		{
+			decimal total = 0;
+			decimal count = 0;
+			if (value == null || value.Count() == 0) return default;
+			switch (Type.GetTypeCode(typeof(TypeID)))
+			{
+				case TypeCode.Boolean:
+					foreach (var obj in value)
+					{
+						var _ = (bool)obj.ReinterpretCast(typeof(bool));
+						total += _ ? 1 : 0;
+						++count;
+					}
+					bool boolresult = (total / count) >= (decimal)0.5;
+					return boolresult.StaticCast<TypeID>();
+
+				case TypeCode.SByte:
+				case TypeCode.Byte:
+				case TypeCode.Int16:
+				case TypeCode.UInt16:
+				case TypeCode.Int32:
+				case TypeCode.UInt32:
+				case TypeCode.Int64:
+				case TypeCode.UInt64:
+				case TypeCode.Single:
+				case TypeCode.Double:
+				case TypeCode.Decimal:
+					foreach (var obj in value)
+					{
+						total += (decimal)obj.ReinterpretCast(typeof(decimal));
+						++count;
+					}
+					decimal result = total / count;
+					return result.StaticCast<TypeID>();
+
+				default:
+					return default;
+			}
+		}
 	}
 }

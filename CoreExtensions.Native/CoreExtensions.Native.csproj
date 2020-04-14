@@ -9,4 +9,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoreExtensions.Conversions\CoreExtensions.Conversions.csproj" />
+    <ProjectReference Include="..\CoreExtensions.Management\CoreExtensions.Management.csproj" />
+  </ItemGroup>
+
 </Project>
