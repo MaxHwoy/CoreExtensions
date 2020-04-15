@@ -60,6 +60,12 @@ namespace CoreExtensions.Conversions
 			where T1 : IConvertible where T2 : IConvertible
 			=> value.GetEnumerableCopy<T1, T2>().ToArray();
 
+		/// <summary>
+		/// Finds all strings in this <see cref="IEnumerable{T}"/> that contains substring provided.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <param name="match">String to match.</param>
+		/// <returns><see cref="IEnumerable{T}"/> of string that contain matching string.</returns>
 		public static IEnumerable<string> FindAllWithSubstring(this IEnumerable<string> e, string match)
 		{
 			foreach (var str in e)
@@ -67,6 +73,12 @@ namespace CoreExtensions.Conversions
 					yield return str;
 		}
 
+		/// <summary>
+		/// Finds average value of all values in the <see cref="IEnumerable{T}"/>.
+		/// </summary>
+		/// <typeparam name="TypeID"><see cref="Type"/> of the values.</typeparam>
+		/// <param name="value"></param>
+		/// <returns>Average of all values.</returns>
 		public static TypeID PrimitiveAverage<TypeID>(this IEnumerable<TypeID> value) 
 			where TypeID : IConvertible
 		{

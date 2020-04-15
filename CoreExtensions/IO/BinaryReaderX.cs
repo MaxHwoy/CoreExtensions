@@ -94,6 +94,7 @@ namespace CoreExtensions.IO
         /// Reads the specified number of bytes from the current stream into a byte array 
         /// in reverse order and advances the current position by that number of bytes.
         /// </summary>
+        /// <param name="br"></param>
         /// <param name="count">The number of bytes to read. This value must be 0 or a 
         /// non-negative number or an exception will occur.</param>
         /// <returns>A byte array containing data read from the underlying stream. This might be 
@@ -166,6 +167,7 @@ namespace CoreExtensions.IO
         /// <summary>
         /// Reads a C-Style null-terminated string that using UTF8 encoding.
         /// </summary>
+        /// <param name="br"></param>
         /// <param name="length">Max length of the string to read.</param>
         /// <returns>String with UTF8 style encoding.</returns>
         public static string ReadNullTermUTF8(this BinaryReader br, int length)
@@ -179,6 +181,7 @@ namespace CoreExtensions.IO
         /// <summary>
         /// Reads a C-Style null-terminated string that using UTF16 encoding.
         /// </summary>
+        /// <param name="br"></param>
         /// <param name="length">Max length of the string to read.</param>
         /// <returns>String with UTF16 style encoding.</returns>
         public static string ReadNullTermUTF16(this BinaryReader br, int length)
@@ -194,6 +197,7 @@ namespace CoreExtensions.IO
         /// to be read correctly, it should have a <see cref="StructLayoutAttribute"/>.
         /// </summary>
         /// <typeparam name="TypeID">Type of struct to read.</typeparam>
+        /// <param name="br"></param>
         /// <param name="result">Result struct of type <typeparamref name="TypeID"/> that was read.</param>
         /// <returns>True on success; false otherwise.</returns>
         public static bool ReadStruct<TypeID>(this BinaryReader br, out TypeID result) where TypeID : struct
@@ -214,10 +218,11 @@ namespace CoreExtensions.IO
             }
             catch (Exception) { return false; }
         }
-    
+
         /// <summary>
         /// Seeks position of the first occurence of the byte array provided.
         /// </summary>
+        /// <param name="br"></param>
         /// <param name="array">Byte array to find.</param>
         /// <param name="fromstart">True if begin seeking from the start of the stream; 
         /// false otherwise.</param>
@@ -253,6 +258,7 @@ namespace CoreExtensions.IO
         /// be string).
         /// </summary>
         /// <typeparam name="TypeID">Type of the value to find.</typeparam>
+        /// <param name="br"></param>
         /// <param name="value">Value to find.</param>
         /// <param name="fromstart">True if begin seeking from the start of the stream; 
         /// false otherwise.</param>

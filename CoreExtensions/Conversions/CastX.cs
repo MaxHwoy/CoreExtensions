@@ -4,6 +4,9 @@
 
 namespace CoreExtensions.Conversions
 {
+    /// <summary>
+    /// Provides all major extensions to cast objects.
+    /// </summary>
 	public static class CastX
 	{
         /// <summary>

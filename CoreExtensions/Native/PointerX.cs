@@ -8,6 +8,7 @@
 		/// <summary>
 		/// Changes lower (first) byte of the 2-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) byte of the 2-byte 
 		/// signed integer.</param>
 		/// <returns>New 2-byte signed integer with replaced lower (first) byte.</returns>
@@ -20,6 +21,7 @@
 		/// <summary>
 		/// Changes lower (first) byte of the 2-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) byte of the 2-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 2-byte unsigned integer with replaced lower (first) byte.</returns>
@@ -32,6 +34,7 @@
 		/// <summary>
 		/// Changes lower (first) byte of the 4-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) byte of the 4-byte 
 		/// signed integer.</param>
 		/// <returns>New 4-byte signed integer with replaced lower (first) byte.</returns>
@@ -44,6 +47,7 @@
 		/// <summary>
 		/// Changes lower (first) byte of the 4-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) byte of the 4-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 4-byte unsigned integer with replaced lower (first) byte.</returns>
@@ -56,6 +60,7 @@
 		/// <summary>
 		/// Changes lower (first) byte of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) byte of the 8-byte 
 		/// signed integer.</param>
 		/// <returns>New 8-byte signed integer with replaced lower (first) byte.</returns>
@@ -68,6 +73,7 @@
 		/// <summary>
 		/// Changes lower (first) byte of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) byte of the 8-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 8-byte unsigned integer with replaced lower (first) byte.</returns>
@@ -80,6 +86,7 @@
 		/// <summary>
 		/// Changes higher (second) byte of the 2-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) byte of the 2-byte 
 		/// signed integer.</param>
 		/// <returns>New 2-byte signed integer with replaced higher (second) byte.</returns>
@@ -92,6 +99,7 @@
 		/// <summary>
 		/// Changes higher (second) byte of the 2-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) byte of the 2-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 2-byte unsigned integer with replaced higher (second) byte.</returns>
@@ -104,6 +112,7 @@
 		/// <summary>
 		/// Changes higher (second) byte of the 4-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) byte of the 4-byte 
 		/// signed integer.</param>
 		/// <returns>New 4-byte signed integer with replaced higher (second) byte.</returns>
@@ -116,6 +125,7 @@
 		/// <summary>
 		/// Changes higher (second) byte of the 4-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) byte of the 4-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 4-byte unsigned integer with replaced higher (second) byte.</returns>
@@ -128,6 +138,7 @@
 		/// <summary>
 		/// Changes higher (second) byte of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) byte of the 8-byte 
 		/// signed integer.</param>
 		/// <returns>New 8-byte signed integer with replaced higher (second) byte.</returns>
@@ -140,6 +151,7 @@
 		/// <summary>
 		/// Changes higher (second) byte of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) byte of the 8-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 8-byte unsigned integer with replaced higher (second) byte.</returns>
@@ -152,6 +164,7 @@
 		/// <summary>
 		/// Changes lower (first) 2 bytes of the 4-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) 2 bytes of the 4-byte 
 		/// signed integer.</param>
 		/// <returns>New 4-byte signed integer with replaced lower (first) 2 bytes.</returns>
@@ -164,6 +177,7 @@
 		/// <summary>
 		/// Changes lower (first) 2 bytes of the 4-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) 2 bytes of the 4-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 4-byte unsigned integer with replaced lower (first) 2 bytes.</returns>
@@ -176,6 +190,7 @@
 		/// <summary>
 		/// Changes lower (first) 2 bytes of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) 2 bytes of the 8-byte 
 		/// signed integer.</param>
 		/// <returns>New 8-byte signed integer with replaced lower (first) 2 bytes.</returns>
@@ -188,6 +203,7 @@
 		/// <summary>
 		/// Changes lower (first) 2 bytes of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) 2 bytes of the 8-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 8-byte unsigned integer with replaced lower (first) 2 bytes.</returns>
@@ -200,6 +216,7 @@
 		/// <summary>
 		/// Changes higher (second) 2 bytes of the 4-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) 2 bytes of the 4-byte 
 		/// signed integer.</param>
 		/// <returns>New 4-byte signed integer with replaced higher (second) 2 bytes.</returns>
@@ -212,6 +229,7 @@
 		/// <summary>
 		/// Changes higher (second) 2 bytes of the 4-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) 2 bytes of the 4-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 4-byte unsigned integer with replaced higher (second) 2 bytes.</returns>
@@ -224,6 +242,7 @@
 		/// <summary>
 		/// Changes higher (second) 2 bytes of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) 2 bytes of the 8-byte 
 		/// signed integer.</param>
 		/// <returns>New 8-byte signed integer with replaced higher (second) 2 bytes.</returns>
@@ -236,6 +255,7 @@
 		/// <summary>
 		/// Changes higher (second) 2 bytes of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) 2 bytes of the 8-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 8-byte unsigned integer with replaced higher (second) 2 bytes.</returns>
@@ -248,6 +268,7 @@
 		/// <summary>
 		/// Changes lower (first) 4 bytes of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) 4 bytes of the 8-byte 
 		/// signed integer.</param>
 		/// <returns>New 8-byte signed integer with replaced lower (first) 4 bytes.</returns>
@@ -260,6 +281,7 @@
 		/// <summary>
 		/// Changes lower (first) 4 bytes of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces lower (first) 4 bytes of the 8-byte 
 		/// unsigned integer.</param>
 		/// <returns>New 8-byte unsigned integer with replaced lower (first) 4 bytes.</returns>
@@ -272,6 +294,7 @@
 		/// <summary>
 		/// Changes higher (second) 4 bytes of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) 4 bytes of the 8-byte 
 		/// signed integer.</param>
 		/// <returns>New 8-byte signed integer with replaced higher (second) 4 bytes.</returns>
@@ -284,6 +307,7 @@
 		/// <summary>
 		/// Changes higher (second) 4 bytes of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces higher (second) 4 bytes of the 8-byte 
 		/// nnsigned integer.</param>
 		/// <returns>New 8-byte unsigned integer with replaced higher (second) 4 bytes.</returns>
@@ -296,6 +320,7 @@
 		/// <summary>
 		/// Changes n-th byte of the 4-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces n-th byte of the 4-byte signed integer.</param>
 		/// <param name="pos">Position of the byte to replace.</param>
 		/// <returns>New 4-byte signed integer with replaced n-th byte.</returns>
@@ -308,6 +333,7 @@
 		/// <summary>
 		/// Changes n-th byte of the 4-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces n-th byte of the 4-byte unsigned integer.</param>
 		/// <param name="pos">Position of the byte to replace.</param>
 		/// <returns>New 4-byte unsigned integer with replaced n-th byte.</returns>
@@ -320,6 +346,7 @@
 		/// <summary>
 		/// Changes n-th byte of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces n-th byte of the 8-byte signed integer.</param>
 		/// <param name="pos">Position of the byte to replace.</param>
 		/// <returns>New 8-byte signed integer with replaced n-th byte.</returns>
@@ -332,6 +359,7 @@
 		/// <summary>
 		/// Changes n-th byte of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces n-th byte of the 8-byte unsigned integer.</param>
 		/// <param name="pos">Position of the byte to replace.</param>
 		/// <returns>New 8-byte unsigned integer with replaced n-th byte.</returns>
@@ -344,6 +372,7 @@
 		/// <summary>
 		/// Changes n-th 2 bytes of the 8-byte signed integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces n-th 2 bytes of the 8-byte 
 		/// signed integer.</param>
 		/// <param name="pos">Position of the 2 bytes to replace.</param>
@@ -357,6 +386,7 @@
 		/// <summary>
 		/// Changes n-th 2 bytes of the 8-byte unsigned integer.
 		/// </summary>
+		/// <param name="num"></param>
 		/// <param name="value">Value that replaces n-th 2 bytes of the 8-byte 
 		/// unsigned integer.</param>
 		/// <param name="pos">Position of the 2 bytes to replace.</param>

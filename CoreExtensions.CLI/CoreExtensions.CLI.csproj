@@ -10,12 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreExtensions.Conversions\CoreExtensions.Conversions.csproj" />
-    <ProjectReference Include="..\CoreExtensions.IO\CoreExtensions.IO.csproj" />
-    <ProjectReference Include="..\CoreExtensions.Management\CoreExtensions.Management.csproj" />
-    <ProjectReference Include="..\CoreExtensions.Native\CoreExtensions.Native.csproj" />
-    <ProjectReference Include="..\CoreExtensions.Reflection\CoreExtensions.Reflection.csproj" />
-    <ProjectReference Include="..\CoreExtensions.Text\CoreExtensions.Text.csproj" />
+    <ProjectReference Include="..\CoreExtensions\CoreExtensions.csproj" />
   </ItemGroup>
 
 </Project>

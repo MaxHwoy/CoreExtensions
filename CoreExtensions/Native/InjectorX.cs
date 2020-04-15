@@ -14,12 +14,39 @@ namespace CoreExtensions.Native
     /// </summary>
     public enum ASMResult : byte
     {
+        /// <summary>
+        /// Indicates zero result.
+        /// </summary>
         None = 0,
+        
+        /// <summary>
+        /// Indicates ASM success.
+        /// </summary>
         Success = 1,
+        
+        /// <summary>
+        /// Indicates that memory writing failed.
+        /// </summary>
         WritingFailed = 2,
+        
+        /// <summary>
+        /// Indicates that value passed was of invalid size.
+        /// </summary>
         InvalidSize = 3,
+        
+        /// <summary>
+        /// Indicates failure to create or gain access to a remote thread.
+        /// </summary>
         RemoteThreadFailure = 4,
+        
+        /// <summary>
+        /// Indicates failure to allocate memory in the process.
+        /// </summary>
         AllocationFaliure = 5,
+        
+        /// <summary>
+        /// Indicates that value passed could not be casted to a byte array.
+        /// </summary>
         ByteCastFailure = 6,
     }
 
@@ -207,7 +234,6 @@ namespace CoreExtensions.Native
         /// <param name="hProcess">Pointer to process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Value that function should return.</param>
-        /// be convertible to 4-byte unsigned integer type.</param>
         /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
         public static ASMResult ReturnValue(IntPtr hProcess, uint address, uint value)
         {

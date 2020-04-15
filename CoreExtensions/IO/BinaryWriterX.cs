@@ -15,6 +15,7 @@ namespace CoreExtensions.IO
 		/// <summary>
 		/// Writes a byte array to the underlying stream in reverse order.
 		/// </summary>
+		/// <param name="bw"></param>
 		/// <param name="array">A byte array containing the data to write.</param>
 		public static void WriteReversedBytes(this BinaryWriter bw, byte[] array)
 		{
@@ -28,6 +29,7 @@ namespace CoreExtensions.IO
 		/// the current position by the size of the underlying type of the <see cref="Enum"/>.
 		/// </summary>
 		/// <typeparam name="TypeID">Type of the <see cref="Enum"/> to read.</typeparam>
+		/// <param name="bw"></param>
 		/// <param name="value"><see cref="Enum"/> value to write.</param>
 		public static void WriteEnum<TypeID>(this BinaryWriter bw, TypeID value) where TypeID : IConvertible
 		{
@@ -66,6 +68,7 @@ namespace CoreExtensions.IO
 		/// <summary>
 		/// Writes a C-Style null-terminated string that using UTF8 encoding.
 		/// </summary>
+		/// <param name="bw"></param>
 		/// <param name="value">String value to write.</param>
 		public static void WriteNullTermUTF8(this BinaryWriter bw, string value)
 		{
@@ -80,6 +83,7 @@ namespace CoreExtensions.IO
 		/// <summary>
 		/// Writes a C-Style null-terminated string that using UTF16 encoding.
 		/// </summary>
+		/// <param name="bw"></param>
 		/// <param name="value">String value to write.</param>
 		public static void WriteNullTermUTF16(this BinaryWriter bw, string value)
 		{
@@ -94,6 +98,7 @@ namespace CoreExtensions.IO
 		/// <summary>
 		/// Writes a C-Style null-terminated string that using UTF8 encoding.
 		/// </summary>
+		/// <param name="bw"></param>
 		/// <param name="value">String value to write.</param>
 		/// <param name="length">Max length of the string to write; if length of the string 
 		/// is less then length specified, padding will be added after it to fill buffer.</param>
@@ -118,6 +123,7 @@ namespace CoreExtensions.IO
 		/// <summary>
 		/// Writes a C-Style null-terminated string that using UTF16 encoding.
 		/// </summary>
+		/// <param name="bw"></param>
 		/// <param name="value">String value to write.</param>
 		/// <param name="length">Max length of the string to write; if length of the string 
 		/// is less then length specified, padding will be added after it to fill buffer.</param>
@@ -143,7 +149,8 @@ namespace CoreExtensions.IO
 		/// to be read correctly, it should have a <see cref="StructLayoutAttribute"/>.
 		/// </summary>
 		/// <typeparam name="TypeID">Type of struct to read.</typeparam>
-		/// <param name="result">Struct of type <typeparamref name="TypeID"/> to write.</param>
+		/// <param name="bw"></param>
+		/// <param name="value">Struct of type <typeparamref name="TypeID"/> to write.</param>
 		/// <returns>True on success; false otherwise.</returns>
 		public static bool WriteStruct<TypeID>(this BinaryWriter bw, TypeID value) where TypeID : struct
 		{
@@ -163,10 +170,11 @@ namespace CoreExtensions.IO
 			}
 			catch (Exception) { return false; }
 		}
-	
+
 		/// <summary>
 		/// Fills stream buffer till the certain padding is reached.
 		/// </summary>
+		/// <param name="bw"></param>
 		/// <param name="align">Align to fill the stream buffer to.</param>
 		public static void FillBuffer(this BinaryWriter bw, int align)
 		{

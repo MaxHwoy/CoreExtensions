@@ -101,6 +101,22 @@ namespace CoreExtensions.Native
         private List<byte> _asm;
 
         /// <summary>
+        /// Initializes new instance of <see cref="ASMBuilder"/> with default capacity 0x100.
+        /// </summary>
+        public ASMBuilder() : this(0x100) { }
+
+        /// <summary>
+        /// Initializes new instance of <see cref="ASMBuilder"/> with capacity specified.
+        /// </summary>
+        /// <param name="capacity">Initial capacity of the <see cref="ASMBuilder"/>. 
+        /// If the number is zero or negative, capacity will be defaulted to 0x100.</param>
+        public ASMBuilder(int capacity)
+        {
+            if (capacity <= 0) capacity = 0x100;
+            this._asm = new List<byte>(capacity);
+        }
+
+        /// <summary>
         /// Writes ASM assembly.
         /// </summary>
         /// <param name="asm">ASM to write.</param>

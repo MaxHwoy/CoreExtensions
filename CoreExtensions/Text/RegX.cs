@@ -10,6 +10,9 @@ using CoreExtensions.Conversions;
 
 namespace CoreExtensions.Text
 {
+	/// <summary>
+	/// Provides all major extensions for <see cref="Regex"/>.
+	/// </summary>
 	public static class RegX
 	{
 		/// <summary>
