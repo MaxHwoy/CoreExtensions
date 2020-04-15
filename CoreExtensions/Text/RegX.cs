@@ -72,8 +72,8 @@ namespace CoreExtensions.Text
 					return Type.GetTypeCode(value.GetType()) switch
 					{
 						TypeCode.Boolean => BitConverter.GetBytes(convertible.StaticCast<bool>()),
-						TypeCode.Byte => BitConverter.GetBytes(convertible.StaticCast<byte>()),
-						TypeCode.SByte => BitConverter.GetBytes(convertible.StaticCast<sbyte>()),
+						TypeCode.Byte => new byte[1] { convertible.StaticCast<byte>() },
+						TypeCode.SByte => new byte[1] { (byte)convertible.StaticCast<sbyte>() },
 						TypeCode.Int16 => BitConverter.GetBytes(convertible.StaticCast<short>()),
 						TypeCode.UInt16 => BitConverter.GetBytes(convertible.StaticCast<ushort>()),
 						TypeCode.Int32 => BitConverter.GetBytes(convertible.StaticCast<int>()),

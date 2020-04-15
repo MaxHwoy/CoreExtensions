@@ -59,7 +59,15 @@ namespace CoreExtensions.CLI
 	{
 		static void Main(string[] args)
 		{
+			var asm = new ASMBuilder();
 
+			var process = InjectorX.FindProcess("NFSC");
+
+			// Unhide special category
+			var a = InjectorX.MakeNOP(process, 0x00588BA8, 2);
+			var b = InjectorX.MakeNOP(process, 0x00588BAD, 2);
+			var c = InjectorX.WriteMemory(process, 0x577669, 0xDEADCAFE);
+			var done = (a != InjectResult.Success) ? a : (b != InjectResult.Success) ? b : c;
 
 
 			int aa = 0;

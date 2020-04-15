@@ -1015,42 +1015,42 @@
             </summary>
             <param name="value">Value to make return based on.</param>
         </member>
-        <member name="T:CoreExtensions.Native.ASMResult">
+        <member name="T:CoreExtensions.Native.InjectResult">
             <summary>
             <see cref="T:System.Enum"/> that returns result of processing InjectorX methods.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.None">
+        <member name="F:CoreExtensions.Native.InjectResult.None">
             <summary>
             Indicates zero result.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.Success">
+        <member name="F:CoreExtensions.Native.InjectResult.Success">
             <summary>
             Indicates ASM success.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.WritingFailed">
+        <member name="F:CoreExtensions.Native.InjectResult.WritingFailed">
             <summary>
             Indicates that memory writing failed.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.InvalidSize">
+        <member name="F:CoreExtensions.Native.InjectResult.InvalidSize">
             <summary>
             Indicates that value passed was of invalid size.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.RemoteThreadFailure">
+        <member name="F:CoreExtensions.Native.InjectResult.RemoteThreadFailure">
             <summary>
             Indicates failure to create or gain access to a remote thread.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.AllocationFaliure">
+        <member name="F:CoreExtensions.Native.InjectResult.AllocationFaliure">
             <summary>
             Indicates failure to allocate memory in the process.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMResult.ByteCastFailure">
+        <member name="F:CoreExtensions.Native.InjectResult.ByteCastFailure">
             <summary>
             Indicates that value passed could not be casted to a byte array.
             </summary>
@@ -1067,6 +1067,20 @@
             </summary>
             <returns>Process with the name specified.</returns>
         </member>
+        <member name="M:CoreExtensions.Native.InjectorX.GetHandle(System.Diagnostics.Process)">
+            <summary>
+            Gets hProcess handle from <see cref="T:System.Diagnostics.Process"/> provided.
+            </summary>
+            <param name="process"><see cref="T:System.Diagnostics.Process"/> to get handle from.</param>
+            <returns>Pointer to the base address of the process.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.CloseHandle(System.IntPtr)">
+            <summary>
+            Closes hProcess handle with pointer provided.
+            </summary>
+            <param name="hProcess">Pointer to base address of a <see cref="T:System.Diagnostics.Process"/>.</param>
+            <returns>Result of closing.</returns>
+        </member>
         <member name="T:CoreExtensions.Native.InjectorX.InjectInstr">
             <summary>
             Represents <see cref="T:System.Enum"/> of all possible InjectorX instructions.
@@ -1080,7 +1094,7 @@
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="value">Object to write. This object should be either of type 
             <see cref="T:System.IConvertible"/> or <see cref="T:System.Collections.IEnumerable"/>.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.IntPtr,System.UInt32,System.Object)">
             <summary>
@@ -1090,7 +1104,7 @@
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="value">Object to write. This object should be either of type 
             <see cref="T:System.IConvertible"/> or <see cref="T:System.Collections.IEnumerable"/>.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.Diagnostics.Process,System.UInt32,System.Byte[])">
             <summary>
@@ -1099,7 +1113,7 @@
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="array">Byte array to write to memory.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.IntPtr,System.UInt32,System.Byte[])">
             <summary>
@@ -1108,7 +1122,7 @@
             <param name="hProcess">Pointer to process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="array">Byte array to write to memory..</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.ReturnValue(System.Diagnostics.Process,System.UInt32,System.Object)">
             <summary>
@@ -1119,7 +1133,7 @@
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="value">Value that function should return. This value should 
             be convertible to 4-byte unsigned integer type.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.ReturnValue(System.IntPtr,System.UInt32,System.Object)">
             <summary>
@@ -1130,7 +1144,7 @@
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="value">Value that function should return. This value should 
             be convertible to 4-byte unsigned integer type.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.ReturnValue(System.Diagnostics.Process,System.UInt32,System.UInt32)">
             <summary>
@@ -1140,7 +1154,7 @@
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="value">Value that function should return.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.ReturnValue(System.IntPtr,System.UInt32,System.UInt32)">
             <summary>
@@ -1150,7 +1164,7 @@
             <param name="hProcess">Pointer to process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="value">Value that function should return.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.MakeJMP(System.Diagnostics.Process,System.UInt32,System.UInt32)">
             <summary>
@@ -1159,7 +1173,16 @@
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="function">Function to where JMP point.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.MakeJMP(System.IntPtr,System.UInt32,System.UInt32)">
+            <summary>
+            Writes JMP instruction to the address provided in the process specified.
+            </summary>
+            <param name="hProcess">Pointer to process where write memory.</param>
+            <param name="address">Address of the process at which memory writing should occur.</param>
+            <param name="function">Function to where JMP point.</param>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.MakeCALL(System.Diagnostics.Process,System.UInt32,System.UInt32)">
             <summary>
@@ -1168,7 +1191,16 @@
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="function">Function that should be called.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.MakeCALL(System.IntPtr,System.UInt32,System.UInt32)">
+            <summary>
+            Writes CALL instruction to the address provided in the process specified.
+            </summary>
+            <param name="hProcess">Pointer to process where write memory.</param>
+            <param name="address">Address of the process at which memory writing should occur.</param>
+            <param name="function">Function that should be called.</param>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.MakeRETN(System.Diagnostics.Process,System.UInt32,System.UInt16)">
             <summary>
@@ -1177,7 +1209,16 @@
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="size">Size of the return. 0 by default.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.MakeRETN(System.IntPtr,System.UInt32,System.UInt16)">
+            <summary>
+            Writes RETN instruction to the address provided in the process specified.
+            </summary>
+            <param name="hProcess">Pointer to process where write memory.</param>
+            <param name="address">Address of the process at which memory writing should occur.</param>
+            <param name="size">Size of the return. 0 by default.</param>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.MakeNOP(System.Diagnostics.Process,System.UInt32,System.Int32)">
             <summary>
@@ -1186,7 +1227,16 @@
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
             <param name="size">Size of the NOP.</param>
-            <returns><see cref="T:CoreExtensions.Native.ASMResult"/> of the memory writing.</returns>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.MakeNOP(System.IntPtr,System.UInt32,System.Int32)">
+            <summary>
+            Writes NOP instructions to the address provided in the process specified.
+            </summary>
+            <param name="hProcess">Pointer to process where write memory.</param>
+            <param name="address">Address of the process at which memory writing should occur.</param>
+            <param name="size">Size of the NOP.</param>
+            <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="T:CoreExtensions.Native.InvertX">
             <summary>

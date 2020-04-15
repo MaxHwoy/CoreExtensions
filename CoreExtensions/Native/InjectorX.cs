@@ -12,7 +12,7 @@ namespace CoreExtensions.Native
     /// <summary>
     /// <see cref="Enum"/> that returns result of processing InjectorX methods.
     /// </summary>
-    public enum ASMResult : byte
+    public enum InjectResult : byte
     {
         /// <summary>
         /// Indicates zero result.
@@ -64,6 +64,21 @@ namespace CoreExtensions.Native
 			=> Process.GetProcesses()?.ToList().Find(p => p.ProcessName == name);
 
         /// <summary>
+        /// Gets hProcess handle from <see cref="Process"/> provided.
+        /// </summary>
+        /// <param name="process"><see cref="Process"/> to get handle from.</param>
+        /// <returns>Pointer to the base address of the process.</returns>
+        public static IntPtr GetHandle(Process process)
+            => NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
+
+        /// <summary>
+        /// Closes hProcess handle with pointer provided.
+        /// </summary>
+        /// <param name="hProcess">Pointer to base address of a <see cref="Process"/>.</param>
+        /// <returns>Result of closing.</returns>
+        public static int CloseHandle(IntPtr hProcess) => NativeCall.CloseHandle(hProcess);
+
+        /// <summary>
         /// Represents <see cref="Enum"/> of all possible InjectorX instructions.
         /// </summary>
         private enum InjectInstr : byte
@@ -85,18 +100,18 @@ namespace CoreExtensions.Native
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Object to write. This object should be either of type 
         /// <see cref="IConvertible"/> or <see cref="IEnumerable"/>.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult WriteMemory(Process process, uint address, object value)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult WriteMemory(Process process, uint address, object value)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = value.GetMemory();
-            if (array == null) return ASMResult.ByteCastFailure;
+            if (array == null) return InjectResult.ByteCastFailure;
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -106,16 +121,16 @@ namespace CoreExtensions.Native
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Object to write. This object should be either of type 
         /// <see cref="IConvertible"/> or <see cref="IEnumerable"/>.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult WriteMemory(IntPtr hProcess, uint address, object value)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult WriteMemory(IntPtr hProcess, uint address, object value)
         {
             var array = value.GetMemory();
-            if (array == null) return ASMResult.ByteCastFailure;
+            if (array == null) return InjectResult.ByteCastFailure;
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -124,17 +139,17 @@ namespace CoreExtensions.Native
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="array">Byte array to write to memory.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult WriteMemory(Process process, uint address, byte[] array)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult WriteMemory(Process process, uint address, byte[] array)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
-            if (array == null) return ASMResult.ByteCastFailure;
+            if (array == null) return InjectResult.ByteCastFailure;
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -143,14 +158,14 @@ namespace CoreExtensions.Native
         /// <param name="hProcess">Pointer to process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="array">Byte array to write to memory..</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult WriteMemory(IntPtr hProcess, uint address, byte[] array)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult WriteMemory(IntPtr hProcess, uint address, byte[] array)
         {
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         #endregion
@@ -165,21 +180,21 @@ namespace CoreExtensions.Native
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Value that function should return. This value should 
         /// be convertible to 4-byte unsigned integer type.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult ReturnValue(Process process, uint address, object value)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult ReturnValue(Process process, uint address, object value)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = new byte[6] { (byte)InjectInstr.MOV, 0, 0, 0, 0, (byte)InjectInstr.RETN };
             var val = value.ReinterpretCast(typeof(uint));
-            if (val == null) return ASMResult.ByteCastFailure;
+            if (val == null) return InjectResult.ByteCastFailure;
             var diff = BitConverter.GetBytes((uint)val);
             for (int a1 = 0; a1 < 4; ++a1) array[1 + a1] = diff[a1];
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -190,19 +205,19 @@ namespace CoreExtensions.Native
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Value that function should return. This value should 
         /// be convertible to 4-byte unsigned integer type.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult ReturnValue(IntPtr hProcess, uint address, object value)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult ReturnValue(IntPtr hProcess, uint address, object value)
         {
             var array = new byte[6] { (byte)InjectInstr.MOV, 0, 0, 0, 0, (byte)InjectInstr.RETN };
             var val = value.ReinterpretCast(typeof(uint));
-            if (val == null) return ASMResult.ByteCastFailure;
+            if (val == null) return InjectResult.ByteCastFailure;
             var diff = BitConverter.GetBytes((uint)val);
             for (int a1 = 0; a1 < 4; ++a1) array[1 + a1] = diff[a1];
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -212,8 +227,8 @@ namespace CoreExtensions.Native
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Value that function should return.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult ReturnValue(Process process, uint address, uint value)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult ReturnValue(Process process, uint address, uint value)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = new byte[6] { (byte)InjectInstr.MOV, 0, 0, 0, 0, (byte)InjectInstr.RETN };
@@ -223,8 +238,8 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -234,8 +249,8 @@ namespace CoreExtensions.Native
         /// <param name="hProcess">Pointer to process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="value">Value that function should return.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult ReturnValue(IntPtr hProcess, uint address, uint value)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult ReturnValue(IntPtr hProcess, uint address, uint value)
         {
             var array = new byte[6] { (byte)InjectInstr.MOV, 0, 0, 0, 0, (byte)InjectInstr.RETN };
             var diff = BitConverter.GetBytes(value);
@@ -243,8 +258,8 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         #endregion
@@ -257,8 +272,8 @@ namespace CoreExtensions.Native
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="function">Function to where JMP point.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult MakeJMP(Process process, uint address, uint function)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeJMP(Process process, uint address, uint function)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = new byte[5] { (byte)InjectInstr.JMP, 0, 0, 0, 0 };
@@ -268,8 +283,27 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
+        }
+
+        /// <summary>
+        /// Writes JMP instruction to the address provided in the process specified.
+        /// </summary>
+        /// <param name="hProcess">Pointer to process where write memory.</param>
+        /// <param name="address">Address of the process at which memory writing should occur.</param>
+        /// <param name="function">Function to where JMP point.</param>
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeJMP(IntPtr hProcess, uint address, uint function)
+        {
+            var array = new byte[5] { (byte)InjectInstr.JMP, 0, 0, 0, 0 };
+            var diff = BitConverter.GetBytes(function - address - 5);
+            for (int a1 = 0; a1 < 4; ++a1) array[1 + a1] = diff[a1];
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
+            NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -278,8 +312,8 @@ namespace CoreExtensions.Native
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="function">Function that should be called.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult MakeCALL(Process process, uint address, uint function)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeCALL(Process process, uint address, uint function)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = new byte[5] { (byte)InjectInstr.CALL, 0, 0, 0, 0 };
@@ -289,8 +323,27 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
+        }
+
+        /// <summary>
+        /// Writes CALL instruction to the address provided in the process specified.
+        /// </summary>
+        /// <param name="hProcess">Pointer to process where write memory.</param>
+        /// <param name="address">Address of the process at which memory writing should occur.</param>
+        /// <param name="function">Function that should be called.</param>
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeCALL(IntPtr hProcess, uint address, uint function)
+        {
+            var array = new byte[5] { (byte)InjectInstr.CALL, 0, 0, 0, 0 };
+            var diff = BitConverter.GetBytes(function - address - 5);
+            for (int a1 = 0; a1 < 4; ++a1) array[1 + a1] = diff[a1];
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
+            NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -299,8 +352,8 @@ namespace CoreExtensions.Native
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="size">Size of the return. 0 by default.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult MakeRETN(Process process, uint address, ushort size = 0)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeRETN(Process process, uint address, ushort size = 0)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             if (size != 0)
@@ -310,8 +363,8 @@ namespace CoreExtensions.Native
                 NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
                 NativeCall.CloseHandle(hProcess);
-                if (array.Length == num) return ASMResult.Success;
-                else return ASMResult.WritingFailed;
+                if (array.Length == num) return InjectResult.Success;
+                else return InjectResult.WritingFailed;
             }
             else
             {
@@ -320,8 +373,37 @@ namespace CoreExtensions.Native
                 NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
                 NativeCall.CloseHandle(hProcess);
-                if (array.Length == num) return ASMResult.Success;
-                else return ASMResult.WritingFailed;
+                if (array.Length == num) return InjectResult.Success;
+                else return InjectResult.WritingFailed;
+            }
+        }
+
+        /// <summary>
+        /// Writes RETN instruction to the address provided in the process specified.
+        /// </summary>
+        /// <param name="hProcess">Pointer to process where write memory.</param>
+        /// <param name="address">Address of the process at which memory writing should occur.</param>
+        /// <param name="size">Size of the return. 0 by default.</param>
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeRETN(IntPtr hProcess, uint address, ushort size = 0)
+        {
+            if (size != 0)
+            {
+                var array = new byte[3] { (byte)InjectInstr.RET, (byte)(size & 0xFF), (byte)(size >> 8) };
+                NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
+                NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
+                NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
+                if (array.Length == num) return InjectResult.Success;
+                else return InjectResult.WritingFailed;
+            }
+            else
+            {
+                var array = new byte[1] { (byte)InjectInstr.RETN };
+                NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
+                NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
+                NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
+                if (array.Length == num) return InjectResult.Success;
+                else return InjectResult.WritingFailed;
             }
         }
 
@@ -331,10 +413,10 @@ namespace CoreExtensions.Native
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
         /// <param name="size">Size of the NOP.</param>
-        /// <returns><see cref="ASMResult"/> of the memory writing.</returns>
-        public static ASMResult MakeNOP(Process process, uint address, int size)
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeNOP(Process process, uint address, int size)
         {
-            if (size <= 0) return ASMResult.InvalidSize;
+            if (size <= 0) return InjectResult.InvalidSize;
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = new byte[size];
             for (int a1 = 0; a1 < size; ++a1) array[a1] = (byte)InjectInstr.NOP;
@@ -342,10 +424,29 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return ASMResult.Success;
-            else return ASMResult.WritingFailed;
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
         }
-		
+
+        /// <summary>
+        /// Writes NOP instructions to the address provided in the process specified.
+        /// </summary>
+        /// <param name="hProcess">Pointer to process where write memory.</param>
+        /// <param name="address">Address of the process at which memory writing should occur.</param>
+        /// <param name="size">Size of the NOP.</param>
+        /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
+        public static InjectResult MakeNOP(IntPtr hProcess, uint address, int size)
+        {
+            if (size <= 0) return InjectResult.InvalidSize;
+            var array = new byte[size];
+            for (int a1 = 0; a1 < size; ++a1) array[a1] = (byte)InjectInstr.NOP;
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
+            NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
+            if (array.Length == num) return InjectResult.Success;
+            else return InjectResult.WritingFailed;
+        }
+
         #endregion
-	}
+    }
 }
