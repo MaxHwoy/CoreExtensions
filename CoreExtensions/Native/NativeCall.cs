@@ -21,6 +21,18 @@ namespace CoreExtensions.Native
 
         [DllImport("kernel32.dll")]
         public static extern int CloseHandle(IntPtr hProcess);
+
+        [DllImport("kernel32.dll")]
+        internal static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr thread_attrib, uint stack_size, IntPtr address, IntPtr parameter, uint flags, out uint ThreadId); // Creates a remote thread.
+
+        [DllImport("kernel32.dll")]
+        internal static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr address, byte[] buffer, uint size, int bytes_read);
+
+        [DllImport("kernel32.dll")]
+        public static extern void AllocConsole();
+
+        [DllImport("kernel32.dll")]
+        public static extern void FreeConsole();
     }
 
     [Flags]

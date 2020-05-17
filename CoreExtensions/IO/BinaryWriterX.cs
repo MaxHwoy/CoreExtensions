@@ -13,6 +13,20 @@ namespace CoreExtensions.IO
 	public static class BinaryWriterX
 	{
 		/// <summary>
+		/// Position in the current stream as a 4-byte signed integer.
+		/// </summary>
+		/// <param name="bw">This <see cref="BinaryWriter"/>.</param>
+		/// <returns>Position of the stream as a 4-byte signed integer.</returns>
+		public static int IntPosition(this BinaryWriter bw) => (int)bw.BaseStream.Position;
+
+		/// <summary>
+		/// Length in the current stream as a 4-byte signed integer.
+		/// </summary>
+		/// <param name="bw">This <see cref="BinaryWriter"/>.</param>
+		/// <returns>Length of the stream as a 4-byte signed integer.</returns>
+		public static int IntLength(this BinaryWriter bw) => (int)bw.BaseStream.Length;
+
+		/// <summary>
 		/// Writes a byte array to the underlying stream in reverse order.
 		/// </summary>
 		/// <param name="bw"></param>
@@ -181,6 +195,16 @@ namespace CoreExtensions.IO
 			int padding = align - ((int)(bw.BaseStream.Position % align));
 			if (padding == align) padding = 0;
 			for (int a1 = 0; a1 < padding; ++a1) bw.Write((byte)0);
+		}
+	
+		/// <summary>
+		/// Writes amount of bytes specified.
+		/// </summary>
+		/// <param name="bw"></param>
+		/// <param name="count">Amount of bytes to write.</param>
+		public static void WriteBytes(this BinaryWriter bw, int count)
+		{
+			for (int a1 = 0; a1 < count; ++a1) bw.Write((byte)0);
 		}
 	}
 }

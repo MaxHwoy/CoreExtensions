@@ -10,7 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreExtensions\CoreExtensions.csproj" />
+    <ProjectReference Include="E:\MaxHwoy\source\repos\Nikki\Nikki\Nikki.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CoreExtensions">
+      <HintPath>E:\MaxHwoy\source\repos\Nikki\Nikki\CoreExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

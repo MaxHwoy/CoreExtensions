@@ -122,6 +122,30 @@
             <param name="result">Result value of type <see cref="T:System.IConvertible"/> passed.</param>
             <returns>Value got from format of the string passed.</returns>
         </member>
+        <member name="T:CoreExtensions.Conversions.ListX">
+            <summary>
+            Provides all major extensions for <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.Conversions.ListX.Resize``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Resizes <see cref="T:System.Collections.Generic.List`1"/> to a count specified.
+            </summary>
+            <typeparam name="TypeID"><see cref="T:System.Type"/> of elements in this list.</typeparam>
+            <param name="list">This <see cref="T:System.Collections.Generic.List`1"/> to resize.</param>
+            <param name="count">Number of items to resize to.</param>
+        </member>
+        <member name="M:CoreExtensions.Conversions.ListX.RemoveWith``1(System.Collections.Generic.List{``0},System.Predicate{``0})">
+            <summary>
+            Searches for an element that matches the conditions defined by the specified        
+            predicate, and removes the first occurrence within the entire <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+            <typeparam name="TypeID"><see cref="T:System.Type"/> of elements in this list.</typeparam>
+            <param name="list">This list to remove element in.</param>
+            <param name="predicate">The <see cref="T:System.Predicate`1"/> delegate that defines the 
+            conditions of the element to remove.</param>
+            <returns></returns>
+        </member>
         <member name="T:CoreExtensions.IO.BigEndianBinaryReader">
             <summary>
             Reads primitive data types as binary values in a specific encoding using big-endian methods.
@@ -320,6 +344,20 @@
             <see cref="T:System.IO.BinaryReader"/> reading methods.
             </summary>
         </member>
+        <member name="M:CoreExtensions.IO.BinaryReaderX.IntPosition(System.IO.BinaryReader)">
+            <summary>
+            Position in the current stream as a 4-byte signed integer.
+            </summary>
+            <param name="br">This <see cref="T:System.IO.BinaryReader"/>.</param>
+            <returns>Position of the stream as a 4-byte signed integer.</returns>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryReaderX.IntLength(System.IO.BinaryReader)">
+            <summary>
+            Length in the current stream as a 4-byte signed integer.
+            </summary>
+            <param name="br">This <see cref="T:System.IO.BinaryReader"/>.</param>
+            <returns>Length of the stream as a 4-byte signed integer.</returns>
+        </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.ReadReversedBytes(System.IO.BinaryReader,System.Int32)">
             <summary>
             Reads the specified number of bytes from the current stream into a byte array 
@@ -407,6 +445,20 @@
             Provides all major extensions for <see cref="T:System.IO.BinaryWriter"/>
             </summary>
         </member>
+        <member name="M:CoreExtensions.IO.BinaryWriterX.IntPosition(System.IO.BinaryWriter)">
+            <summary>
+            Position in the current stream as a 4-byte signed integer.
+            </summary>
+            <param name="bw">This <see cref="T:System.IO.BinaryWriter"/>.</param>
+            <returns>Position of the stream as a 4-byte signed integer.</returns>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryWriterX.IntLength(System.IO.BinaryWriter)">
+            <summary>
+            Length in the current stream as a 4-byte signed integer.
+            </summary>
+            <param name="bw">This <see cref="T:System.IO.BinaryWriter"/>.</param>
+            <returns>Length of the stream as a 4-byte signed integer.</returns>
+        </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.WriteReversedBytes(System.IO.BinaryWriter,System.Byte[])">
             <summary>
             Writes a byte array to the underlying stream in reverse order.
@@ -471,6 +523,13 @@
             </summary>
             <param name="bw"></param>
             <param name="align">Align to fill the stream buffer to.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteBytes(System.IO.BinaryWriter,System.Int32)">
+            <summary>
+            Writes amount of bytes specified.
+            </summary>
+            <param name="bw"></param>
+            <param name="count">Amount of bytes to write.</param>
         </member>
         <member name="T:CoreExtensions.Management.ExceptionX">
             <summary>
@@ -1086,24 +1145,40 @@
             Represents <see cref="T:System.Enum"/> of all possible InjectorX instructions.
             </summary>
         </member>
-        <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.Diagnostics.Process,System.UInt32,System.Object)">
+        <member name="M:CoreExtensions.Native.InjectorX.ReadMemory(System.Diagnostics.Process,System.UInt32,System.Int32)">
+            <summary>
+            Reads memory of the <see cref="T:System.Diagnostics.Process"/> provided at the address specified.
+            </summary>
+            <param name="process">Process where read memory.</param>
+            <param name="address">Address of the process at which memory reading should occur.</param>
+            <param name="size">Amount of bytes to read.</param>
+            <returns>Memory read as an array of bytes.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.ReadMemory(System.IntPtr,System.UInt32,System.Int32)">
+            <summary>
+            Reads memory of the <see cref="T:System.Diagnostics.Process"/> provided at the address specified.
+            </summary>
+            <param name="hProcess">Pointer to process where read memory.</param>
+            <param name="address">Address of the process at which memory reading should occur.</param>
+            <param name="size">Amount of bytes to read.</param>
+            <returns>Memory read as an array of bytes.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.Diagnostics.Process,System.UInt32,System.IConvertible)">
             <summary>
             Writes memory of an object passed to the process specified at the address provided.
             </summary>
             <param name="process">Process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
-            <param name="value">Object to write. This object should be either of type 
-            <see cref="T:System.IConvertible"/> or <see cref="T:System.Collections.IEnumerable"/>.</param>
+            <param name="value"><see cref="T:System.IConvertible"/> to write.</param>
             <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
-        <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.IntPtr,System.UInt32,System.Object)">
+        <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.IntPtr,System.UInt32,System.IConvertible)">
             <summary>
             Writes memory of an object passed to the process specified at the address provided.
             </summary>
             <param name="hProcess">Pointer to process where write memory.</param>
             <param name="address">Address of the process at which memory writing should occur.</param>
-            <param name="value">Object to write. This object should be either of type 
-            <see cref="T:System.IConvertible"/> or <see cref="T:System.Collections.IEnumerable"/>.</param>
+            <param name="value"><see cref="T:System.IConvertible"/> to write.</param>
             <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
         <member name="M:CoreExtensions.Native.InjectorX.WriteMemory(System.Diagnostics.Process,System.UInt32,System.Byte[])">
@@ -1305,6 +1380,21 @@
             </summary>
             <param name="value">8-byte unsigned integer value to invert.</param>
             <returns>Inverted 8-byte unsigned integer value.</returns>
+        </member>
+        <member name="T:CoreExtensions.Native.NativeCallerX">
+            <summary>
+            Class with methods of calling native functions.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeCallerX.AllocConsole">
+            <summary>
+            Allocates console for the current process.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeCallerX.FreeConsole">
+            <summary>
+            Deallocates console for the current process.
+            </summary>
         </member>
         <member name="T:CoreExtensions.Native.PointerX">
             <summary>
@@ -1658,86 +1748,49 @@
             <param name="value">A 16-byte floating point value to reverse (endian-swap).</param>
             <returns>Reversed (endian-swapped) 16-byte floating point value.</returns>
         </member>
-        <member name="T:CoreExtensions.Reflection.FieldInfoX">
-            <summary>
-            Represents all major extensions for <see cref="T:System.Reflection.FieldInfo"/>.
-            </summary>
-        </member>
-        <member name="M:CoreExtensions.Reflection.FieldInfoX.IsEnumerableType(System.Reflection.FieldInfo)">
-            <summary>
-            
-            </summary>
-            <param name="field"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.Reflection.FieldInfoX.GetFastProperty(System.Object,System.String)">
-            <summary>
-            
-            </summary>
-            <param name="obj"></param>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.Reflection.FieldInfoX.GetFastMethod(System.Reflection.FieldInfo,System.String,System.Type[])">
-            <summary>
-            
-            </summary>
-            <param name="field"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.Reflection.FieldInfoX.GetFastMethod(System.Object,System.String,System.String,System.Type[])">
-            <summary>
-            
-            </summary>
-            <param name="obj"></param>
-            <param name="field"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.Reflection.FieldInfoX.FastMethodInvoke(System.Reflection.FieldInfo,System.Object,System.String,System.Type[],System.Object[])">
-            <summary>
-            
-            </summary>
-            <param name="field"></param>
-            <param name="obj"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <param name="attr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.Reflection.FieldInfoX.FastMethodInvoke(System.Object,System.String,System.String,System.Type[],System.Object[])">
-            <summary>
-            
-            </summary>
-            <param name="obj"></param>
-            <param name="field"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <param name="attr"></param>
-            <returns></returns>
-        </member>
         <member name="T:CoreExtensions.Reflection.PropertyInfoX">
             <summary>
             Provides all major extensions for <see cref="T:System.Reflection.PropertyInfo"/>.
             </summary>
         </member>
-        <member name="M:CoreExtensions.Reflection.PropertyInfoX.IsEnumerableType(System.Reflection.PropertyInfo)">
+        <member name="M:CoreExtensions.Reflection.PropertyInfoX.IsIEnumerableType(System.Reflection.PropertyInfo)">
             <summary>
-            
+            Checks if the property is of <see cref="T:System.Collections.IEnumerable"/> type.
             </summary>
-            <param name="property"></param>
-            <returns></returns>
+            <param name="property">Property to check.</param>
+            <returns>True if property is of <see cref="T:System.Collections.IEnumerable"/> type; false otherwise.</returns>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PropertyInfoX.IsPropertyOfEnumType(System.Object,System.String)">
+            <summary>
+            Checks if the property is of <see cref="T:System.Enum"/> type.
+            </summary>
+            <param name="obj">Object to check.</param>
+            <param name="property">Name of the property to check.</param>
+            <returns>True if property is enum; false otherwise.</returns>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PropertyInfoX.GetPropertyEnumerableTypes(System.Object,System.String)">
+            <summary>
+            Returns all <see cref="T:System.Enum"/> names of the property provided.
+            </summary>
+            <param name="obj">Object to parse.</param>
+            <param name="property">Name of the enumerable property.</param>
+            <returns>Array of strings.</returns>
         </member>
         <member name="M:CoreExtensions.Reflection.PropertyInfoX.GetFastProperty(System.Object,System.String)">
             <summary>
-            
+            Gets <see cref="T:System.Reflection.PropertyInfo"/> of the object by name provided.
             </summary>
-            <param name="obj"></param>
-            <param name="name"></param>
-            <returns></returns>
+            <param name="obj">Object to parse.</param>
+            <param name="name">Name of the <see cref="T:System.Reflection.PropertyInfo"/> to get.</param>
+            <returns><see cref="T:System.Reflection.PropertyInfo"/> with the name provided.</returns>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PropertyInfoX.GetFastPropertyValue(System.Object,System.String)">
+            <summary>
+            Gets value of <see cref="T:System.Reflection.PropertyInfo"/> of the object by name provided.
+            </summary>
+            <param name="obj">Object to parse.</param>
+            <param name="name">Name of the <see cref="T:System.Reflection.PropertyInfo"/> to get value from.</param>
+            <returns>Value of the <see cref="T:System.Reflection.PropertyInfo"/> with the name provided.</returns>
         </member>
         <member name="M:CoreExtensions.Reflection.PropertyInfoX.GetFastMethod(System.Reflection.PropertyInfo,System.String,System.Type[])">
             <summary>
@@ -1842,12 +1895,26 @@
             </summary>
             <returns>Array of bytes of the string.</returns>
         </member>
-        <member name="M:CoreExtensions.Text.RegX.GetMemory(System.Object)">
+        <member name="M:CoreExtensions.Text.RegX.GetSafeHashCode(System.String)">
             <summary>
-            Gets memory of the object as an array of bytes. Object must be either 
-            <see cref="T:System.IConvertible"/> or <see cref="T:System.Collections.IEnumerable"/>.
+            Gets HashCode of the string; if string is null, returns String.Empty HashCode.
             </summary>
-            <returns>Memory of the object as an array of bytes.</returns>
+            <param name="value"></param>
+            <returns>HashCode of the string.</returns>
+        </member>
+        <member name="M:CoreExtensions.Text.RegX.ToObject``1(System.Byte[])">
+            <summary>
+            Returns object of type <typeparamref name="TypeID"/> from the byte array provided.
+            </summary>
+            <param name="array">Array of bytes to convert.</param>
+            <returns>Object of type <typeparamref name="TypeID"/>.</returns>
+        </member>
+        <member name="M:CoreExtensions.Text.RegX.GetMemory(System.IConvertible)">
+            <summary>
+            Gets memory of object of type <see cref="T:System.IConvertible"/> as a byte array.
+            </summary>
+            <param name="value">Value which memory should be returned.</param>
+            <returns>Memory of the value passed as a byte array.</returns>
         </member>
     </members>
 </doc>

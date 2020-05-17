@@ -43,12 +43,11 @@ namespace CoreExtensions.Reflection
         public static bool IsFromGenericClass(this Type thistype, Type classtype)
         {
             var basetype = thistype.BaseType;
-            if (basetype == null) return false;
-
-            if (basetype.IsGenericType && basetype.GetGenericTypeDefinition() == classtype)
-                return true;
-            else
-                return IsFromGenericClass(basetype, classtype);
+            return basetype == null
+                ? false
+                : basetype.IsGenericType && basetype.GetGenericTypeDefinition() == classtype
+                    ? true :
+                    IsFromGenericClass(basetype, classtype);
         }
 
         /// <summary>

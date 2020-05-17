@@ -91,6 +91,20 @@ namespace CoreExtensions.IO
         };
 
         /// <summary>
+        /// Position in the current stream as a 4-byte signed integer.
+        /// </summary>
+        /// <param name="br">This <see cref="BinaryReader"/>.</param>
+        /// <returns>Position of the stream as a 4-byte signed integer.</returns>
+        public static int IntPosition(this BinaryReader br) => (int)br.BaseStream.Position;
+
+        /// <summary>
+        /// Length in the current stream as a 4-byte signed integer.
+        /// </summary>
+        /// <param name="br">This <see cref="BinaryReader"/>.</param>
+        /// <returns>Length of the stream as a 4-byte signed integer.</returns>
+        public static int IntLength(this BinaryReader br) => (int)br.BaseStream.Length;
+
+        /// <summary>
         /// Reads the specified number of bytes from the current stream into a byte array 
         /// in reverse order and advances the current position by that number of bytes.
         /// </summary>
@@ -146,7 +160,7 @@ namespace CoreExtensions.IO
         /// <returns>String with UTF8 style encoding.</returns>
         public static string ReadNullTermUTF8(this BinaryReader br)
         {
-            string result = string.Empty;
+            string result = String.Empty;
             byte b;
             while ((b = br.ReadByte()) != 0) result += ((char)b).ToString();
             return result;
@@ -158,7 +172,7 @@ namespace CoreExtensions.IO
         /// <returns>String with UTF16 style encoding.</returns>
         public static string ReadNullTermUTF16(this BinaryReader br)
         {
-            string result = string.Empty;
+            string result = String.Empty;
             char c;
             while ((c = br.ReadChar()) != '\0') result += c.ToString();
             return result;
@@ -172,9 +186,11 @@ namespace CoreExtensions.IO
         /// <returns>String with UTF8 style encoding.</returns>
         public static string ReadNullTermUTF8(this BinaryReader br, int length)
         {
-            string result = string.Empty;
+            string result = String.Empty;
             byte b;
+            var pos = br.BaseStream.Position + length;
             for (int a1 = 0; a1 < length && (b = br.ReadByte()) != 0; ++a1) result += ((char)b).ToString();
+            br.BaseStream.Position = pos;
             return result;
         }
 
@@ -186,9 +202,11 @@ namespace CoreExtensions.IO
         /// <returns>String with UTF16 style encoding.</returns>
         public static string ReadNullTermUTF16(this BinaryReader br, int length)
         {
-            string result = string.Empty;
+            string result = String.Empty;
             char c;
+            var pos = br.BaseStream.Position + length * sizeof(char);
             for (int a1 = 0; a1 < length && (c = br.ReadChar()) != 0; ++a1) result += c.ToString();
+            br.BaseStream.Position = pos;
             return result;
         }
 

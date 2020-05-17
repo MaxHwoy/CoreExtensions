@@ -22,7 +22,7 @@ namespace CoreExtensions.Conversions
             {
                 int formatstart = format.IndexOf('{');
                 int formatend = format.Length - format.IndexOf('}') - 1;
-                string result = value.Substring(formatstart, value.Length - formatend - formatstart);
+                string result = value[formatstart..^formatend];
                 return result;
             }
             catch (Exception)

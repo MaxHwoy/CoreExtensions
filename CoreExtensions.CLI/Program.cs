@@ -1,76 +1,62 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CoreExtensions.IO;
-using CoreExtensions.Text;
-using CoreExtensions.Native;
-using CoreExtensions.Reflection;
-using CoreExtensions.Management;
+using Nikki.Core;
+using Nikki.Utils;
+using Nikki.Reflection.Enum;
+using Nikki.Reflection.Enum.CP;
+using Nikki.Support.Carbon.Framework;
+using Nikki.Support.Shared.Parts.CarParts;
 using CoreExtensions.Conversions;
 
 
 
 namespace CoreExtensions.CLI
 {
-	enum eType : int
-	{
-		None = 0,
-		One = 1,
-		Two = 2,
-		Three = 3,
-		Four = 4,
-		Five = 5,
-		Six = 6,
-		Seven = 7,
-		Eight = 8,
-		Nine = 9
-	}
-
-	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 0xA8)]
-	struct MySTR
-	{
-		public uint ID { get; set; }
-		public int Size { get; set; }
-		public uint ClassKey { get; set; }
-		public int Localizer1 { get; set; }
-		public int Localizer2 { get; set; }
-		public uint BinKey { get; set; }
-		public int Localizer3 { get; set; }
-
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x1C)]
-		private string _collection_name;
-
-		public string CollectionName
-		{
-			get => this._collection_name;
-			set => this._collection_name = value;
-		}
-
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x1C)]
-		private float[] _values;
-
-		public float GetValue(int index) => this._values[index];
-	}
-
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			var asm = new ASMBuilder();
+			var db = new Nikki.Database.Carbon(true);
 
-			var process = InjectorX.FindProcess("NFSC");
+			var options_load = new Options()
+			{
+				File = @"C:\Need for Speed Carbon\Global\GlobalBTest.lzc",
+				Flags = eOptFlags.Materials | eOptFlags.CarTypeInfos | eOptFlags.PresetRides |
+						eOptFlags.PresetSkins | eOptFlags.Collisions | eOptFlags.DBModelParts |
+						eOptFlags.FNGroups | eOptFlags.TPKBlocks | eOptFlags.STRBlocks |
+						eOptFlags.Tracks | eOptFlags.SunInfos
+			};
 
-			// Unhide special category
-			var a = InjectorX.MakeNOP(process, 0x00588BA8, 2);
-			var b = InjectorX.MakeNOP(process, 0x00588BAD, 2);
-			var c = InjectorX.WriteMemory(process, 0x577669, 0xDEADCAFE);
-			var done = (a != InjectResult.Success) ? a : (b != InjectResult.Success) ? b : c;
+			var options_save = new Options()
+			{
+				File = @"C:\Need for Speed Carbon\Global\GlobalB.lzc",
+				Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
+				MessageShow = false,
+				Compress = false,
+				Flags = eOptFlags.Materials | eOptFlags.CarTypeInfos | eOptFlags.PresetRides |
+						eOptFlags.PresetSkins | eOptFlags.Collisions | eOptFlags.DBModelParts |
+						eOptFlags.FNGroups | eOptFlags.TPKBlocks | eOptFlags.STRBlocks |
+						eOptFlags.Tracks | eOptFlags.SunInfos
+			};
 
+			Manager.LoadBinKeys(new string[] { @"E:\MaxHwoy\source\repos\Nikki\Nikki\keys.txt" });
+			Manager.LoadVaultAttributes(@"C:\Need for Speed Carbon\Global\attributes.bin");
+			Manager.LoadVaultFEAttribs(@"C:\Need for Speed Carbon\Global\fe_attrib.bin");
+
+			db.Load(options_load);
 
 			int aa = 0;
+
+			db.Save(options_save);
+
+			int aaa = 0;
+
+
 		}
 	}
 }

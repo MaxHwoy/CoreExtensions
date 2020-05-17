@@ -40,4 +40,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.CodeDom" Version="5.0.0-preview.3.20214.6" />
+  </ItemGroup>
+
 </Project>

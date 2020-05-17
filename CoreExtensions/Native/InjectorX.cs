@@ -91,6 +91,46 @@ namespace CoreExtensions.Native
             JMP = 0xE9,
         }
 
+        #region ReadMemory
+
+        /// <summary>
+        /// Reads memory of the <see cref="Process"/> provided at the address specified.
+        /// </summary>
+        /// <param name="process">Process where read memory.</param>
+        /// <param name="address">Address of the process at which memory reading should occur.</param>
+        /// <param name="size">Amount of bytes to read.</param>
+        /// <returns>Memory read as an array of bytes.</returns>
+        public static byte[] ReadMemory(Process process, uint address, int size)
+        {
+            var array = new byte[size];
+            int bytes_read = 0;
+            var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)size, 4, out var old);
+            NativeCall.ReadProcessMemory(hProcess, (IntPtr)address, array, (uint)size, bytes_read);
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)size, old, out old);
+            NativeCall.CloseHandle(hProcess);
+            return array;
+        }
+
+        /// <summary>
+        /// Reads memory of the <see cref="Process"/> provided at the address specified.
+        /// </summary>
+        /// <param name="hProcess">Pointer to process where read memory.</param>
+        /// <param name="address">Address of the process at which memory reading should occur.</param>
+        /// <param name="size">Amount of bytes to read.</param>
+        /// <returns>Memory read as an array of bytes.</returns>
+        public static byte[] ReadMemory(IntPtr hProcess, uint address, int size)
+        {
+            var array = new byte[size];
+            int bytes_read = 0;
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)size, 4, out var old);
+            NativeCall.ReadProcessMemory(hProcess, (IntPtr)address, array, (uint)size, bytes_read);
+            NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)size, old, out old);
+            return array;
+        }
+
+        #endregion
+
         #region WriteMemory
 
         /// <summary>
@@ -98,10 +138,9 @@ namespace CoreExtensions.Native
         /// </summary>
         /// <param name="process">Process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
-        /// <param name="value">Object to write. This object should be either of type 
-        /// <see cref="IConvertible"/> or <see cref="IEnumerable"/>.</param>
+        /// <param name="value"><see cref="IConvertible"/> to write.</param>
         /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
-        public static InjectResult WriteMemory(Process process, uint address, object value)
+        public static InjectResult WriteMemory(Process process, uint address, IConvertible value)
         {
             var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
             var array = value.GetMemory();
@@ -119,10 +158,9 @@ namespace CoreExtensions.Native
         /// </summary>
         /// <param name="hProcess">Pointer to process where write memory.</param>
         /// <param name="address">Address of the process at which memory writing should occur.</param>
-        /// <param name="value">Object to write. This object should be either of type 
-        /// <see cref="IConvertible"/> or <see cref="IEnumerable"/>.</param>
+        /// <param name="value"><see cref="IConvertible"/> to write.</param>
         /// <returns><see cref="InjectResult"/> of the memory writing.</returns>
-        public static InjectResult WriteMemory(IntPtr hProcess, uint address, object value)
+        public static InjectResult WriteMemory(IntPtr hProcess, uint address, IConvertible value)
         {
             var array = value.GetMemory();
             if (array == null) return InjectResult.ByteCastFailure;
@@ -447,6 +485,17 @@ namespace CoreExtensions.Native
             else return InjectResult.WritingFailed;
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Create Thread
+
+        //public IntPtr MakeThread(Process process)
+        //{
+        //    var hProcess = NativeCall.OpenProcess(ProcessAccessFlags.All, false, process.Id);
+        //
+        //    var ThreadPtr = NativeCall.CreateRemoteThread(hProcess, IntPtr.Zero, 0, )
+        //}
+
+		#endregion
+	}
 }

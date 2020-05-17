@@ -58,38 +58,64 @@ namespace CoreExtensions.Text
 		/// <returns>Array of bytes of the string.</returns>
 		public static byte[] GetBytes(this string value) => Encoding.UTF8.GetBytes(value);
 
-		/// <summary>
-		/// Gets memory of the object as an array of bytes. Object must be either 
-		/// <see cref="IConvertible"/> or <see cref="IEnumerable"/>.
-		/// </summary>
-		/// <returns>Memory of the object as an array of bytes.</returns>
-		public static byte[] GetMemory(this object value)
-		{
-			try
-			{
-				if (value is IConvertible convertible)
-				{
-					return Type.GetTypeCode(value.GetType()) switch
-					{
-						TypeCode.Boolean => BitConverter.GetBytes(convertible.StaticCast<bool>()),
-						TypeCode.Byte => new byte[1] { convertible.StaticCast<byte>() },
-						TypeCode.SByte => new byte[1] { (byte)convertible.StaticCast<sbyte>() },
-						TypeCode.Int16 => BitConverter.GetBytes(convertible.StaticCast<short>()),
-						TypeCode.UInt16 => BitConverter.GetBytes(convertible.StaticCast<ushort>()),
-						TypeCode.Int32 => BitConverter.GetBytes(convertible.StaticCast<int>()),
-						TypeCode.UInt32 => BitConverter.GetBytes(convertible.StaticCast<uint>()),
-						TypeCode.Int64 => BitConverter.GetBytes(convertible.StaticCast<long>()),
-						TypeCode.UInt64 => BitConverter.GetBytes(convertible.StaticCast<ulong>()),
-						TypeCode.Single => BitConverter.GetBytes(convertible.StaticCast<float>()),
-						TypeCode.Double => BitConverter.GetBytes(convertible.StaticCast<double>()),
-						TypeCode.String => convertible.StaticCast<string>().GetBytes(),
-						_ => null
-					};
-				}
-				else if (value is IEnumerable enumerable) return enumerable.Cast<byte>().ToArray();
-				else return null;
-			}
-			catch (Exception) { return null; }
-		}
-	}
+        /// <summary>
+        /// Gets HashCode of the string; if string is null, returns String.Empty HashCode.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>HashCode of the string.</returns>
+        public static int GetSafeHashCode(this string value) =>
+            String.IsNullOrEmpty(value) ? String.Empty.GetHashCode() : value.GetHashCode();
+
+        /// <summary>
+        /// Returns object of type <typeparamref name="TypeID"/> from the byte array provided.
+        /// </summary>
+        /// <param name="array">Array of bytes to convert.</param>
+        /// <returns>Object of type <typeparamref name="TypeID"/>.</returns>
+        public static TypeID ToObject<TypeID>(this byte[] array) where TypeID : IConvertible
+        {
+            return Type.GetTypeCode(typeof(TypeID)) switch
+            {
+                TypeCode.Boolean => (TypeID)(object)BitConverter.ToBoolean(array, 0),
+                TypeCode.Byte => (TypeID)(object)array[0],
+                TypeCode.SByte => (TypeID)(object)array[0],
+                TypeCode.Char => (TypeID)(object)(char)BitConverter.ToInt16(array, 0),
+                TypeCode.Int16 => (TypeID)(object)BitConverter.ToInt16(array, 0),
+                TypeCode.UInt16 => (TypeID)(object)BitConverter.ToUInt16(array, 0),
+                TypeCode.Int32 => (TypeID)(object)BitConverter.ToInt32(array, 0),
+                TypeCode.UInt32 => (TypeID)(object)BitConverter.ToUInt32(array, 0),
+                TypeCode.Int64 => (TypeID)(object)BitConverter.ToInt64(array, 0),
+                TypeCode.UInt64 => (TypeID)(object)BitConverter.ToUInt64(array, 0),
+                TypeCode.Single => (TypeID)(object)BitConverter.ToSingle(array, 0),
+                TypeCode.Double => (TypeID)(object)BitConverter.ToDouble(array, 0),
+                TypeCode.String => (TypeID)(object)Encoding.UTF8.GetString(array),
+                _ => default
+            };
+        }
+
+        /// <summary>
+        /// Gets memory of object of type <see cref="IConvertible"/> as a byte array.
+        /// </summary>
+        /// <param name="value">Value which memory should be returned.</param>
+        /// <returns>Memory of the value passed as a byte array.</returns>
+        public static byte[] GetMemory(this IConvertible value)
+        {
+            return Type.GetTypeCode(value.GetType()) switch
+            {
+                TypeCode.Boolean => BitConverter.GetBytes((bool)value),
+                TypeCode.Byte => new byte[1] { (byte)value },
+                TypeCode.SByte => new byte[1] { (byte)value },
+                TypeCode.Char => BitConverter.GetBytes((char)value),
+                TypeCode.Int16 => BitConverter.GetBytes((short)value),
+                TypeCode.UInt16 => BitConverter.GetBytes((ushort)value),
+                TypeCode.Int32 => BitConverter.GetBytes((int)value),
+                TypeCode.UInt32 => BitConverter.GetBytes((uint)value),
+                TypeCode.Int64 => BitConverter.GetBytes((long)value),
+                TypeCode.UInt64 => BitConverter.GetBytes((ulong)value),
+                TypeCode.Single => BitConverter.GetBytes((float)value),
+                TypeCode.Double => BitConverter.GetBytes((double)value),
+                TypeCode.String => Encoding.UTF8.GetBytes((string)value),
+                _ => null
+            };
+        }
+    }
 }
