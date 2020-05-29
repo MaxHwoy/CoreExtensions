@@ -4,6 +4,25 @@
         <name>CoreExtensions</name>
     </assembly>
     <members>
+        <member name="T:CoreExtensions.Compressions.HUFF">
+            <summary>
+            Collection with HUFF compresssor and decompressor.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.Compressions.HUFF.Decompress(System.Byte[])">
+            <summary>
+            Attempts to decompress HUFF byte array. It is not precise when node table is missing.
+            </summary>
+            <param name="buffer">Byte buffer to decompress.</param>
+            <returns>Byte array of decompressed data.</returns>
+        </member>
+        <member name="M:CoreExtensions.Compressions.HUFF.Compress(System.Byte[])">
+            <summary>
+            Compresses byte array into HUFF-compressed one.
+            </summary>
+            <param name="buffer">Byte buffer to compress.</param>
+            <returns>HUFF-compressed byte array.</returns>
+        </member>
         <member name="T:CoreExtensions.Conversions.CastX">
             <summary>
             Provides all major extensions to cast objects.
@@ -144,7 +163,15 @@
             <param name="list">This list to remove element in.</param>
             <param name="predicate">The <see cref="T:System.Predicate`1"/> delegate that defines the 
             conditions of the element to remove.</param>
-            <returns></returns>
+            <returns>True if removing was successful; false otherwise.</returns>
+        </member>
+        <member name="M:CoreExtensions.Conversions.ListX.AllUnique``1(System.Collections.Generic.List{``0})">
+            <summary>
+            Checks whether all elements in <see cref="T:System.Collections.Generic.List`1"/> are unique.
+            </summary>
+            <typeparam name="TypeID"><see cref="T:System.Type"/> of elements in this list.</typeparam>
+            <param name="list">This list to check elements in.</param>
+            <returns>True if all elements are unique; false otherwise.</returns>
         </member>
         <member name="T:CoreExtensions.IO.BigEndianBinaryReader">
             <summary>
@@ -1313,74 +1340,6 @@
             <param name="size">Size of the NOP.</param>
             <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
-        <member name="T:CoreExtensions.Native.InvertX">
-            <summary>
-            Provides all major extensions for inverting bits of integer values.
-            </summary>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.SByte)">
-            <summary>
-            Inverts all bits of an 8-bit signed byte value.
-            </summary>
-            <param name="value">Signed byte value to invert.</param>
-            <returns>Inverted signed byte value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.Byte)">
-            <summary>
-            Inverts all bits of an 8-bit unsigned byte value.
-            </summary>
-            <param name="value">Unigned byte value to invert.</param>
-            <returns>Inverted unsigned byte value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.Char)">
-            <summary>
-            Inverts all bits of a 16-bit char value.
-            </summary>
-            <param name="value">Char value to invert.</param>
-            <returns>Inverted char value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.Int16)">
-            <summary>
-            Inverts all bits of a 16-bit 2-byte signed integer value.
-            </summary>
-            <param name="value">2-byte signed integer value to invert.</param>
-            <returns>Inverted 2-byte signed integer value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.UInt16)">
-            <summary>
-            Inverts all bits of a 16-bit 2-byte unsigned integer value.
-            </summary>
-            <param name="value">2-byte unsigned integer value to invert.</param>
-            <returns>Inverted 2-byte unsigned integer value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.Int32)">
-            <summary>
-            Inverts all bits of a 32-bit 4-byte signed integer value.
-            </summary>
-            <param name="value">4-byte signed integer value to invert.</param>
-            <returns>Inverted 4-byte signed integer value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.UInt32)">
-            <summary>
-            Inverts all bits of a 32-bit 4-byte unsigned integer value.
-            </summary>
-            <param name="value">4-byte unsigned integer value to invert.</param>
-            <returns>Inverted 4-byte unsigned integer value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.Int64)">
-            <summary>
-            Inverts all bits of a 64-bit 8-byte signed integer value.
-            </summary>
-            <param name="value">8-byte signed integer value to invert.</param>
-            <returns>Inverted 8-byte signed integer value.</returns>
-        </member>
-        <member name="M:CoreExtensions.Native.InvertX.NegateBits(System.UInt64)">
-            <summary>
-            Inverts all bits of a 64-bit 8-byte unsigned integer value.
-            </summary>
-            <param name="value">8-byte unsigned integer value to invert.</param>
-            <returns>Inverted 8-byte unsigned integer value.</returns>
-        </member>
         <member name="T:CoreExtensions.Native.NativeCallerX">
             <summary>
             Class with methods of calling native functions.
@@ -1794,44 +1753,44 @@
         </member>
         <member name="M:CoreExtensions.Reflection.PropertyInfoX.GetFastMethod(System.Reflection.PropertyInfo,System.String,System.Type[])">
             <summary>
-            
+            Gets method of <see cref="T:System.Reflection.PropertyInfo"/> of the object by names and types provided.
             </summary>
-            <param name="property"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <returns></returns>
+            <param name="property">This property to get method from.</param>
+            <param name="method">Name of the method to get.</param>
+            <param name="args">Argument types of the method.</param>
+            <returns>MethodInfo found from arguments passed.</returns>
         </member>
         <member name="M:CoreExtensions.Reflection.PropertyInfoX.GetFastMethod(System.Object,System.String,System.String,System.Type[])">
             <summary>
-            
+            Gets method of <see cref="T:System.Reflection.PropertyInfo"/> of the object by names and types provided.
             </summary>
-            <param name="obj"></param>
-            <param name="property"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <returns></returns>
+            <param name="obj">Object to parse.</param>
+            <param name="property">This property to get method from.</param>
+            <param name="method">Name of the method to get.</param>
+            <param name="args">Argument types of the method.</param>
+            <returns>MethodInfo found from arguments passed.</returns>
         </member>
         <member name="M:CoreExtensions.Reflection.PropertyInfoX.FastMethodInvoke(System.Reflection.PropertyInfo,System.Object,System.String,System.Type[],System.Object[])">
             <summary>
-            
+            Invokes method found by method name, object and property info passed.
             </summary>
-            <param name="property"></param>
-            <param name="obj"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <param name="attr"></param>
-            <returns></returns>
+            <param name="property">This property to get method from.</param>
+            <param name="obj">Object to parse.</param>
+            <param name="method">Name of the method to get.</param>
+            <param name="args">Argument types of the method.</param>
+            <param name="attr">Arguments passed to the invokable method.</param>
+            <returns>Result object from invokation of a method.</returns>
         </member>
         <member name="M:CoreExtensions.Reflection.PropertyInfoX.FastMethodInvoke(System.Object,System.String,System.String,System.Type[],System.Object[])">
             <summary>
-            
+            Invokes method found by method name, object and property info passed.
             </summary>
-            <param name="obj"></param>
-            <param name="property"></param>
-            <param name="method"></param>
-            <param name="args"></param>
-            <param name="attr"></param>
-            <returns></returns>
+            <param name="obj">Object to parse.</param>
+            <param name="property">Name of the property to get.</param>
+            <param name="method">Name of the method to get.</param>
+            <param name="args">Argument types of the method.</param>
+            <param name="attr">Arguments passed to the invokable method.</param>
+            <returns>Result object from invokation of a method.</returns>
         </member>
         <member name="T:CoreExtensions.Reflection.TypeX">
             <summary>
@@ -1915,6 +1874,14 @@
             </summary>
             <param name="value">Value which memory should be returned.</param>
             <returns>Memory of the value passed as a byte array.</returns>
+        </member>
+        <member name="M:CoreExtensions.Text.RegX.SplitByLength(System.String,System.Int32)">
+            <summary>
+            Splits string into substrings with length specified.
+            </summary>
+            <param name="str">This string to split.</param>
+            <param name="size">Size of each splitted substring.</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/> of substrings.</returns>
         </member>
     </members>
 </doc>

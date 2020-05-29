@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 
@@ -36,7 +37,7 @@ namespace CoreExtensions.Conversions
 		/// <param name="list">This list to remove element in.</param>
 		/// <param name="predicate">The <see cref="Predicate{T}"/> delegate that defines the 
 		/// conditions of the element to remove.</param>
-		/// <returns></returns>
+		/// <returns>True if removing was successful; false otherwise.</returns>
 		public static bool RemoveWith<TypeID>(this List<TypeID> list, Predicate<TypeID> predicate)
 		{
 			if (list.Find(predicate) is { } val)
@@ -45,6 +46,18 @@ namespace CoreExtensions.Conversions
 				return true;
 			}
 			return false;
+		}
+
+		/// <summary>
+		/// Checks whether all elements in <see cref="List{T}"/> are unique.
+		/// </summary>
+		/// <typeparam name="TypeID"><see cref="Type"/> of elements in this list.</typeparam>
+		/// <param name="list">This list to check elements in.</param>
+		/// <returns>True if all elements are unique; false otherwise.</returns>
+		public static bool AllUnique<TypeID>(this List<TypeID> list)
+		{
+			var diffChecker = new HashSet<TypeID>();
+			return list.All(diffChecker.Add);
 		}
 	}
 }

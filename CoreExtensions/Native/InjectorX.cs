@@ -149,8 +149,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -167,8 +166,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -186,8 +184,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -202,8 +199,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         #endregion
@@ -231,8 +227,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -254,8 +249,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -276,8 +270,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -296,8 +289,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         #endregion
@@ -321,8 +313,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -340,8 +331,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -361,8 +351,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -380,8 +369,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -401,8 +389,7 @@ namespace CoreExtensions.Native
                 NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
                 NativeCall.CloseHandle(hProcess);
-                if (array.Length == num) return InjectResult.Success;
-                else return InjectResult.WritingFailed;
+                return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
             }
             else
             {
@@ -411,8 +398,7 @@ namespace CoreExtensions.Native
                 NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
                 NativeCall.CloseHandle(hProcess);
-                if (array.Length == num) return InjectResult.Success;
-                else return InjectResult.WritingFailed;
+                return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
             }
         }
 
@@ -431,8 +417,7 @@ namespace CoreExtensions.Native
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
                 NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-                if (array.Length == num) return InjectResult.Success;
-                else return InjectResult.WritingFailed;
+                return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
             }
             else
             {
@@ -440,8 +425,7 @@ namespace CoreExtensions.Native
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
                 NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
                 NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-                if (array.Length == num) return InjectResult.Success;
-                else return InjectResult.WritingFailed;
+                return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
             }
         }
 
@@ -462,8 +446,7 @@ namespace CoreExtensions.Native
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
             NativeCall.CloseHandle(hProcess);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
         /// <summary>
@@ -481,8 +464,7 @@ namespace CoreExtensions.Native
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, 4, out var old);
             NativeCall.WriteProcessMemory(hProcess, (IntPtr)address, array, (uint)array.Length, out var num);
             NativeCall.VirtualProtect(hProcess, (IntPtr)address, (UIntPtr)array.Length, old, out old);
-            if (array.Length == num) return InjectResult.Success;
-            else return InjectResult.WritingFailed;
+            return array.Length == num ? InjectResult.Success : InjectResult.WritingFailed;
         }
 
 		#endregion

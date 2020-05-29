@@ -57,49 +57,49 @@ namespace CoreExtensions.Reflection
 			=> obj.GetType().GetProperty(name ?? string.Empty)?.GetValue(obj);
 
 		/// <summary>
-		/// 
+		/// Gets method of <see cref="PropertyInfo"/> of the object by names and types provided.
 		/// </summary>
-		/// <param name="property"></param>
-		/// <param name="method"></param>
-		/// <param name="args"></param>
-		/// <returns></returns>
+		/// <param name="property">This property to get method from.</param>
+		/// <param name="method">Name of the method to get.</param>
+		/// <param name="args">Argument types of the method.</param>
+		/// <returns>MethodInfo found from arguments passed.</returns>
 		public static MethodInfo GetFastMethod(this PropertyInfo property, string method, Type[] args)
 			=> property.PropertyType.GetMethod(method ?? string.Empty, args);
 
 		/// <summary>
-		/// 
+		/// Gets method of <see cref="PropertyInfo"/> of the object by names and types provided.
 		/// </summary>
-		/// <param name="obj"></param>
-		/// <param name="property"></param>
-		/// <param name="method"></param>
-		/// <param name="args"></param>
-		/// <returns></returns>
+		/// <param name="obj">Object to parse.</param>
+		/// <param name="property">This property to get method from.</param>
+		/// <param name="method">Name of the method to get.</param>
+		/// <param name="args">Argument types of the method.</param>
+		/// <returns>MethodInfo found from arguments passed.</returns>
 		public static MethodInfo GetFastMethod(this object obj, string property, string method, Type[] args)
 			=> obj.GetType().GetProperty(property ?? string.Empty)?.PropertyType
 				.GetMethod(method ?? string.Empty, args);
 
 		/// <summary>
-		/// 
+		/// Invokes method found by method name, object and property info passed.
 		/// </summary>
-		/// <param name="property"></param>
-		/// <param name="obj"></param>
-		/// <param name="method"></param>
-		/// <param name="args"></param>
-		/// <param name="attr"></param>
-		/// <returns></returns>
+		/// <param name="property">This property to get method from.</param>
+		/// <param name="obj">Object to parse.</param>
+		/// <param name="method">Name of the method to get.</param>
+		/// <param name="args">Argument types of the method.</param>
+		/// <param name="attr">Arguments passed to the invokable method.</param>
+		/// <returns>Result object from invokation of a method.</returns>
 		public static object FastMethodInvoke(this PropertyInfo property, object obj, string method,
 			Type[] args, object[] attr)
 			=> property.PropertyType.GetMethod(method ?? string.Empty, args)?.Invoke(obj, attr);
 
 		/// <summary>
-		/// 
+		/// Invokes method found by method name, object and property info passed.
 		/// </summary>
-		/// <param name="obj"></param>
-		/// <param name="property"></param>
-		/// <param name="method"></param>
-		/// <param name="args"></param>
-		/// <param name="attr"></param>
-		/// <returns></returns>
+		/// <param name="obj">Object to parse.</param>
+		/// <param name="property">Name of the property to get.</param>
+		/// <param name="method">Name of the method to get.</param>
+		/// <param name="args">Argument types of the method.</param>
+		/// <param name="attr">Arguments passed to the invokable method.</param>
+		/// <returns>Result object from invokation of a method.</returns>
 		public static object FastMethodInvoke(this object obj, string property, string method,
 			Type[] args, object[] attr)
 		{

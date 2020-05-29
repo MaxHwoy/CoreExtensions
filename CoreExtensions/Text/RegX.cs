@@ -31,9 +31,8 @@ namespace CoreExtensions.Text
 		public static string GetQuotedString(this string value)
 		{
 			var match = new Regex("[\"]{1}[^\n]*[\"]{1}").Match(value ?? string.Empty);
-			if (match.Success) return match.Value.Trim('\"');
-			else return string.Empty;
-		}
+            return match.Success ? match.Value.Trim('\"') : string.Empty;
+        }
 
 		/// <summary>
 		/// Splits string by whitespace and quotation marks.
@@ -45,11 +44,8 @@ namespace CoreExtensions.Text
 			var result = Regex.Split(value, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 			foreach (var str in result)
 			{
-				if (str.StartsWith('\"') && str.EndsWith('\"'))
-					yield return str.Substring(1, str.Length - 2);
-				else
-					yield return str;
-			}
+                yield return str.StartsWith('\"') && str.EndsWith('\"') ? str[1..^1] : str;
+            }
 		}
 
 		/// <summary>
@@ -117,5 +113,15 @@ namespace CoreExtensions.Text
                 _ => null
             };
         }
+    
+        /// <summary>
+        /// Splits string into substrings with length specified.
+        /// </summary>
+        /// <param name="str">This string to split.</param>
+        /// <param name="size">Size of each splitted substring.</param>
+        /// <returns><see cref="IEnumerable{T}"/> of substrings.</returns>
+        public static IEnumerable<string> SplitByLength(this string str, int size) =>
+            Enumerable.Range(0, str.Length / size)
+                .Select(i => str.Substring(i * size, size));
     }
 }
