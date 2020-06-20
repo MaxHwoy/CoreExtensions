@@ -597,6 +597,18 @@
             <param name="bw"></param>
             <param name="count">Amount of bytes to write.</param>
         </member>
+        <member name="M:CoreExtensions.IO.IniReader.Dispose">
+            <summary>
+            Releases all resources used by the current instance of the <see cref="T:CoreExtensions.IO.IniReader"/>.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:CoreExtensions.IO.IniReader"/>.
+            </summary>
+            <param name="disposing">True if release both managed and unmanaged resources; false 
+            if release unmanaged only.</param>
+        </member>
         <member name="T:CoreExtensions.Management.ExceptionX">
             <summary>
             Provides all major extensions for <see cref="T:System.Exception"/>.

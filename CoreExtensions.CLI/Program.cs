@@ -184,35 +184,17 @@ namespace CoreExtensions.CLI
 	{
 		static void Main(string[] args)
 		{
-			var array = new byte[0x10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+			var path = @"E:\NFS\Need for Speed Carbon\scripts\NFSCExtraOptionsSettings.ini";
 
-			unsafe
+			using var reader = new IniReader(path)
 			{
+				ArraySeparator = ",|",
+				CommentDelimiter = "//"
+			};
 
-				fixed (byte* ptr = &array[0])
-				{
+			//reader.ReadAllLines();
 
-					Pointer pointer = ptr;
-
-					sbyte sbyte_ = pointer;
-					Console.WriteLine(sbyte_);
-
-					byte byte_ = pointer + 1;
-					Console.WriteLine(byte_);
-
-					int int_ = pointer + 5;
-					Console.WriteLine(int_);
-
-					float* floatptr_ = pointer + 10;
-					Console.WriteLine(*floatptr_);
-
-
-
-
-				}
-
-			}
-
+			int aaa = 0;
 
 		}
 	}
