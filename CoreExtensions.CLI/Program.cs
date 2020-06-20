@@ -2,148 +2,216 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CoreExtensions.Native;
+using CoreExtensions.IO;
 using CoreExtensions.Management;
 using CoreExtensions.Conversions;
 using Nikki.Core;
 using Nikki.Utils;
 using Nikki.Reflection.Enum;
-using Nikki.Support.Carbon.Class;
-using Nikki.Support.Carbon.Parts.CarParts;
+using Nikki.Reflection.Enum.CP;
+using Nikki.Reflection.Abstract;
+using Nikki.Reflection.Enum.SlotID;
+using CoreExtensions.Types;
+
+
 
 
 
 namespace CoreExtensions.CLI
 {
-    class Program
+	public static class AllIn
 	{
-		public static RealCarPart NewWheelsWork(DBModelPart x, string curretPartName, int size, string brand, string style, int styleNumber, int unk)
+		public static Options c_load = new Options()
 		{
-			var carPart = new RealCarPart(x.Index, x)
-			{
-				PartName = curretPartName
-			};
+			File = @"E:\NFS\Need for Speed Carbon\GLOBAL\GlobalBTest.lzc",
+			//File = @"E:\NFS\Need for Speed Carbon\LANGUAGES\English_Global.bin",
+		};
+		public static Options mw_load = new Options()
+		{
+			File = @"E:\NFS\Need for Speed Most Wanted\GLOBAL\GlobalBTest.lzc",
+		};
+		public static Options ps_load = new Options()
+		{
+			File = @"E:\NFS\Need for Speed Prostreet\GLOBAL\GlobalBTest.lzc",
+		};
 
-			carPart.TryAddAttribute("TEXTURE_NAME");
-			carPart.GetAttribute("TEXTURE_NAME").SetValue("Value", Hashing.BinHash($"{brand}_{style}"));
+		public static Options c_save = new Options()
+		{
+			File = @"E:\NFS\Need for Speed Carbon\GLOBAL\GlobalB.lzc",
+			Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
+			MessageShow = false,
+			Compress = false,
+		};
+		public static Options mw_save = new Options()
+		{
+			File = @"E:\NFS\Need for Speed Most Wanted\GLOBAL\GlobalB.lzc",
+			Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
+			MessageShow = false,
+			Compress = false,
+		};
+		public static Options ps_save = new Options()
+		{
+			File = @"E:\NFS\Need for Speed Prostreet\GLOBAL\GlobalB.lzc",
+			Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
+			MessageShow = false,
+			Compress = false,
+		};
 
-			carPart.TryAddAttribute(0x1b0ea1a9);
-			carPart.GetAttribute((uint)0x1b0ea1a9).SetValue("Value", 7);
-
-			carPart.TryAddAttribute("LOD_CHARACTERS_OFFSET");
-			carPart.GetAttribute("LOD_CHARACTERS_OFFSET").SetValue("Value", "ABCD ");
-			carPart.GetAttribute("LOD_CHARACTERS_OFFSET").SetValue("ValueExists", eBoolean.True);
-
-			carPart.TryAddAttribute("LOD_NAME_PREFIX_SELECTOR");
-			carPart.GetAttribute("LOD_NAME_PREFIX_SELECTOR").SetValue("Value", 1);
-
-			carPart.TryAddAttribute("STOCK_MATERIAL");
-			carPart.GetAttribute("STOCK_MATERIAL").SetValue("Value", eBoolean.True);
-
-			carPart.TryAddAttribute("ONLINE");
-			carPart.GetAttribute("ONLINE").SetValue("Value", eBoolean.False);
-
-			carPart.TryAddAttribute("NAME_OFFSET");
-			carPart.GetAttribute("NAME_OFFSET").SetValue("Value", $"PART_WHEEL_{brand}_{styleNumber} {size} 25");
-			carPart.GetAttribute("NAME_OFFSET").SetValue("ValueExists", eBoolean.True);
-
-			carPart.TryAddAttribute(0x87557E1E);
-			carPart.GetAttribute((uint)0x87557E1E).SetValue("Value", eBoolean.True);
-
-			carPart.TryAddAttribute("PARTID_UPGRADE_GROUP");
-			carPart.GetAttribute("PARTID_UPGRADE_GROUP").SetValue("Unknown", unk);
-			carPart.GetAttribute("PARTID_UPGRADE_GROUP").SetValue("ID", 85);
-
-			carPart.TryAddAttribute("PART_NAME_SELECTOR");
-			carPart.GetAttribute("PART_NAME_SELECTOR").SetValue("Value", 1);
-
-			carPart.TryAddAttribute("PART_NAME_OFFSETS");
-			carPart.GetAttribute("PART_NAME_OFFSETS").SetValue("Value1", $"{style}");
-			carPart.GetAttribute("PART_NAME_OFFSETS").SetValue("Value1Exists", eBoolean.True);
-			carPart.GetAttribute("PART_NAME_OFFSETS").SetValue("Value2", $"{size}_25");
-			carPart.GetAttribute("PART_NAME_OFFSETS").SetValue("Value2Exists", eBoolean.True);
-
-			carPart.TryAddAttribute(0xCE7D8DB5);
-			carPart.GetAttribute((uint)0xCE7D8DB5).SetValue("Value", 25);
-
-			carPart.TryAddAttribute("MAX_LOD");
-			carPart.GetAttribute("MAX_LOD").SetValue("Value", 3);
-
-			carPart.TryAddAttribute(0xEB0101E2);
-			carPart.GetAttribute((uint)0xEB0101E2).SetValue("Value", size);
-
-			carPart.TryAddAttribute(0xEBB03E66);
-			carPart.GetAttribute((uint)0xEBB03E66).SetValue("Value", Hashing.BinHash($"{brand}"));
-
-			carPart.TryAddAttribute("LOD_BASE_NAME");
-			carPart.GetAttribute("LOD_BASE_NAME").SetValue("Value1", $"{style}");
-			carPart.GetAttribute("LOD_BASE_NAME").SetValue("Value1Exists", eBoolean.True);
-			carPart.GetAttribute("LOD_BASE_NAME").SetValue("Value2", $"{size}_25");
-			carPart.GetAttribute("LOD_BASE_NAME").SetValue("Value2Exists", eBoolean.True);
-
-			return carPart;
+		private static void RunCarbon()
+		{
+			Loader.LoadBinKeys(new string[] { @"E:\MaxHwoy\source\repos\Nikki\Nikki\keys.txt" });
+			Loader.LoadVaultAttributes(@"E:\NFS\Need for Speed Carbon\GLOBAL\attributes.bin");
+			Loader.LoadVaultFEAttribs(@"E:\NFS\Need for Speed Carbon\GLOBAL\fe_attrib.bin");
+		}
+		private static void RunMostWanted()
+		{
+			Loader.LoadBinKeys(new string[] { @"E:\MaxHwoy\source\repos\Nikki\Nikki\keys.txt" });
+			Loader.LoadVaultAttributes(@"E:\NFS\Need for Speed Most Wanted\GLOBAL\attributes.bin");
+			Loader.LoadVaultFEAttribs(@"E:\NFS\Need for Speed Most Wanted\GLOBAL\fe_attrib.bin");
+		}
+		private static void RunProstreet()
+		{
+			Loader.LoadBinKeys(new string[] { @"E:\MaxHwoy\source\repos\Nikki\Nikki\keys.txt" });
+			Loader.LoadVaultAttributes(@"E:\NFS\Need for Speed Prostreet\GLOBAL\attributes.bin");
+			Loader.LoadVaultFEAttribs(@"E:\NFS\Need for Speed Prostreet\GLOBAL\fe_attrib.bin");
 		}
 
-
-		static unsafe void Main(string[] args)
+		public static bool Load(FileBase filebase)
 		{
-			//var bytes = File.ReadAllBytes("jdlz_csharp.bin");
-			//bytes = Interop.Decompress(bytes);
-
-
-
-			var db = new Nikki.Database.Carbon(true);
-			
-			var options_load = new Options()
+			switch (filebase.GameINT)
 			{
-				File = @"E:\NFS\NFSC\CARS\TRAFCEMTR\TEXTURES.BIN",
-				Flags = eOptFlags.Materials | eOptFlags.CarTypeInfos | eOptFlags.PresetRides |
-						eOptFlags.PresetSkins | eOptFlags.Collisions | eOptFlags.DBModelParts |
-						eOptFlags.FNGroups | eOptFlags.TPKBlocks | eOptFlags.STRBlocks |
-						eOptFlags.Tracks | eOptFlags.SunInfos
-			};
+				case GameINT.Carbon:
+					RunCarbon();
+					return filebase.Load(c_load);
 
+				case GameINT.MostWanted:
+					RunMostWanted();
+					return filebase.Load(mw_load);
 
-			
-			var options_save = new Options()
-			{
-				File = @"E:\NFS\NFSC\CARS\TRAFCEMTR\TEXTURES.BIN",
-				Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
-				MessageShow = false,
-				Compress = false,
-				Flags = eOptFlags.Materials | eOptFlags.CarTypeInfos | eOptFlags.PresetRides |
-						eOptFlags.PresetSkins | eOptFlags.Collisions | eOptFlags.DBModelParts |
-						eOptFlags.FNGroups | eOptFlags.TPKBlocks | eOptFlags.STRBlocks |
-						eOptFlags.Tracks | eOptFlags.SunInfos
-			};
+				case GameINT.Prostreet:
+					RunProstreet();
+					return filebase.Load(ps_load);
 
-			//Manager.LoadBinKeys(new string[] { @"E:\MaxHwoy\source\repos\Nikki\Nikki\keys.txt" });
-			//Manager.LoadVaultAttributes(@"C:\Need for Speed Carbon\GLOBAL\attributes.bin");
-			//Manager.LoadVaultFEAttribs(@"C:\Need for Speed Carbon\GLOBAL\fe_attrib.bin");
+				default:
+					return false;
 
-			//db.Load(options_load);
-
-			var array = File.ReadAllBytes(@"E:\NFS\Need for Speed Carbon\scripts\BlockData\0x00000A08");
-
-			array = Interop.Decompress(array);
-
-			var result = false;
-
-
-			using (var bw = new BinaryWriter(File.Open(@"OUTPUT.BIN", FileMode.Create)))
-			{
-				bw.Write(array);
 			}
+		}
+		public static bool Save(FileBase filebase)
+		{
+			switch (filebase.GameINT)
+			{
+				case GameINT.Carbon:
+					RunCarbon();
+					return filebase.Save(c_save);
+
+				case GameINT.MostWanted:
+					RunMostWanted();
+					return filebase.Save(mw_save);
+
+				case GameINT.Prostreet:
+					RunProstreet();
+					return filebase.Save(ps_save);
+
+				default:
+					return false;
+
+			}
+		}
+	}
+
+	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 0x30)]
+	public struct Vector4
+	{
+		public int Const1 { get; set; }
+		public int Const2 { get; set; }
+		public short Unknown1 { get; set; }
+		public short Unknown2 { get; set; }
+		public int ID { get; set; }
+		public float X { get; set; }
+		public float Y { get; set; }
+		public float Z { get; set; }
+		public float W { get; set; }
+		public float PadX { get; set; }
+		public float PadY { get; set; }
+		public float PadZ { get; set; }
+		public float PadW { get; set; }
+		public override string ToString()
+		{
+			return $"{this.Const1}\t{this.Const2}\t{this.Unknown1}\t{this.Unknown2}\t" +
+				$"{this.ID}\t{this.X}\t{this.Y}\t{this.Z}\t{this.W}" +
+				$"{this.PadX}\t{this.PadY}\t{this.PadZ}\t{this.PadW}";
+
+		}
+	}
+
+	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 0x58)]
+	public struct CVHeader
+	{
+		public int Const1 { get; set; }
+		public int Const2 { get; set; }
+		public int Unknown0 { get; set; }
+		public float Unknown1 { get; set; }
+		public int Unknown2 { get; set; }
+		public int NumberOfPoints { get; set; }
+		public uint BinKey { get; set; }
+
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
+		public string Name;
+
+		public float Unknown3 { get; set; }
+		public int Unknown4 { get; set; }
+		public int Unknown5 { get; set; }
+		public int Unknown6 { get; set; }
+		public int Unknown7 { get; set; }
+		public int Unknown8 { get; set; }
+		public float Unknown9 { get; set; }
+
+		public override string ToString()
+		{
+			return $"{this.Const1}\t{this.Const2}\t{this.Unknown0}\t{this.Unknown1}\t{this.Unknown2}\t" +
+				$"{this.NumberOfPoints}\t0x{this.BinKey:X8}\t{this.Name}\t{this.Unknown3}\t" +
+				$"{this.Unknown4}\t{this.Unknown5}\t{this.Unknown6}\t{this.Unknown7}\t" +
+				$"{this.Unknown8}\t{this.Unknown9}\t";
+		}
+	}
+
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			var array = new byte[0x10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+
+			unsafe
+			{
+
+				fixed (byte* ptr = &array[0])
+				{
+
+					Pointer pointer = ptr;
+
+					sbyte sbyte_ = pointer;
+					Console.WriteLine(sbyte_);
+
+					byte byte_ = pointer + 1;
+					Console.WriteLine(byte_);
+
+					int int_ = pointer + 5;
+					Console.WriteLine(int_);
+
+					float* floatptr_ = pointer + 10;
+					Console.WriteLine(*floatptr_);
 
 
 
-			//db.Save(options_save);
 
+				}
 
-			int aaa = 0;
+			}
 
 
 		}
