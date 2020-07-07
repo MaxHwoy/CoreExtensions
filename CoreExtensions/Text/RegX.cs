@@ -21,7 +21,7 @@ namespace CoreExtensions.Text
 		/// <returns>True if string can be a hexadecimal digit; false otherwise.</returns>
 		public static bool IsHexString(this string value)
 		{
-			return new Regex(@"^0x[0-9a-fA-F]{1,}$").IsMatch(value ?? string.Empty);
+			return new Regex(@"^0x[0-9a-fA-F]{1,}$").IsMatch(value ?? String.Empty);
 		}
 
 		/// <summary>
@@ -30,8 +30,8 @@ namespace CoreExtensions.Text
 		/// <returns>First quoted string.</returns>
 		public static string GetQuotedString(this string value)
 		{
-			var match = new Regex("[\"]{1}[^\n]*[\"]{1}").Match(value ?? string.Empty);
-            return match.Success ? match.Value.Trim('\"') : string.Empty;
+			var match = new Regex("[\"]{1}[^\n]*[\"]{1}").Match(value ?? String.Empty);
+            return match.Success ? match.Value.Trim('\"') : String.Empty;
         }
 
 		/// <summary>
@@ -40,19 +40,41 @@ namespace CoreExtensions.Text
 		/// <returns><see cref="IEnumerable{T}"/> of strings.</returns>
 		public static IEnumerable<string> SmartSplitString(this string value)
 		{
-			if (string.IsNullOrWhiteSpace(value)) yield break;
+			if (String.IsNullOrWhiteSpace(value)) yield break;
 			var result = Regex.Split(value, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 			foreach (var str in result)
 			{
+
+                if (String.IsNullOrEmpty(str)) continue;
                 yield return str.StartsWith('\"') && str.EndsWith('\"') ? str[1..^1] : str;
+            
             }
 		}
 
 		/// <summary>
 		/// Gets array of bytes of from the current string provided.
 		/// </summary>
+        /// <param name="value">String to convert to array of bytes.</param>
 		/// <returns>Array of bytes of the string.</returns>
-		public static byte[] GetBytes(this string value) => Encoding.UTF8.GetBytes(value);
+		public static byte[] GetBytes(this string value)
+		{
+            var result = new byte[value.Length];
+            for (int i = 0; i < value.Length; ++i) result[i] = (byte)value[i];
+            return result;
+        }
+
+        /// <summary>
+        /// Gets string from array of bytes using UTF8 encoding.
+        /// </summary>
+        /// <param name="array">Array of bytes to convert to string.</param>
+        /// <returns>String from array of bytes.</returns>
+        public static string GetString(this byte[] array)
+		{
+            if (array == null) return null;
+            string result = String.Empty;
+            for (int i = 0; i < array.Length; ++i) result += (char)array[i];
+            return result;
+        }
 
         /// <summary>
         /// Gets HashCode of the string; if string is null, returns String.Empty HashCode.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
 
@@ -20,7 +21,7 @@ namespace CoreExtensions.Types
 		public static readonly Pointer Zero;
 
 		/// <summary>
-		/// Gets the size of this instance.
+		/// Gets the size of this instance, which is 4 bytes.
 		/// </summary>
 		public static int Size => 4;
 
@@ -29,7 +30,7 @@ namespace CoreExtensions.Types
 		/// </summary>
 		/// <returns><see langword="true"/> if pointer of this instance is 0; otherwise, 
 		/// <see langword="false"/>.</returns>
-		public unsafe bool IsNull() => this._address == 0;
+		public bool IsNull() => this._address == 0;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
@@ -108,6 +109,18 @@ namespace CoreExtensions.Types
 		/// </summary>
 		/// <param name="ptr">A pointer to a 128-bit floating point type.</param>
 		public unsafe Pointer(decimal* ptr) => this._ptr = ptr;
+
+		/// <summary>
+		/// Initializes a new instance of <see cref="Pointer"/> using the <see cref="IntPtr"/> specified.
+		/// </summary>
+		/// <param name="ptr"><see cref="IntPtr"/> to initialize with.</param>
+		public unsafe Pointer(IntPtr ptr) => this._ptr = ptr.ToPointer();
+
+		/// <summary>
+		/// Initializes a new instance of <see cref="Pointer"/> using the <see cref="UIntPtr"/> specified.
+		/// </summary>
+		/// <param name="ptr"><see cref="UIntPtr"/> to initialize with.</param>
+		public unsafe Pointer(UIntPtr ptr) => this._ptr = ptr.ToPointer();
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the specified 32-bit 
@@ -337,6 +350,18 @@ namespace CoreExtensions.Types
 		public static unsafe implicit operator decimal(Pointer ptr) => *(decimal*)ptr._ptr;
 
 		/// <summary>
+		/// Converts this <see cref="Pointer"/> to a <see cref="IntPtr"/> instance.
+		/// </summary>
+		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
+		public static unsafe implicit operator IntPtr(Pointer ptr) => new IntPtr(ptr._ptr);
+
+		/// <summary>
+		/// Converts this <see cref="Pointer"/> to a <see cref="UIntPtr"/> instance.
+		/// </summary>
+		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
+		public static unsafe implicit operator UIntPtr(Pointer ptr) => new UIntPtr(ptr._ptr);
+
+		/// <summary>
 		/// Converts pointer to an unspecified type to a <see cref="Pointer"/> instance.
 		/// </summary>
 		/// <param name="ptr">Pointer to convert.</param>
@@ -413,6 +438,18 @@ namespace CoreExtensions.Types
 		/// </summary>
 		/// <param name="ptr">Pointer to convert.</param>
 		public static unsafe implicit operator Pointer(decimal* ptr) => new Pointer(ptr);
+
+		/// <summary>
+		/// Converts <see cref="IntPtr"/> instance to a <see cref="Pointer"/> instance.
+		/// </summary>
+		/// <param name="ptr"><see cref="IntPtr"/> to convert.</param>
+		public static unsafe implicit operator Pointer(IntPtr ptr) => new Pointer(ptr);
+
+		/// <summary>
+		/// Converts <see cref="UIntPtr"/> instance to a <see cref="Pointer"/> instance.
+		/// </summary>
+		/// <param name="ptr"><see cref="UIntPtr"/> to convert.</param>
+		public static unsafe implicit operator Pointer(UIntPtr ptr) => new Pointer(ptr);
 
 		/// <summary>
 		/// Converts a 32-bit signed integer address to a <see cref="Pointer"/> instance.

@@ -18,13 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreExtensions\CoreExtensions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Nikki">
-      <HintPath>E:\MaxHwoy\source\repos\Binary\Binary\bin\Debug\netcoreapp3.1\Nikki.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="E:\MaxHwoy\source\repos\Nikki\Nikki\Nikki.csproj" />
   </ItemGroup>
 
 </Project>

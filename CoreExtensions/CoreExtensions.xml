@@ -597,6 +597,72 @@
             <param name="bw"></param>
             <param name="count">Amount of bytes to write.</param>
         </member>
+        <member name="T:CoreExtensions.IO.IniReader">
+            <summary>
+            Represents a disposable .ini files reader.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.IO.IniReader.CommentDelimiter">
+            <summary>
+            Comment delimiter in the file.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.IO.IniReader.ArraySeparator">
+            <summary>
+            Array of characters that separate array elements.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.IO.IniReader.Length">
+            <summary>
+            Length of the stream.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.IO.IniReader.Position">
+            <summary>
+            Position in the stream.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.#ctor(System.String)">
+            <summary>
+            Initializes new instance of <see cref="T:CoreExtensions.IO.IniReader"/> using file path provided.
+            </summary>
+            <param name="path">Path of the file to read.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.#ctor(System.IO.StreamReader)">
+            <summary>
+            Initializes new instance of <see cref="T:CoreExtensions.IO.IniReader"/> using <see cref="T:System.IO.StreamReader"/> 
+            provided.
+            </summary>
+            <param name="reader"><see cref="T:System.IO.StreamReader"/> with opened file to read.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.ReadLine">
+            <summary>
+            Reads a line from the stream.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.ReadAllLines">
+            <summary>
+            Reads all lines from the stream.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.GetValue``1(System.String,System.String)">
+            <summary>
+            Gets value of type specified from category and property provided.
+            </summary>
+            <typeparam name="T">Type of the value to return.</typeparam>
+            <param name="category">Category in the file to search in.</param>
+            <param name="property">Property to get value from.</param>
+            <returns>Value of a type specified.</returns>
+        </member>
+        <member name="M:CoreExtensions.IO.IniReader.GetArray``1(System.String,System.String)">
+            <summary>
+            Gets array of values of type specified from category and property provided.
+            </summary>
+            <typeparam name="T">Type of the values of the array to return.</typeparam>
+            <param name="category">Category in the file to search in.</param>
+            <param name="property">Property to get value from.</param>
+            <returns>Array of values of a type specified.</returns>
+        </member>
         <member name="M:CoreExtensions.IO.IniReader.Dispose">
             <summary>
             Releases all resources used by the current instance of the <see cref="T:CoreExtensions.IO.IniReader"/>.
@@ -608,6 +674,162 @@
             </summary>
             <param name="disposing">True if release both managed and unmanaged resources; false 
             if release unmanaged only.</param>
+        </member>
+        <member name="T:CoreExtensions.IO.Logger">
+            <summary>
+            A <see cref="T:System.IO.Stream"/> class to write logs and exception data.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.#ctor(System.String)">
+            <summary>
+            Initializes new instance of <see cref="T:CoreExtensions.IO.Logger"/> that writes to a file specified.
+            </summary>
+            <param name="file">File to write to.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.#ctor(System.String,System.String)">
+            <summary>
+            Initializes new instance of <see cref="T:CoreExtensions.IO.Logger"/> that writes to a file specified. 
+            When initialized, writes introductory string to a file.
+            </summary>
+            <param name="file">File to write to.</param>
+            <param name="intro">Introductory string to write on file opening.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes new instance of <see cref="T:CoreExtensions.IO.Logger"/> that writes to a file specified. 
+            When initialized, writes introductory string to a file with date and time.
+            </summary>
+            <param name="file">File to write to.</param>
+            <param name="intro">Introductory string to write on file opening.</param>
+            <param name="writedate">True if write date to a file; false otherwise.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.Write(System.String)">
+            <summary>
+            Writes a string to a file.
+            </summary>
+            <param name="value">String value to write.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.WriteException(System.Exception)">
+            <summary>
+            Writes <see cref="T:System.Exception"/> details to a file.
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/> to write.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.WriteException(System.Exception,System.IO.Stream)">
+            <summary>
+            Writes <see cref="T:System.Exception"/> details and <see cref="T:System.IO.Stream"/> position to a file.
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/> to write.</param>
+            <param name="stream"><see cref="T:System.IO.Stream"/> which position should be written.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.WriteException(System.Exception,System.Delegate)">
+            <summary>
+            Writes <see cref="T:System.Exception"/> details and <see cref="T:System.Delegate"/> info to a file.
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/> to write.</param>
+            <param name="delegate"><see cref="T:System.Delegate"/> which information should be written.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.WriteException(System.Exception,System.Delegate,System.IO.Stream)">
+            <summary>
+            Writes <see cref="T:System.Exception"/> details, <see cref="T:System.Delegate"/> info and 
+            <see cref="T:System.IO.Stream"/> position to a file.
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/> to write.</param>
+            <param name="delegate"><see cref="T:System.Delegate"/> which information should be written.</param>
+            <param name="stream"><see cref="T:System.IO.Stream"/> which position should be written.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.WriteLine(System.String)">
+            <summary>
+            Writes string value to a file and appends a newline to the end.
+            </summary>
+            <param name="value">String value to write.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.Dispose">
+            <summary>
+            Releases all resources used by the current instance of the <see cref="T:CoreExtensions.IO.IniReader"/>.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:CoreExtensions.IO.IniReader"/>.
+            </summary>
+            <param name="disposing">True if release both managed and unmanaged resources; false 
+            if release unmanaged only.</param>
+        </member>
+        <member name="T:CoreExtensions.IO.MemoryStreamX">
+            <summary>
+            Helper extensions for <see cref="T:System.IO.MemoryStream"/> and <see cref="T:System.IO.Stream"/> classes.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.IO.MemoryStreamX.ReadBytes(CoreExtensions.Types.Pointer,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="pointer"></param>
+            <param name="numBytes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalArray``1(CoreExtensions.Types.Pointer,System.Int32)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pointer"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalArray``1(CoreExtensions.Types.Pointer,System.Int32,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pointer"></param>
+            <param name="length"></param>
+            <param name="doubleIndirection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalStructure``1(CoreExtensions.Types.Pointer)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="ptr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalClass``1(CoreExtensions.Types.Pointer)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="ptr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.IO.MemoryStreamX.GetBuffer(System.IO.Stream)">
+            <summary>
+            
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CoreExtensions.Management.eRoundType">
+            <summary>
+            Specifies type of rounding values.
+            </summary>
+        </member>
+        <member name="F:CoreExtensions.Management.eRoundType.Nearest">
+            <summary>
+            Specifies that value should be rounded to the nearest possible result.
+            </summary>
+        </member>
+        <member name="F:CoreExtensions.Management.eRoundType.Up">
+            <summary>
+            Specifies that value should be rounded up to the closest matching result.
+            </summary>
+        </member>
+        <member name="F:CoreExtensions.Management.eRoundType.Down">
+            <summary>
+            Specifies that value should be rounded down to the closest matching result.
+            </summary>
         </member>
         <member name="T:CoreExtensions.Management.ExceptionX">
             <summary>
@@ -640,13 +862,47 @@
             Provides all major helper methods to force system thread.
             </summary>
         </member>
-        <member name="M:CoreExtensions.Management.ForcedX.GCCollect(System.Boolean,System.Boolean)">
+        <member name="M:CoreExtensions.Management.ForcedX.GCCollect">
             <summary>
             Forces <see cref="T:System.GC"/> to collect unused data.
             </summary>
-            <param name="blocking">true to perform a blocking garbage collection; false to perform a background
-            garbage collection where possible.</param>
-            <param name="compacting">true to compact the small object heap; false to sweep only.</param>
+        </member>
+        <member name="T:CoreExtensions.Management.HelperX">
+            <summary>
+            Static helper class with methods.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.Management.HelperX.Bound``1(``0,``0,``0)">
+            <summary>
+            Bounds value passed inbetween maximum and minimum limits.
+            </summary>
+            <typeparam name="T"><see cref="T:System.Type"/> of value to compare. This type should inherit 
+            from <see cref="T:System.IComparable"/> interface.</typeparam>
+            <param name="value">An <see cref="T:System.IComparable"/> value to bound.</param>
+            <param name="min">Minimum value to bound to.</param>
+            <param name="max">Maximum value to bound to.</param>
+            <returns>Bound value passed.</returns>
+        </member>
+        <member name="M:CoreExtensions.Management.HelperX.RoundUpToPowerOfTwo(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.Management.HelperX.RoundDownToPowerOfTwo(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.Management.HelperX.RoundToNearestPowerOfTwo(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
         </member>
         <member name="T:CoreExtensions.Native.ASMBuilder">
             <summary>
@@ -1406,6 +1662,28 @@
             Deallocates console for the current process.
             </summary>
         </member>
+        <member name="M:CoreExtensions.Native.NativeCallerX.GetCurrentThreadID">
+            <summary>
+            Gets ID of the current thread.
+            </summary>
+            <returns>ID as a 4-byte signed integer value.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeCallerX.TerminateThread(System.Threading.Thread)">
+            <summary>
+            Terminates <see cref="T:System.Threading.Thread"/> specified.
+            </summary>
+            <param name="thread"><see cref="T:System.Threading.Thread"/> to terminate.</param>
+            <returns><see langword="true"/> if thread was successfully terminated; 
+            <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeCallerX.TerminateThread(System.Int32)">
+            <summary>
+            Terminates <see cref="T:System.Threading.Thread"/> with ID specified.
+            </summary>
+            <param name="id">ID of the <see cref="T:System.Threading.Thread"/> to terminate.</param>
+            <returns><see langword="true"/> if thread was successfully terminated; 
+            <see langword="false"/> otherwise.</returns>
+        </member>
         <member name="T:CoreExtensions.Native.PointerX">
             <summary>
             Provides all major extensions for changing internal byte values of integer types.
@@ -1903,7 +2181,15 @@
             <summary>
             Gets array of bytes of from the current string provided.
             </summary>
+            <param name="value">String to convert to array of bytes.</param>
             <returns>Array of bytes of the string.</returns>
+        </member>
+        <member name="M:CoreExtensions.Text.RegX.GetString(System.Byte[])">
+            <summary>
+            Gets string from array of bytes using UTF8 encoding.
+            </summary>
+            <param name="array">Array of bytes to convert to string.</param>
+            <returns>String from array of bytes.</returns>
         </member>
         <member name="M:CoreExtensions.Text.RegX.GetSafeHashCode(System.String)">
             <summary>
@@ -1946,7 +2232,7 @@
         </member>
         <member name="P:CoreExtensions.Types.Pointer.Size">
             <summary>
-            Gets the size of this instance.
+            Gets the size of this instance, which is 4 bytes.
             </summary>
         </member>
         <member name="M:CoreExtensions.Types.Pointer.IsNull">
@@ -2033,6 +2319,18 @@
             Initializes a new instance of <see cref="T:CoreExtensions.Types.Pointer"/> using the pointer specified.
             </summary>
             <param name="ptr">A pointer to a 128-bit floating point type.</param>
+        </member>
+        <member name="M:CoreExtensions.Types.Pointer.#ctor(System.IntPtr)">
+            <summary>
+            Initializes a new instance of <see cref="T:CoreExtensions.Types.Pointer"/> using the <see cref="T:System.IntPtr"/> specified.
+            </summary>
+            <param name="ptr"><see cref="T:System.IntPtr"/> to initialize with.</param>
+        </member>
+        <member name="M:CoreExtensions.Types.Pointer.#ctor(System.UIntPtr)">
+            <summary>
+            Initializes a new instance of <see cref="T:CoreExtensions.Types.Pointer"/> using the <see cref="T:System.UIntPtr"/> specified.
+            </summary>
+            <param name="ptr"><see cref="T:System.UIntPtr"/> to initialize with.</param>
         </member>
         <member name="M:CoreExtensions.Types.Pointer.#ctor(System.Int32)">
             <summary>
@@ -2251,6 +2549,18 @@
             </summary>
             <param name="ptr"><see cref="T:CoreExtensions.Types.Pointer"/> to convert.</param>
         </member>
+        <member name="M:CoreExtensions.Types.Pointer.op_Implicit(CoreExtensions.Types.Pointer)~System.IntPtr">
+            <summary>
+            Converts this <see cref="T:CoreExtensions.Types.Pointer"/> to a <see cref="T:System.IntPtr"/> instance.
+            </summary>
+            <param name="ptr"><see cref="T:CoreExtensions.Types.Pointer"/> to convert.</param>
+        </member>
+        <member name="M:CoreExtensions.Types.Pointer.op_Implicit(CoreExtensions.Types.Pointer)~System.UIntPtr">
+            <summary>
+            Converts this <see cref="T:CoreExtensions.Types.Pointer"/> to a <see cref="T:System.UIntPtr"/> instance.
+            </summary>
+            <param name="ptr"><see cref="T:CoreExtensions.Types.Pointer"/> to convert.</param>
+        </member>
         <member name="M:CoreExtensions.Types.Pointer.op_Implicit(System.Void*)~CoreExtensions.Types.Pointer">
             <summary>
             Converts pointer to an unspecified type to a <see cref="T:CoreExtensions.Types.Pointer"/> instance.
@@ -2328,6 +2638,18 @@
             Convert pointer to a 128-bit floating point type to a <see cref="T:CoreExtensions.Types.Pointer"/> instance.
             </summary>
             <param name="ptr">Pointer to convert.</param>
+        </member>
+        <member name="M:CoreExtensions.Types.Pointer.op_Implicit(System.IntPtr)~CoreExtensions.Types.Pointer">
+            <summary>
+            Converts <see cref="T:System.IntPtr"/> instance to a <see cref="T:CoreExtensions.Types.Pointer"/> instance.
+            </summary>
+            <param name="ptr"><see cref="T:System.IntPtr"/> to convert.</param>
+        </member>
+        <member name="M:CoreExtensions.Types.Pointer.op_Implicit(System.UIntPtr)~CoreExtensions.Types.Pointer">
+            <summary>
+            Converts <see cref="T:System.UIntPtr"/> instance to a <see cref="T:CoreExtensions.Types.Pointer"/> instance.
+            </summary>
+            <param name="ptr"><see cref="T:System.UIntPtr"/> to convert.</param>
         </member>
         <member name="M:CoreExtensions.Types.Pointer.op_Implicit(System.Int32)~CoreExtensions.Types.Pointer">
             <summary>

@@ -16,10 +16,14 @@ using Nikki.Reflection.Enum.CP;
 using Nikki.Reflection.Abstract;
 using Nikki.Reflection.Enum.SlotID;
 using CoreExtensions.Types;
-
-
-
-
+using Nikki.Support.MostWanted.Attributes;
+using System.Reflection;
+using System.Threading;
+using CoreExtensions.Native;
+using Nikki.Support.MostWanted.Class;
+using Nikki.Utils.DDS;
+using System.Runtime.CompilerServices;
+using CoreExtensions.Text;
 
 namespace CoreExtensions.CLI
 {
@@ -29,10 +33,13 @@ namespace CoreExtensions.CLI
 		{
 			File = @"E:\NFS\Need for Speed Carbon\GLOBAL\GlobalBTest.lzc",
 			//File = @"E:\NFS\Need for Speed Carbon\LANGUAGES\English_Global.bin",
+			//File = @"E:\NFS\Need for Speed Carbon\FRONTEND\FRONTB1.LZC",
+			//File = @"E:\NFS\Need for Speed Carbon\TRACKS\STREAML5RATEST.BUN",
 		};
 		public static Options mw_load = new Options()
 		{
 			File = @"E:\NFS\Need for Speed Most Wanted\GLOBAL\GlobalBTest.lzc",
+			//File = @"E:\NFS\Need for Speed Most Wanted\Cars\Supra\VinylsTest.bin",
 		};
 		public static Options ps_load = new Options()
 		{
@@ -42,6 +49,7 @@ namespace CoreExtensions.CLI
 		public static Options c_save = new Options()
 		{
 			File = @"E:\NFS\Need for Speed Carbon\GLOBAL\GlobalB.lzc",
+			//File = @"E:\NFS\Need for Speed Carbon\TRACKS\STREAML5RATEST.BUN",
 			Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
 			MessageShow = false,
 			Compress = false,
@@ -49,6 +57,7 @@ namespace CoreExtensions.CLI
 		public static Options mw_save = new Options()
 		{
 			File = @"E:\NFS\Need for Speed Most Wanted\GLOBAL\GlobalB.lzc",
+			//File = @"E:\NFS\Need for Speed Most Wanted\Cars\Supra\Vinyls.bin",
 			Watermark = $"Nikki by MaxHwoy | {DateTime.Today:MM/dd/yyyy}",
 			MessageShow = false,
 			Compress = false,
@@ -80,122 +89,294 @@ namespace CoreExtensions.CLI
 			Loader.LoadVaultFEAttribs(@"E:\NFS\Need for Speed Prostreet\GLOBAL\fe_attrib.bin");
 		}
 
-		public static bool Load(FileBase filebase)
+		public static void Load(FileBase filebase)
 		{
 			switch (filebase.GameINT)
 			{
 				case GameINT.Carbon:
 					RunCarbon();
-					return filebase.Load(c_load);
+					filebase.Load(c_load);
+					return;
 
 				case GameINT.MostWanted:
 					RunMostWanted();
-					return filebase.Load(mw_load);
+					filebase.Load(mw_load);
+					return;
 
 				case GameINT.Prostreet:
 					RunProstreet();
-					return filebase.Load(ps_load);
+					filebase.Load(ps_load);
+					return;
 
 				default:
-					return false;
+					return;
 
 			}
 		}
-		public static bool Save(FileBase filebase)
+		public static void Save(FileBase filebase)
 		{
 			switch (filebase.GameINT)
 			{
 				case GameINT.Carbon:
 					RunCarbon();
-					return filebase.Save(c_save);
+					filebase.Save(c_save);
+					return;
 
 				case GameINT.MostWanted:
 					RunMostWanted();
-					return filebase.Save(mw_save);
+					filebase.Save(mw_save);
+					return;
 
 				case GameINT.Prostreet:
 					RunProstreet();
-					return filebase.Save(ps_save);
+					filebase.Save(ps_save);
+					return;
 
 				default:
-					return false;
+					return;
 
 			}
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 0x30)]
-	public struct Vector4
-	{
-		public int Const1 { get; set; }
-		public int Const2 { get; set; }
-		public short Unknown1 { get; set; }
-		public short Unknown2 { get; set; }
-		public int ID { get; set; }
-		public float X { get; set; }
-		public float Y { get; set; }
-		public float Z { get; set; }
-		public float W { get; set; }
-		public float PadX { get; set; }
-		public float PadY { get; set; }
-		public float PadZ { get; set; }
-		public float PadW { get; set; }
-		public override string ToString()
-		{
-			return $"{this.Const1}\t{this.Const2}\t{this.Unknown1}\t{this.Unknown2}\t" +
-				$"{this.ID}\t{this.X}\t{this.Y}\t{this.Z}\t{this.W}" +
-				$"{this.PadX}\t{this.PadY}\t{this.PadZ}\t{this.PadW}";
 
-		}
-	}
-
-	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Size = 0x58)]
-	public struct CVHeader
-	{
-		public int Const1 { get; set; }
-		public int Const2 { get; set; }
-		public int Unknown0 { get; set; }
-		public float Unknown1 { get; set; }
-		public int Unknown2 { get; set; }
-		public int NumberOfPoints { get; set; }
-		public uint BinKey { get; set; }
-
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
-		public string Name;
-
-		public float Unknown3 { get; set; }
-		public int Unknown4 { get; set; }
-		public int Unknown5 { get; set; }
-		public int Unknown6 { get; set; }
-		public int Unknown7 { get; set; }
-		public int Unknown8 { get; set; }
-		public float Unknown9 { get; set; }
-
-		public override string ToString()
-		{
-			return $"{this.Const1}\t{this.Const2}\t{this.Unknown0}\t{this.Unknown1}\t{this.Unknown2}\t" +
-				$"{this.NumberOfPoints}\t0x{this.BinKey:X8}\t{this.Name}\t{this.Unknown3}\t" +
-				$"{this.Unknown4}\t{this.Unknown5}\t{this.Unknown6}\t{this.Unknown7}\t" +
-				$"{this.Unknown8}\t{this.Unknown9}\t";
-		}
-	}
 
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main2(string[] args)
 		{
-			var path = @"E:\NFS\Need for Speed Carbon\scripts\NFSCExtraOptionsSettings.ini";
+			var lines = File.ReadAllLines("somefile.end");
+			var commands = new List<Base>();
 
-			using var reader = new IniReader(path)
+			foreach (var line in lines)
 			{
-				ArraySeparator = ",|",
-				CommentDelimiter = "//"
-			};
 
-			//reader.ReadAllLines();
+				if (String.IsNullOrEmpty(line) || line.StartsWith("//")) continue;
+				var splits = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-			int aaa = 0;
+				Base command = splits[0] switch
+				{
+					"command" => new Command(),
+					"combobox" => new Combobox(),
+					"checkbox" => new Checkbox(),
+					"end" => new End(),
+					_ => new Generic(),
+				};
+
+				command.Line = line;
+				command.Parse(splits);
+				commands.Add(command);
+
+			}
+
+			foreach (var command in commands)
+			{
+
+				if (command is ISelectable select)
+				{
+
+					Console.Write($"{select.Description} (");
+					for (int i = 0; i < select.Options.Count; ++i) Console.Write($"{i} = {select.Options[i]}; ");
+					Console.Write("): ");
+					select.Choice = Convert.ToInt32(Console.ReadLine());
+
+				}
+
+			}
+
+			var stack = new Stack<ISelectable>();
+			
+			for (int i = 0; i < commands.Count; ++i)
+			{
+
+				var command = commands[i];
+
+				if (command is End end)
+				{
+
+					if (stack.Count > 0) stack.Pop(); // if stack is not empty
+					else throw new Exception("Compiling failure"); // throw
+
+				}
+
+				else if (command is ISelectable select) // if selectable
+				{
+
+					stack.Push(select); // set selectable to find
+
+					while (i < commands.Count) // bound it
+					{
+
+						// traverse till we find matching option
+						var next = commands[++i]; // get next command
+
+						if (next is Generic generic && // if matches, break
+							select.Choice == select.ParseOption(generic.Type))
+						{
+
+							break;
+
+						}
+
+					}
+
+
+				}
+
+				else if (command is Generic generic) // if generic command
+				{
+
+					if (stack.Count == 0) throw new Exception("Invalid operation");
+					var peek = stack.Peek(); // get last ISelectable
+
+					if (peek.Contains(generic.Type)) // if contains
+					{
+
+						while (i < commands.Count) // bound it
+						{
+
+							// we traverse till we find end command
+							var next = commands[++i];
+
+							if (next is End final)
+							{
+
+								stack.Pop(); // pop from the stack
+								break;
+
+							}
+
+						}
+
+					}
+					else throw new Exception("Invalid operation"); // throw
+
+				}
+
+				else
+				{
+
+					command.Execute(); // execute any other command
+
+				}
+
+			}
+
+
 
 		}
+	
+		static void Main(string[] args)
+		{
+			var version = new Version("2.2");
+			var compare = new Version("2.2");
+
+			Console.WriteLine(version.CompareTo(compare));
+
+			int aaaa = 0;
+		}
+	}
+
+	public interface ISelectable
+	{
+		public int Choice { get; set; }
+		public string Description { get; }
+		public List<string> Options { get; }
+		public int ParseOption(string option);
+		public bool Contains(string option);
+	}
+
+	public abstract class Base
+	{
+		public string Line { get; set; } = String.Empty;
+		public abstract void Parse(string[] splits);
+		public virtual void Execute() => Console.WriteLine(this.Line);
+
+		public Base() { }
+	}
+
+	public class Command : Base
+	{
+		public string Collection { get; set; }
+
+		public override void Parse(string[] splits)
+		{
+			this.Collection = splits[1];
+		}
+	}
+
+	public class Combobox : Base, ISelectable
+	{
+		private string _description = String.Empty;
+
+		public int Choice { get; set; }
+		public List<string> Options { get; }
+		public string Description => this._description;
+		public Combobox() => this.Options = new List<string>();
+		public override void Parse(string[] splits)
+		{
+			for (int i = 1; i < splits.Length - 1; ++i) this.Options.Add(splits[i]);
+			this._description = splits[^1];
+		}
+		public override void Execute()
+		{
+			Console.WriteLine(this.Line);
+			Console.WriteLine($"Option chosen: {this.Choice}");
+		}
+		public int ParseOption(string option)
+		{
+			for (int i = 0; i < this.Options.Count; ++i) { if (this.Options[i] == option) return i; }
+			return -1;
+		}
+		public bool Contains(string option) => this.Options.Contains(option);
+	}
+
+	public class Checkbox : Base, ISelectable
+	{
+		private string _description = String.Empty;
+
+		public int Choice { get; set; }
+		public List<string> Options { get; }
+		public string Description => this._description;
+		public Checkbox() => this.Options = new List<string>() { "disabled", "enabled" };
+		public override void Parse(string[] splits) => this._description = splits[1];
+		public override void Execute()
+		{
+			Console.WriteLine(this.Line);
+			Console.WriteLine($"Option chosen: {this.Choice}");
+		}
+		public int ParseOption(string option)
+		{
+			return option switch
+			{
+				"disabled" => 0,
+				"enabled" => 1,
+				_ => -1,
+			};
+		}
+		public bool Contains(string option) => this.Options.Contains(option);
+	}
+
+	public class Generic : Base
+	{
+		public string Type { get; set; }
+		private bool _is_valid = false;
+
+		public override void Parse(string[] splits)
+		{
+			this.Type = splits[0];
+			if (splits.Length == 1) this._is_valid = true;
+		}
+		public override void Execute()
+		{
+			if (!this._is_valid) throw new Exception("Invalid operation");
+		}
+	}
+
+	public class End : Base
+	{
+		public string Type => "end";
+
+		public override void Parse(string[] splits) { }
 	}
 }

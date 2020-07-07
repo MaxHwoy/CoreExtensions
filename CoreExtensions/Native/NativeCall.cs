@@ -14,19 +14,31 @@ namespace CoreExtensions.Native
         public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr address, byte[] buffer, uint size, out int bytes_written);
 
         [DllImport("kernel32.dll")]
-        internal static extern IntPtr VirtualAlloc(IntPtr hProcess, IntPtr address, uint size, AllocationType alloc_type, MemoryProtection protect);
+        public static extern IntPtr VirtualAlloc(IntPtr hProcess, IntPtr address, uint size, AllocationType alloc_type, MemoryProtection protect);
 
         [DllImport("kernel32.dll")]
-        internal static extern bool VirtualProtect(IntPtr hProcess, IntPtr address, UIntPtr size, uint new_protect, out uint old_protect);
+        public static extern bool VirtualProtect(IntPtr hProcess, IntPtr address, UIntPtr size, uint new_protect, out uint old_protect);
 
-        [DllImport("kernel32.dll")]
+        [DllImport("kernel32.dll", SetLastError = true)]
         public static extern int CloseHandle(IntPtr hProcess);
 
         [DllImport("kernel32.dll")]
-        internal static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr thread_attrib, uint stack_size, IntPtr address, IntPtr parameter, uint flags, out uint ThreadId); // Creates a remote thread.
+        public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr thread_attrib, uint stack_size, IntPtr address, IntPtr parameter, uint flags, out uint ThreadId); // Creates a remote thread.
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern uint GetCurrentThreadId();
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr OpenThread(uint desiredAccess, bool inheritHandle, uint threadId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern int TerminateThread(IntPtr handle, int exitcode);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool CancelSynchronousIo(IntPtr threadHandle);
 
         [DllImport("kernel32.dll")]
-        internal static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr address, byte[] buffer, uint size, int bytes_read);
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr address, byte[] buffer, uint size, int bytes_read);
 
         [DllImport("kernel32.dll")]
         public static extern void AllocConsole();
