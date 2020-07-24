@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>CoreExtensionsAPI</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.4</Version>
     <Authors>MaxHwoy</Authors>
     <Company>MaxHwoy</Company>
     <Description>Library of useful extensions for System classes.</Description>
-    <Copyright>Copyright (c) 2020 MaxHwoy</Copyright>
+    <Copyright>Copyright © 2020 MaxHwoy</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <RepositoryUrl>https://github.com/MaxHwoy/CoreExtensions</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

@@ -92,7 +92,7 @@ namespace CoreExtensions.IO
 		public void ReadLine()
 		{
 			var line = this._reader.ReadLine();
-			Console.WriteLine(line);
+			//Console.WriteLine(line);
 
 			if (line.Contains(this.CommentDelimiter))
 			{
