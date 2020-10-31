@@ -10,7 +10,7 @@
     <Copyright>Copyright © 2020 MaxHwoy</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <RepositoryUrl>https://github.com/MaxHwoy/CoreExtensions</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageTags>CoreExtensions, CoreExtensionsAPI, Core, Extensions, API, System, Reflection, IO, Text, Cast</PackageTags>
     <PackageIcon>Extensions.png</PackageIcon>
     <PackageIconUrl />
@@ -32,10 +32,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\Desktop\Extensions.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <None Include="..\LICENSE.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

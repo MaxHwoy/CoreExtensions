@@ -12,8 +12,8 @@ namespace CoreExtensions.Types
 	/// </summary>
 	public struct Pointer : ISerializable
 	{
-		private unsafe void* _ptr;
-		private unsafe int _address => (int)this._ptr;
+		private readonly unsafe void* _ptr;
+		private unsafe int Address => (int)this._ptr;
 
 		/// <summary>
 		/// A <see langword="static"/> <see cref="Pointer"/> value with address 0.
@@ -30,7 +30,7 @@ namespace CoreExtensions.Types
 		/// </summary>
 		/// <returns><see langword="true"/> if pointer of this instance is 0; otherwise, 
 		/// <see langword="false"/>.</returns>
-		public bool IsNull() => this._address == 0;
+		public bool IsNull() => this.Address == 0;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
@@ -181,14 +181,14 @@ namespace CoreExtensions.Types
 		/// Returns the hash code for this instance.
 		/// </summary>
 		/// <returns>A 32-bit signed integer hash code.</returns>
-		public override unsafe int GetHashCode() => this._address;
+		public override unsafe int GetHashCode() => this.Address;
 
 		/// <summary>
 		/// Converts the numeric value of the current <see cref="Pointer"/> object to its 
 		/// equivalent string representation.
 		/// </summary>
 		/// <returns>The string representation of the value of this instance.</returns>
-		public override unsafe string ToString() => this._address.ToString(CultureInfo.InvariantCulture);
+		public override unsafe string ToString() => this.Address.ToString(CultureInfo.InvariantCulture);
 
 		/// <summary>
 		/// Converts the numeric value of the current <see cref="Pointer"/> object to its 
@@ -197,7 +197,7 @@ namespace CoreExtensions.Types
 		/// <param name="format">A format specification that governs how the current 
 		/// <see cref="Pointer"/> object is converted.</param>
 		/// <returns>The string representation of the value of the current <see cref="Pointer"/> object.</returns>
-		public unsafe string ToString(string format) => this._address.ToString(format, CultureInfo.InvariantCulture);
+		public unsafe string ToString(string format) => this.Address.ToString(format, CultureInfo.InvariantCulture);
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of unspecified type.
@@ -501,7 +501,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the addition of address to pointer.</returns>
 		public static unsafe Pointer operator +(Pointer ptr, int address)
 		{
-			return new Pointer(ptr._address + address);
+			return new Pointer(ptr.Address + address);
 		}
 
 		/// <summary>
@@ -512,7 +512,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the addition of address to pointer.</returns>
 		public static unsafe Pointer operator +(Pointer ptr, uint address)
 		{
-			return new Pointer((uint)ptr._address + address);
+			return new Pointer((uint)ptr.Address + address);
 		}
 
 		/// <summary>
@@ -523,7 +523,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the addition of address to pointer.</returns>
 		public static unsafe Pointer operator +(Pointer ptr, long address)
 		{
-			return new Pointer((long)ptr._address + address);
+			return new Pointer((long)ptr.Address + address);
 		}
 
 		/// <summary>
@@ -534,7 +534,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the addition of address to pointer.</returns>
 		public static unsafe Pointer operator +(Pointer ptr, ulong address)
 		{
-			return new Pointer((ulong)ptr._address + address);
+			return new Pointer((ulong)ptr.Address + address);
 		}
 
 		/// <summary>
@@ -545,7 +545,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the subtraction of address from pointer.</returns>
 		public static unsafe Pointer operator -(Pointer ptr, int address)
 		{
-			return new Pointer(ptr._address - address);
+			return new Pointer(ptr.Address - address);
 		}
 
 		/// <summary>
@@ -556,7 +556,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the subtraction of address from pointer.</returns>
 		public static unsafe Pointer operator -(Pointer ptr, uint address)
 		{
-			return new Pointer((uint)ptr._address - address);
+			return new Pointer((uint)ptr.Address - address);
 		}
 
 		/// <summary>
@@ -567,7 +567,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the subtraction of address from pointer.</returns>
 		public static unsafe Pointer operator -(Pointer ptr, long address)
 		{
-			return new Pointer((long)ptr._address - address);
+			return new Pointer((long)ptr.Address - address);
 		}
 
 		/// <summary>
@@ -578,7 +578,7 @@ namespace CoreExtensions.Types
 		/// <returns>A new pointer that reflects the subtraction of address from pointer.</returns>
 		public static unsafe Pointer operator -(Pointer ptr, ulong address)
 		{
-			return new Pointer((ulong)ptr._address - address);
+			return new Pointer((ulong)ptr.Address - address);
 		}
 	}
 }
