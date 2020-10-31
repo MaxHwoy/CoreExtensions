@@ -471,6 +471,7 @@ namespace CoreExtensions.Numeric
 		}
 		ISquareMatrix ISquareMatrix.Invert() => this.Invert();
 		public Matrix4x4 Power(int power) => this ^ power;
+		
 		public Matrix4x4 Transpose()
 		{
 			/*
