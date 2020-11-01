@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Runtime.InteropServices;
 
 
@@ -24,7 +23,7 @@ namespace CoreExtensions.Numeric
 		public bool IsIdentity => this == Identity;
 		public bool IsInvertible => this.Determinant != 0f;
 		public bool IsLowerTriangular => this.CheckLowerTriangular();
-		public bool IsOrthogonal => this.Transpose() == this.Invert();
+		public bool IsOrthogonal => this.CheckOrthogonal();
 		public bool IsSkewSymmetric => this.CheckSkewSymmetry();
 		public bool IsSymmetric => this.CheckSymmetry();
 		public bool IsUpperTriangular => this.CheckUpperTriangular();
@@ -130,6 +129,11 @@ namespace CoreExtensions.Numeric
 			// |A| = ad - bc
 			return this.Value11 * this.Value22 - this.Value12 * this.Value21;
 		}
+		private bool CheckOrthogonal()
+		{
+			if (this.IsInvertible) return false;
+			else return this.Transpose() == this.Invert();
+		}
 		private bool CheckSymmetry() => this.Value12 == this.Value21;
 		private bool CheckSkewSymmetry()
 		{
@@ -169,7 +173,6 @@ namespace CoreExtensions.Numeric
 		}
 		ISquareMatrix ISquareMatrix.Invert() => this.Invert();
 		public Matrix2x2 Power(int power) => this ^ power;
-
 		public Matrix2x2 Transpose()
 		{
 			/*
@@ -182,40 +185,7 @@ namespace CoreExtensions.Numeric
 		}
 		IMatrix IMatrix.Transpose() => this.Transpose();
 		public override string ToString() => this.ToString(null);
-		public string ToString(string format)
-		{
-			/*
-			 * Supported formats are:
-			 * null/String.Empty = regular matrix format
-			 * "-" = all entries are inlined and separated with -
-			 * " " = all entries are inlined and separated with whitespace
-			 */
-
-			var sb = new StringBuilder(40);
-
-			switch (format)
-			{
-				case null:
-				case "":
-					for (int i = 1; i <= 2; ++i)
-					{
-
-						for (int k = 1; k <= 2; ++k) sb.Append(this[i, k]);
-						sb.AppendLine();
-
-					}
-					return sb.ToString();
-
-				case " ":
-				case "-":
-					for (int i = 0; i < 4; ++i) { sb.Append(this[i]); sb.Append(format); }
-					return sb.ToString();
-
-				default:
-					goto case null;
-
-			}
-		}
+		public string ToString(string format) => Matrix.ToString(this, format);
 
 		public static bool operator ==(Matrix2x2 a, Matrix2x2 b)
 		{

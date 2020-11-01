@@ -14,6 +14,7 @@ namespace CoreExtensions.Numeric
 		public static Matrix1x1 Identity => new Matrix1x1(1f);
 		public int Columns => 1;
 		public float Determinant => this.Value11;
+		public int Entries => 1;
 		public ISquareMatrix IdentityMatrix => Identity;
 		public bool IsDiagonal => true;
 		public bool IsIdempotent => this.Value11 == 1f || this.Value11 == 0f;
@@ -36,25 +37,27 @@ namespace CoreExtensions.Numeric
 			get
 			{
 				if (index == 0) return this.Value11;
-				else throw new ArgumentOutOfRangeException("Index can only be 0");
+				else throw new ArgumentOutOfRangeException(nameof(index), "Index can only be 0");
 			}
 			set
 			{
 				if (index == 0) this.Value11 = value;
-				else throw new ArgumentOutOfRangeException("Index can only be 0");
+				else throw new ArgumentOutOfRangeException(nameof(index), "Index can only be 0");
 			}
 		}
 		public float this[int row, int column]
 		{
 			get
 			{
-				if (row == 0 && column == 0) return this.Value11;
-				else throw new ArgumentOutOfRangeException("Row and column indexes should be 1");
+				if (row != 0) throw new ArgumentOutOfRangeException(nameof(row), "Row index should be 0");
+				if (column != 0) throw new ArgumentOutOfRangeException(nameof(column), "Column index should be 0");
+				return this.Value11;
 			}
 			set
 			{
-				if (row == 0 && column == 0) this.Value11 = value;
-				else throw new ArgumentOutOfRangeException("Row and column indexes should be 1");
+				if (row != 0) throw new ArgumentOutOfRangeException(nameof(row), "Row index should be 0");
+				if (column != 0) throw new ArgumentOutOfRangeException(nameof(column), "Column index should be 0");
+				this.Value11 = value;
 			}
 		}
 
@@ -69,7 +72,6 @@ namespace CoreExtensions.Numeric
 		}
 		ISquareMatrix ISquareMatrix.Invert() => this.Invert();
 		public Matrix1x1 Power(int power) => this ^ power;
-
 		public Matrix1x1 Transpose() => new Matrix1x1(this.Value11);
 		IMatrix IMatrix.Transpose() => this.Transpose();
 		public override string ToString() => this.Value11.ToString();

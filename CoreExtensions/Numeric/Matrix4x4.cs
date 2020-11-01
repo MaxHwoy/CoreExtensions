@@ -36,7 +36,7 @@ namespace CoreExtensions.Numeric
 		public bool IsIdentity => this == Identity;
 		public bool IsInvertible => this.Determinant != 0f;
 		public bool IsLowerTriangular => this.CheckLowerTriangular();
-		public bool IsOrthogonal => this.Transpose() == this.Invert();
+		public bool IsOrthogonal => this.CheckOrthogonal();
 		public bool IsSkewSymmetric => this.CheckSkewSymmetry();
 		public bool IsSymmetric => this.CheckSymmetry();
 		public bool IsUpperTriangular => this.CheckUpperTriangular();
@@ -294,6 +294,11 @@ namespace CoreExtensions.Numeric
 
 			return p1 - p2 + p3 - p4;
 		}
+		private bool CheckOrthogonal()
+		{
+			if (this.IsInvertible) return false;
+			else return this.Transpose() == this.Invert();
+		}
 		private bool CheckSymmetry()
 		{
 			/* Matrix is symmetric when A = AT, e.g. of form
@@ -474,7 +479,6 @@ namespace CoreExtensions.Numeric
 		}
 		ISquareMatrix ISquareMatrix.Invert() => this.Invert();
 		public Matrix4x4 Power(int power) => this ^ power;
-		
 		public Matrix4x4 Transpose()
 		{
 			/*
@@ -491,40 +495,7 @@ namespace CoreExtensions.Numeric
 		}
 		IMatrix IMatrix.Transpose() => this.Transpose();
 		public override string ToString() => this.ToString(null);
-		public string ToString(string format)
-		{
-			/*
-			 * Supported formats are:
-			 * null/String.Empty = regular matrix format
-			 * "-" = all entries are inlined and separated with -
-			 * " " = all entries are inlined and separated with whitespace
-			 */
-
-			var sb = new StringBuilder(100);
-
-			switch (format)
-			{
-				case null:
-				case "":
-					for (int i = 1; i <= 4; ++i)
-					{
-
-						for (int k = 1; k <= 4; ++k) sb.Append(this[i, k]);
-						sb.AppendLine();
-
-					}
-					return sb.ToString();
-
-				case " ":
-				case "-":
-					for (int i = 0; i < 16; ++i) { sb.Append(this[i]); sb.Append(format); }
-					return sb.ToString();
-
-				default:
-					goto case null;
-
-			}
-		}
+		public string ToString(string format) => Matrix.ToString(this, format);
 
 		public static bool operator ==(Matrix4x4 a, Matrix4x4 b)
 		{
