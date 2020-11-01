@@ -207,8 +207,8 @@ namespace CoreExtensions.Numeric
 							case 4: this.Value24 = value; return;
 							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
 						}
-					case 3:
 
+					case 3:
 						switch (column)
 						{
 							case 1: this.Value31 = value; return;
@@ -312,12 +312,16 @@ namespace CoreExtensions.Numeric
 		private bool CheckSkewSymmetry()
 		{
 			/* Matrix is skew-symmetric when A = -AT, e.g. of form
-			 * [  a  b  c  d ]
-			 * [ -b  e  f  g ]
-			 * [ -c -f  h  i ]
-			 * [ -d -g -i  j ]
+			 * [  0  b  c  d ]
+			 * [ -b  0  e  f ]
+			 * [ -c -e  0  g ]
+			 * [ -d -f -g  0 ]
 			 */
 
+			if (this.Value11 != 0f) return false;
+			if (this.Value22 != 0f) return false;
+			if (this.Value33 != 0f) return false;
+			if (this.Value44 != 0f) return false;
 			if (this.Value12 != -this.Value21) return false;
 			if (this.Value13 != -this.Value31) return false;
 			if (this.Value14 != -this.Value41) return false;
@@ -400,9 +404,7 @@ namespace CoreExtensions.Numeric
 			if (!this.IsInvertible) return Zero;
 
 			/*
-			 *           1
-			 * A^(-1) = --- * ~A~
-			 *          |A|
+			 * A^(-1) = (1 / |A|) * adj(A)
 			 */
 
 			/* [ + - + - ]

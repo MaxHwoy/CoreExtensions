@@ -130,7 +130,13 @@ namespace CoreExtensions.Numeric
 			return this.Value11 * this.Value22 - this.Value12 * this.Value21;
 		}
 		private bool CheckSymmetry() => this.Value12 == this.Value21;
-		private bool CheckSkewSymmetry() => this.Value12 == -this.Value21;
+		private bool CheckSkewSymmetry()
+		{
+			bool result = true;
+			result &= this.Value11 == 0f;
+			result &= this.Value22 == 0f;
+			return result && this.Value12 == -this.Value21;
+		}
 		private bool CheckIdempotency() => this == (this ^ 2);
 		private bool CheckDiagonal() => this.Value12 == 0f && this.Value21 == 0f;
 		private bool CheckUpperTriangular() => this.Value21 == 0f;
@@ -154,9 +160,7 @@ namespace CoreExtensions.Numeric
 			if (!this.IsInvertible) return Zero;
 
 			/*
-			 *           1           1 |  d -b |
-			 * A^(-1) = --- * ~A~ = ---| -c  a |
-			 *          |A|         |A|
+			 * A^(-1) = (1 / |A|) * adj(A)
 			 */
 
 			var result = new Matrix2x2(this.Value22, -this.Value12, -this.Value21, this.Value11);

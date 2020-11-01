@@ -80,7 +80,7 @@ namespace CoreExtensions.IO
 		/// <returns></returns>
 		public static T MarshalStructure<T>(Pointer ptr) where T : struct
 		{
-			return ptr.IsNull() ? default : (T)Marshal.PtrToStructure(ptr, typeof(T));
+			return ptr.IsNull() ? default : Marshal.PtrToStructure<T>(ptr);
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@ namespace CoreExtensions.IO
 		/// <returns></returns>
 		public static T MarshalClass<T>(Pointer ptr) where T : class
 		{
-			return ptr.IsNull() ? null : (T)Marshal.PtrToStructure<T>(ptr);
+			return ptr.IsNull() ? null : Marshal.PtrToStructure<T>(ptr);
 		}
 
 		/// <summary>

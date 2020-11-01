@@ -19,13 +19,23 @@ namespace CoreExtensions.Conversions
 		/// <param name="count">Number of items to resize to.</param>
 		public static void Resize<TypeID>(this List<TypeID> list, int count) where TypeID : new()
 		{
-			if (count <= 0) list.Clear();
+			if (count <= 0)
+			{
+
+				list.Clear();
+
+			}
 			else if (count < list.Count)
+			{
+
 				list.RemoveRange(count, list.Count - count);
+
+			}
 			else
 			{
-				for (int a1 = list.Count; a1 < count; ++a1)
-					list.Add(new TypeID());
+
+				for (int a1 = list.Count; a1 < count; ++a1) list.Add(new TypeID());
+
 			}
 		}
 
@@ -40,12 +50,9 @@ namespace CoreExtensions.Conversions
 		/// <returns>True if removing was successful; false otherwise.</returns>
 		public static bool RemoveWith<TypeID>(this List<TypeID> list, Predicate<TypeID> predicate)
 		{
-			if (list.Find(predicate) is { } val)
-			{
-				list.Remove(val);
-				return true;
-			}
-			return false;
+			int index = list.FindIndex(predicate);
+			if (index != -1) { list.RemoveAt(index); return true; }
+			else return false;
 		}
 
 		/// <summary>
