@@ -94,7 +94,8 @@ namespace CoreExtensions.Numeric
 		public override bool Equals(object obj) => obj is Matrix1x3 matrix && this == matrix;
 		public bool Equals(Matrix1x3 matrix) => this == matrix;
 		public override int GetHashCode() => HashCode.Combine(this.Value11, this.Value12, this.Value13);
-		public IMatrix Transpose() => throw new NotImplementedException();
+		public Matrix3x1 Transpose() => new Matrix3x1(this.Value11, this.Value12, this.Value13);
+		IMatrix IMatrix.Transpose() => this.Transpose();
 		public override string ToString() => this.ToString(null);
 		public string ToString(string format) => Matrix.ToString(this, format);
 
