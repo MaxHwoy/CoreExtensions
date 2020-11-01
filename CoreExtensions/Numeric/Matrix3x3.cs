@@ -23,6 +23,7 @@ namespace CoreExtensions.Numeric
 		public static Matrix3x3 Identity => new Matrix3x3(1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f);
 		public int Columns => 3;
 		public float Determinant => this.GetDeterminant();
+		public int Entries => 9;
 		public ISquareMatrix IdentityMatrix => Identity;
 		public bool IsDiagonal => this.CheckDiagonal();
 		public bool IsIdempotent => this.CheckIdempotency();

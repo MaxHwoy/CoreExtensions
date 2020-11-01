@@ -17,6 +17,7 @@ namespace CoreExtensions.Numeric
 		public static Matrix2x2 Identity => new Matrix2x2(1f, 0f, 0f, 1f);
 		public int Columns => 2;
 		public float Determinant => this.GetDeterminant();
+		public int Entries => 4;
 		public ISquareMatrix IdentityMatrix => Identity;
 		public bool IsDiagonal => this.CheckDiagonal();
 		public bool IsIdempotent => this.CheckIdempotency();

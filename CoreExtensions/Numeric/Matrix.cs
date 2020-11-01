@@ -15,7 +15,7 @@ namespace CoreExtensions.Numeric
 			* " " = all entries are inlined and separated with whitespace
 			*/
 
-			var sb = new StringBuilder(matrix.Rows * matrix.Columns * 3);
+			var sb = new StringBuilder(matrix.Entries * 3);
 
 			switch (format)
 			{
@@ -32,7 +32,7 @@ namespace CoreExtensions.Numeric
 
 				case " ":
 				case "-":
-					for (int i = 0; i < matrix.Columns * matrix.Rows; ++i) { sb.Append(matrix[i]); sb.Append(format); }
+					for (int i = 0; i < matrix.Entries; ++i) { sb.Append(matrix[i]); sb.Append(format); }
 					return sb.ToString();
 
 				default:
