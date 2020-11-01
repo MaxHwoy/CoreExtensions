@@ -14,16 +14,17 @@ namespace CoreExtensions.Numeric
 		public float Value21 { get; set; }
 		public float Value22 { get; set; }
 
-		public static Matrix2x2 Zero => new Matrix2x2(0, 0, 0, 0);
-		public static Matrix2x2 Identity => new Matrix2x2(1, 0, 0, 1);
+		public static Matrix2x2 Zero => new Matrix2x2(0f, 0f, 0f, 0f);
+		public static Matrix2x2 Identity => new Matrix2x2(1f, 0f, 0f, 1f);
 		public int Columns => 2;
 		public float Determinant => this.GetDeterminant();
 		public ISquareMatrix IdentityMatrix => Identity;
 		public bool IsDiagonal => this.CheckDiagonal();
 		public bool IsIdempotent => this.CheckIdempotency();
 		public bool IsIdentity => this == Identity;
-		public bool IsInvertible => this.Determinant != 0;
+		public bool IsInvertible => this.Determinant != 0f;
 		public bool IsLowerTriangular => this.CheckLowerTriangular();
+		public bool IsOrthogonal => this.Transpose() == this.Invert();
 		public bool IsSkewSymmetric => this.CheckSkewSymmetry();
 		public bool IsSymmetric => this.CheckSymmetry();
 		public bool IsUpperTriangular => this.CheckUpperTriangular();

@@ -26,16 +26,17 @@ namespace CoreExtensions.Numeric
 		public float Value43 { get; set; }
 		public float Value44 { get; set; }
 
-		public static Matrix4x4 Zero => new Matrix4x4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		public static Matrix4x4 Identity => new Matrix4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+		public static Matrix4x4 Zero => new Matrix4x4(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f);
+		public static Matrix4x4 Identity => new Matrix4x4(1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
 		public int Columns => 4;
 		public float Determinant => this.GetDeterminant();
 		public ISquareMatrix IdentityMatrix => Identity;
 		public bool IsDiagonal => this.CheckDiagonal();
 		public bool IsIdempotent => this.CheckIdempotency();
 		public bool IsIdentity => this == Identity;
-		public bool IsInvertible => this.Determinant != 0;
+		public bool IsInvertible => this.Determinant != 0f;
 		public bool IsLowerTriangular => this.CheckLowerTriangular();
+		public bool IsOrthogonal => this.Transpose() == this.Invert();
 		public bool IsSkewSymmetric => this.CheckSkewSymmetry();
 		public bool IsSymmetric => this.CheckSymmetry();
 		public bool IsUpperTriangular => this.CheckUpperTriangular();

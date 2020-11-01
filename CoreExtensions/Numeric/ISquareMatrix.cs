@@ -9,6 +9,7 @@
 		bool IsIdentity { get; }
 		bool IsInvertible { get; }
 		bool IsLowerTriangular { get; }
+		bool IsOrthogonal { get; }
 		bool IsSkewSymmetric { get; }
 		bool IsSymmetric { get; }
 		bool IsUpperTriangular { get; }

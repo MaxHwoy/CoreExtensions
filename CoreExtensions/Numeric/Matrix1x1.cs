@@ -10,16 +10,17 @@ namespace CoreExtensions.Numeric
 	{
 		public float Value11 { get; set; }
 
-		public static Matrix1x1 Zero => new Matrix1x1(0);
-		public static Matrix1x1 Identity => new Matrix1x1(1);
+		public static Matrix1x1 Zero => new Matrix1x1(0f);
+		public static Matrix1x1 Identity => new Matrix1x1(1f);
 		public int Columns => 1;
 		public float Determinant => this.Value11;
 		public ISquareMatrix IdentityMatrix => Identity;
 		public bool IsDiagonal => true;
 		public bool IsIdempotent => this.Value11 == 1f || this.Value11 == 0f;
 		public bool IsIdentity => this == Identity;
-		public bool IsInvertible => this.Determinant != 0;
+		public bool IsInvertible => this.Determinant != 0f;
 		public bool IsLowerTriangular => true;
+		public bool IsOrthogonal => this.Value11 == 1f;
 		public bool IsSkewSymmetric => this.Value11 == 0f;
 		public bool IsSymmetric => true;
 		public bool IsUpperTriangular => true;
