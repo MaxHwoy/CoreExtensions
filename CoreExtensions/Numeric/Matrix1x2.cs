@@ -87,7 +87,8 @@ namespace CoreExtensions.Numeric
 		public override bool Equals(object obj) => obj is Matrix1x2 matrix && this == matrix;
 		public bool Equals(Matrix1x2 matrix) => this == matrix;
 		public override int GetHashCode() => HashCode.Combine(this.Value11, this.Value12);
-		public IMatrix Transpose() => throw new NotImplementedException();
+		public Matrix2x1 Transpose() => new Matrix2x1(this.Value11, this.Value12);
+		IMatrix IMatrix.Transpose() => this.Transpose();
 		public override string ToString() => this.ToString(null);
 		public string ToString(string format) => Matrix.ToString(this, format);
 

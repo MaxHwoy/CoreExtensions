@@ -1,7 +1,7 @@
 ﻿namespace CoreExtensions.Numeric
 {
 	/// <summary>
-	/// Defines an <see cref="IMatrix"/> which number of rows equals number of columns.
+	/// Defines an <see cref="IMatrix"/> where number of rows equals number of columns.
 	/// </summary>
 	public interface ISquareMatrix : IMatrix
 	{
