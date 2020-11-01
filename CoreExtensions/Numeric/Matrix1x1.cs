@@ -49,14 +49,14 @@ namespace CoreExtensions.Numeric
 		{
 			get
 			{
-				if (row != 0) throw new ArgumentOutOfRangeException(nameof(row), "Row index should be 0");
-				if (column != 0) throw new ArgumentOutOfRangeException(nameof(column), "Column index should be 0");
+				if (row != 1) throw new ArgumentOutOfRangeException(nameof(row), "Row index should be 1");
+				if (column != 1) throw new ArgumentOutOfRangeException(nameof(column), "Column index should be 1");
 				return this.Value11;
 			}
 			set
 			{
-				if (row != 0) throw new ArgumentOutOfRangeException(nameof(row), "Row index should be 0");
-				if (column != 0) throw new ArgumentOutOfRangeException(nameof(column), "Column index should be 0");
+				if (row != 1) throw new ArgumentOutOfRangeException(nameof(row), "Row index should be 1");
+				if (column != 1) throw new ArgumentOutOfRangeException(nameof(column), "Column index should be 1");
 				this.Value11 = value;
 			}
 		}

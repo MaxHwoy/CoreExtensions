@@ -80,7 +80,7 @@
 		/// <summary>
 		/// Gets inverse of this <see cref="ISquareMatrix"/>. If a matrix is invertible, its inverse is a 
 		/// matrix A⁻¹, such that AA⁻¹ = I, meaning product of a matrix with its inverse equals identity 
-		/// matrix.
+		/// matrix. Requires <see cref="IsInvertible"/> = <see langword="true"/>.
 		/// </summary>
 		ISquareMatrix Invert();
 	}

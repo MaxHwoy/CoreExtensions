@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Runtime.InteropServices;
 
 
@@ -109,7 +108,7 @@ namespace CoreExtensions.Numeric
 					case 13: return this.Value42;
 					case 14: return this.Value43;
 					case 15: return this.Value44;
-					default: throw new ArgumentOutOfRangeException("Index should be in range 0 to 15");
+					default: throw new ArgumentOutOfRangeException(nameof(index), "Index should be in range 0 to 15");
 				};
 			}
 			set
@@ -132,7 +131,7 @@ namespace CoreExtensions.Numeric
 					case 13: this.Value42 = value; return;
 					case 14: this.Value43 = value; return;
 					case 15: this.Value44 = value; return;
-					default: throw new ArgumentOutOfRangeException("Index should be in range 0 to 15");
+					default: throw new ArgumentOutOfRangeException(nameof(index), "Index should be in range 0 to 15");
 				}
 			}
 		}
@@ -149,7 +148,7 @@ namespace CoreExtensions.Numeric
 							case 2: return this.Value12;
 							case 3: return this.Value13;
 							case 4: return this.Value14;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					case 2:
@@ -159,7 +158,7 @@ namespace CoreExtensions.Numeric
 							case 2: return this.Value22;
 							case 3: return this.Value23;
 							case 4: return this.Value24;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					case 3:
@@ -169,7 +168,7 @@ namespace CoreExtensions.Numeric
 							case 2: return this.Value32;
 							case 3: return this.Value33;
 							case 4: return this.Value34;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					case 4:
@@ -179,11 +178,11 @@ namespace CoreExtensions.Numeric
 							case 2: return this.Value42;
 							case 3: return this.Value43;
 							case 4: return this.Value44;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					default:
-						throw new ArgumentOutOfRangeException("Row index should be in range 1 to 4");
+						throw new ArgumentOutOfRangeException(nameof(row), "Row index should be in range 1 to 4");
 				}
 			}
 			set
@@ -197,7 +196,7 @@ namespace CoreExtensions.Numeric
 							case 2: this.Value12 = value; return;
 							case 3: this.Value13 = value; return;
 							case 4: this.Value14 = value; return;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					case 2:
@@ -207,7 +206,7 @@ namespace CoreExtensions.Numeric
 							case 2: this.Value22 = value; return;
 							case 3: this.Value23 = value; return;
 							case 4: this.Value24 = value; return;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					case 3:
@@ -217,7 +216,7 @@ namespace CoreExtensions.Numeric
 							case 2: this.Value32 = value; return;
 							case 3: this.Value33 = value; return;
 							case 4: this.Value34 = value; return;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					case 4:
@@ -227,11 +226,11 @@ namespace CoreExtensions.Numeric
 							case 2: this.Value42 = value; return;
 							case 3: this.Value43 = value; return;
 							case 4: this.Value44 = value; return;
-							default: throw new ArgumentOutOfRangeException("Column index should be in range 1 to 4");
+							default: throw new ArgumentOutOfRangeException(nameof(column), "Column index should be in range 1 to 4");
 						}
 
 					default:
-						throw new ArgumentOutOfRangeException("Row index should be in range 1 to 4");
+						throw new ArgumentOutOfRangeException(nameof(row), "Row index should be in range 1 to 4");
 				}
 			}
 		}

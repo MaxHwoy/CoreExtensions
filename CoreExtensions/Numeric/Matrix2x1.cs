@@ -76,7 +76,7 @@ namespace CoreExtensions.Numeric
 					{
 						case 1: this.Value11 = value; return;
 						case 2: this.Value21 = value; return;
-						default: throw new ArgumentOutOfRangeException(nameof(column), "Row index should be in range 1 to 2");
+						default: throw new ArgumentOutOfRangeException(nameof(row), "Row index should be in range 1 to 2");
 					}
 
 				}
