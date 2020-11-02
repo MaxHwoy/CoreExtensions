@@ -181,8 +181,8 @@ namespace CoreExtensions.Numeric
 		}
 		public static Matrix2x4 operator -(Matrix2x4 a, Matrix2x4 b)
 		{
-			return new Matrix2x4(a.Value11 - b.Value11, a.Value12 - b.Value12, a.Value13 - b.Value13, a.Value14 + b.Value14,
-								 a.Value21 - b.Value21, a.Value22 - b.Value22, a.Value23 - b.Value23, a.Value24 + b.Value24);
+			return new Matrix2x4(a.Value11 - b.Value11, a.Value12 - b.Value12, a.Value13 - b.Value13, a.Value14 - b.Value14,
+								 a.Value21 - b.Value21, a.Value22 - b.Value22, a.Value23 - b.Value23, a.Value24 - b.Value24);
 		}
 		public static Matrix2x4 operator *(Matrix2x4 m, float scalar)
 		{

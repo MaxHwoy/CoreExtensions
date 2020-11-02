@@ -2174,6 +2174,140 @@
             <param name="value">A 16-byte floating point value to reverse (endian-swap).</param>
             <returns>Reversed (endian-swapped) 16-byte floating point value.</returns>
         </member>
+        <member name="T:CoreExtensions.Numeric.IMatrix">
+            <summary>
+            Defines a rectangular array of numbers arranged in rows and columns.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.IMatrix.Columns">
+            <summary>
+            Number of columns in this <see cref="T:CoreExtensions.Numeric.IMatrix"/>.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.IMatrix.Entries">
+            <summary>
+            Number of entries in this <see cref="T:CoreExtensions.Numeric.IMatrix"/>. Equals <see cref="P:CoreExtensions.Numeric.IMatrix.Rows"/> times <see cref="P:CoreExtensions.Numeric.IMatrix.Columns"/>.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.IMatrix.Rows">
+            <summary>
+            Number of rows in this <see cref="T:CoreExtensions.Numeric.IMatrix"/>.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.IMatrix.ZeroMatrix">
+            <summary>
+            <see cref="T:CoreExtensions.Numeric.IMatrix"/> of the same type with all zero entries.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.IMatrix.Item(System.Int32)">
+            <summary>
+            Gets or sets value of an entry with index specified. Index is calculated with Row * Column - 1.
+            </summary>
+            <param name="index">Index of an entry to get or set.</param>
+        </member>
+        <member name="P:CoreExtensions.Numeric.IMatrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets or sets value of an entry with row and column specified.
+            </summary>
+            <param name="row">Index of the row of an entry. Ranges 1 to <see cref="P:CoreExtensions.Numeric.IMatrix.Rows"/> count.</param>
+            <param name="column">Index of the column of an entry. Ranges 1 to <see cref="P:CoreExtensions.Numeric.IMatrix.Columns"/> count.</param>
+        </member>
+        <member name="M:CoreExtensions.Numeric.IMatrix.Transpose">
+            <summary>
+            Gets transpose of this <see cref="T:CoreExtensions.Numeric.IMatrix"/>. Transpose of a matrix is a matrix with rows and columns
+            switched.
+            </summary>
+            <example>
+            [a b c]T   [a d g]
+            [d e f]  = [b e h]
+            [g h i]    [c f i]
+            </example>
+            <returns></returns>
+        </member>
+        <member name="T:CoreExtensions.Numeric.ISquareMatrix">
+            <summary>
+            Defines an <see cref="T:CoreExtensions.Numeric.IMatrix"/> where number of rows equals number of columns.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.Determinant">
+            <summary>
+            Determinant value of this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/>. Determinant is a scalar value that 
+            can be computed from the elements of a square matrix and it encodes certain properties of 
+            the linear transformation described by the matrix.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IdentityMatrix">
+            <summary>
+            Gets identity matrix with the same number of rows and columns as this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/>.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsDiagonal">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is a diagonal matrix. Matrix is diagonal if all 
+            its entries besides main diagonal ones are 0.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsIdempotent">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is an idempotent matrix. Matrix A is idempotent
+            if A² = A, meaning if its square equals itself.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsIdentity">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is an identity matrix. Matrix is an identity matrix
+            if its main diagonal entries are 1 and all other entries are 0.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsInvertible">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is invertible. Matrix A is invertible if there 
+            exists matrix B such that AB = BA = I, meaning product of A and B equals identity matrix.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsLowerTriangular">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is a lower triangular matrix. Matrix is lower
+            triangular if all its entries above the main diagonal are zero.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsOrthogonal">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is orthogonal. Matrix is orthogonal if its
+            transpose equals its inverse. Requires matrix to be invertible, e.g. <see cref="P:CoreExtensions.Numeric.ISquareMatrix.IsInvertible"/>
+            = <see langword="true"/>.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsSkewSymmetric">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is skew-symmetric. Matrix A is skew-symmetric
+            if it equals negative reciprocal of its transpose, meaning Aᵀ = -A.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsSymmetric">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is symmetric. Matrix A is symmetric if it
+            equals its transpose, meaning A = Aᵀ.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsUpperTriangular">
+            <summary>
+            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is an upper triangular matrix. Matrix is upper
+            triangular if all its entries below the main diagonal are zero.
+            </summary>
+        </member>
+        <member name="P:CoreExtensions.Numeric.ISquareMatrix.Trace">
+            <summary>
+            Trace of a <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is a sum of its diagonal entries.
+            </summary>
+        </member>
+        <member name="M:CoreExtensions.Numeric.ISquareMatrix.Invert">
+            <summary>
+            Gets inverse of this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/>. If a matrix is invertible, its inverse is a 
+            matrix A⁻¹, such that AA⁻¹ = I, meaning product of a matrix with its inverse equals identity 
+            matrix. Requires <see cref="P:CoreExtensions.Numeric.ISquareMatrix.IsInvertible"/> = <see langword="true"/>.
+            </summary>
+        </member>
         <member name="T:CoreExtensions.Reflection.PropertyInfoX">
             <summary>
             Provides all major extensions for <see cref="T:System.Reflection.PropertyInfo"/>.
