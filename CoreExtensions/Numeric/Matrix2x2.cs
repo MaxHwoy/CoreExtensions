@@ -132,7 +132,7 @@ namespace CoreExtensions.Numeric
 		}
 		private bool CheckOrthogonal()
 		{
-			if (this.IsInvertible) return false;
+			if (!this.IsInvertible) return false;
 			else return this.Transpose() == this.Invert();
 		}
 		private bool CheckSymmetry() => this.Value12 == this.Value21;
@@ -166,7 +166,7 @@ namespace CoreExtensions.Numeric
 			if (!this.IsInvertible) return Zero;
 
 			/*
-			 * A^(-1) = (1 / |A|) * adj(A)
+			 * A⁻¹ = (1 / |A|) * adj(A)
 			 */
 
 			var result = new Matrix2x2(this.Value22, -this.Value12, -this.Value21, this.Value11);

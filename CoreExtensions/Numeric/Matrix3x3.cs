@@ -200,7 +200,7 @@ namespace CoreExtensions.Numeric
 		}
 		private bool CheckOrthogonal()
 		{
-			if (this.IsInvertible) return false;
+			if (!this.IsInvertible) return false;
 			else return this.Transpose() == this.Invert();
 		}
 		private bool CheckSymmetry()
@@ -294,7 +294,7 @@ namespace CoreExtensions.Numeric
 			if (!this.IsInvertible) return Zero;
 
 			/*
-			 * A^(-1) = (1 / |A|) * adj(A)
+			 * A⁻¹ = (1 / |A|) * adj(A)
 			 */
 
 			/* [ + - + ]
@@ -312,7 +312,7 @@ namespace CoreExtensions.Numeric
 				Value23 = this.Value13 * this.Value21 - this.Value11 * this.Value23,
 				Value31 = this.Value21 * this.Value32 - this.Value22 * this.Value31,
 				Value32 = this.Value12 * this.Value31 - this.Value11 * this.Value32,
-				Value33 = this.Value11 * this.Value22 - this.Value12 - this.Value21
+				Value33 = this.Value11 * this.Value22 - this.Value12 * this.Value21
 			};
 
 			return result * (1 / this.Determinant);

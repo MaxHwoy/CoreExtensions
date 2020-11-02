@@ -296,7 +296,7 @@ namespace CoreExtensions.Numeric
 		}
 		private bool CheckOrthogonal()
 		{
-			if (this.IsInvertible) return false;
+			if (!this.IsInvertible) return false;
 			else return this.Transpose() == this.Invert();
 		}
 		private bool CheckSymmetry()
@@ -387,7 +387,13 @@ namespace CoreExtensions.Numeric
 			if (this.Value24 != 0f) return false;
 			return this.Value34 == 0f;
 		}
-		private float GetTrace() => this.Value11 + this.Value22 + this.Value33 + this.Value44;
+		private float GetTrace()
+		{
+			/*
+			 * tr(A) = a11 + a22 + a33 + a44
+			 */
+			return this.Value11 + this.Value22 + this.Value33 + this.Value44;
+		}
 
 		public Matrix4x4 Clone()
 		{
@@ -410,7 +416,7 @@ namespace CoreExtensions.Numeric
 			if (!this.IsInvertible) return Zero;
 
 			/*
-			 * A^(-1) = (1 / |A|) * adj(A)
+			 * A⁻¹ = (1 / |A|) * adj(A)
 			 */
 
 			/* [ + - + - ]
