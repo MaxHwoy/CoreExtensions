@@ -279,5 +279,71 @@ namespace CoreExtensions.Numeric
 			solution = Multiply(system.Invert(), equality);
 			return true;
 		}
+
+
+
+		
+		// We need to implement better versions of those two
+
+		public static T GaussJordan<T>(T matrix) where T : IMatrix
+		{
+			for (int j = 1; j < matrix.Rows; j++)
+			{
+				for (int i = j + 1; i <= matrix.Rows; i++)
+				{
+					var temp = matrix[i, j] / matrix[j, j];
+
+					for (int k = 1; k <= matrix.Rows; k++)
+						matrix[i, k] -= matrix[j, k] * temp;
+				}
+			}
+
+			return matrix;
+		}
+
+		public static bool LUDecompose<T>(T matrix, out T lower, out T upper) where T : ISquareMatrix
+		{
+			/* LU Decomposition is possible iff first N minor determinants are not 0, e.g.
+			 * 
+			 *     [ a b c ]
+			 * A = [ d e f ] -> a != 0, (ae - bd) != 0, |A| != 0
+			 *     [ g h i ]
+			 *
+			 */
+
+			lower = default;
+			upper = default;
+
+			if (!matrix.IsInvertible || matrix[0] == 0f) return false;
+
+			// Considering we checked minor 1, and last minor is the determinant itself, we have to check
+			// Rows - 1 leftover minors
+			for (int i = 2; i < matrix.Rows; ++i)
+			{
+
+				var square = GetMatrixByDimensions(i, i) as ISquareMatrix; // get square matrix for minor
+
+				for (int k = 1; k <= i; ++k) // rows
+				{
+
+					for (int p = 1; p <= i; ++p) // columns
+					{
+
+						square[k, p] = matrix[k, p];
+
+					}
+
+				}
+
+				if (square.Determinant == 0f) return false; // if determinant of minor is 0, LU decomposition is impossible
+
+			}
+
+			// If all minors are non-zero, then LU decomposition is possible
+			// Gauss-Jordan to get U first, then L = AU⁻¹
+			
+
+			return false;
+		}
 	}
 }
