@@ -122,6 +122,25 @@ namespace CoreExtensions.Numeric
 			return matrix;
 		}
 
+		public static T Lerp<T>(T a, T b, float amount) where T : IMatrix
+		{
+			var result = default(T);
+
+			for (int i = 1; i <= a.Rows; ++i)
+			{
+
+				for (int k = 1; k <= a.Columns; ++k)
+				{
+
+					result[i, k] = a[i, k] + (b[i, k] - a[i, k]) * amount;
+
+				}
+
+			}
+
+			return result;
+		}
+
 		public static Matrix1x1 Multiply(Matrix1x1 a, Matrix1x1 b) => (Matrix1x1)RawMultiply(a, b);
 
 		public static Matrix1x2 Multiply(Matrix1x1 a, Matrix1x2 b) => (Matrix1x2)RawMultiply(a, b);

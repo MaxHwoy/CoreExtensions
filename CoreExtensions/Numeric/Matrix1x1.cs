@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace CoreExtensions.Numeric
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct Matrix1x1 : ISquareMatrix, IMatrix
+	public struct Matrix1x1 : ISquareMatrix, IMatrix, IEquatable<Matrix1x1>
 	{
 		public float Value11 { get; set; }
 
@@ -82,6 +82,8 @@ namespace CoreExtensions.Numeric
 		public static Matrix1x1 operator -(Matrix1x1 a, Matrix1x1 b) => new Matrix1x1(a.Value11 - b.Value11);
 		public static Matrix1x1 operator *(Matrix1x1 m, float scalar) => new Matrix1x1(m.Value11 * scalar);
 		public static Matrix1x1 operator *(Matrix1x1 m, int scalar) => new Matrix1x1(m.Value11 * scalar);
+		public static Matrix1x1 operator *(float scalar, Matrix1x1 m) => new Matrix1x1(m.Value11 * scalar);
+		public static Matrix1x1 operator *(int scalar, Matrix1x1 m) => new Matrix1x1(m.Value11 * scalar);
 		public static Matrix1x1 operator *(Matrix1x1 a, Matrix1x1 b) => new Matrix1x1(a.Value11 * b.Value11);
 		public static Matrix1x1 operator ^(Matrix1x1 m, int power)
 		{
