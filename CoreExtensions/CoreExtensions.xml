@@ -40,6 +40,26 @@
             <param name="value">Object passed to be casted.</param>
             <returns>Casted value of type specified. If casting fails, exception will be thrown.</returns>
         </member>
+        <member name="M:CoreExtensions.Conversions.CastX.ReinterpretCast``2(``0)">
+            <summary>
+            Reinterprets pointer to the unmanaged object passed and returns instance of new unmanaged 
+            type specified.
+            </summary>
+            <typeparam name="T">Unmanaged type to reinterpret.</typeparam>
+            <typeparam name="S">Unmanaged type to cast to.</typeparam>
+            <param name="value">Value to reinterpret.</param>
+            <returns>New unmanaged instance casted from object passed.</returns>
+        </member>
+        <member name="M:CoreExtensions.Conversions.CastX.CastManaged``2(``0)">
+            <summary>
+            Reinterprests pointer to the managed object passed and returns instance of new managed
+            type specified.
+            </summary>
+            <typeparam name="T">Managed type to reinterpret.</typeparam>
+            <typeparam name="S">Managed type to cast to.</typeparam>
+            <param name="value">Value to reinterpret.</param>
+            <returns>New managed instance casted from object passed.</returns>
+        </member>
         <member name="T:CoreExtensions.Conversions.EnumerableX">
             <summary>
             Provides all major extensions for <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
@@ -487,6 +507,14 @@
             <returns>Position of the first occurence of the value provided.. If array was not 
             found, returns -1.</returns>
         </member>
+        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadUnmanaged``1(System.IO.BinaryReader)">
+            <summary>
+            Reads unmanaged value type.
+            </summary>
+            <typeparam name="T">Unmanaged type to read.</typeparam>
+            <param name="br"></param>
+            <returns>Instance of unmanaged type provided.</returns>
+        </member>
         <member name="T:CoreExtensions.IO.BinaryWriterX">
             <summary>
             Provides all major extensions for <see cref="T:System.IO.BinaryWriter"/>
@@ -571,12 +599,21 @@
             <param name="bw"></param>
             <param name="align">Align to fill the stream buffer to.</param>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteBytes(System.IO.BinaryWriter,System.Int32)">
+        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteBytes(System.IO.BinaryWriter,System.Byte,System.Int32)">
             <summary>
             Writes amount of bytes specified.
             </summary>
             <param name="bw"></param>
+            <param name="value">Byte value to write.</param>
             <param name="count">Amount of bytes to write.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteUnmanaged``1(System.IO.BinaryWriter,``0)">
+            <summary>
+            Writes unmanaged value type.
+            </summary>
+            <typeparam name="T">Unmanaged type to write.</typeparam>
+            <param name="bw"></param>
+            <param name="value">Instance of unmanaged type to write.</param>
         </member>
         <member name="T:CoreExtensions.IO.IniReader">
             <summary>
@@ -884,163 +921,6 @@
             </summary>
             <param name="value"></param>
             <returns></returns>
-        </member>
-        <member name="T:CoreExtensions.Native.Array`1">
-            <summary>
-            A class with native internal buffer that stores a specific number of structure elements. Useful 
-            for fast data processing and bypassing GC.
-            </summary>
-            <typeparam name="T">Type of elements to store in the array. Type should be a struct</typeparam>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.#ctor(System.Int32)">
-            <summary>
-            Creates and initializes new instance of <see cref="T:CoreExtensions.Native.Array`1"/> with size specified and 
-            initializes all its values to default ones.
-            </summary>
-            <param name="size">Size of the new array.</param>
-        </member>
-        <member name="T:CoreExtensions.Native.Array`1.Enumerator">
-            <summary>
-            Enumerates the elements of an <see cref="T:CoreExtensions.Native.Array`1" />.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.Enumerator.Current">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.Enumerator.System#Collections#IEnumerator#Current">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Enumerator.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Enumerator.MoveNext">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Enumerator.Reset">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.Item(System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.System#Collections#IList#Item(System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.Count">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.IsFixedSize">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.IsReadOnly">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.IsSynchronized">
-            <inheritdoc/>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.Length">
-            <summary>
-            Gets the total number of elements in this <see cref="T:CoreExtensions.Native.Array`1"/>.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Native.Array`1.SyncRoot">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Add(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Add(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Clear">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Clone">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.CompareTo(System.Object,System.Collections.IComparer)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Contains(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Contains(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.CopyTo(`0[],System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.CopyTo(System.Array,System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Equals(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Equals(System.Object,System.Collections.IEqualityComparer)">
-            <summary>
-            Determines whether an object is structurally equal to the current instance.
-            </summary>
-            <param name="other">The object to compare with the current instance.</param>
-            <param name="comparer">An object that determines whether the current instance and <paramref name="other" /> are equal.</param>
-            <returns>
-              <see langword="true" /> if the two objects are equal; otherwise, <see langword="false" />.</returns>
-            <exception cref="T:System.ArgumentNullException">
-              <see cref="T:System.Collections.IEqualityComparer"/> passed was null.</exception>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.GetEnumerator">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.System#Collections#IEnumerable#GetEnumerator">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.GetHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.GetHashCode(System.Collections.IEqualityComparer)">
-            <summary>
-            Returns a hash code for the current instance.
-            </summary>
-            <param name="comparer">An object that computes the hash code of the current object.</param>
-            <returns>The hash code for the current instance.</returns>
-            <exception cref="T:System.ArgumentNullException">
-              <see cref="T:System.Collections.IEqualityComparer"/> passed was null.</exception>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.IndexOf(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.IndexOf(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Insert(System.Int32,`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Insert(System.Int32,System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Remove(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Remove(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.RemoveAt(System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.Resize(System.Int32)">
-            <summary>
-            Changes the number of elements of this <see cref="T:CoreExtensions.Native.Array`1"/> to the specified new size.
-            </summary>
-            <param name="newSize">The new size of the array.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">
-              <paramref name="newSize" /> is less than zero.</exception>
-        </member>
-        <member name="M:CoreExtensions.Native.Array`1.ToString">
-            <summary>
-            Returns length of this <see cref="T:CoreExtensions.Native.Array`1"/> as a string value.
-            </summary>
-            <returns>Length of this <see cref="T:CoreExtensions.Native.Array`1"/> as a string value.</returns>
         </member>
         <member name="T:CoreExtensions.Native.ASMBuilder">
             <summary>
@@ -1785,6 +1665,75 @@
             <param name="size">Size of the NOP.</param>
             <returns><see cref="T:CoreExtensions.Native.InjectResult"/> of the memory writing.</returns>
         </member>
+        <member name="T:CoreExtensions.Native.NativeArray`1">
+            <summary>
+            An array with elements of unmanaged type provided that allocates memory on a native heap, i.e.
+            with no GC.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.#ctor(System.Int32)">
+            <summary>
+            Initializes new instance of <see cref="T:CoreExtensions.Native.NativeArray`1"/> with size and element type specified.
+            After array is about to be destroyed, <see cref="M:CoreExtensions.Native.NativeArray`1.Free"/> should be called to release natively
+            allocated buffer.
+            </summary>
+            <param name="size">Size of array to allocate.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Size of allocation passed is less or 
+            equals zero.</exception>
+        </member>
+        <member name="P:CoreExtensions.Native.NativeArray`1.Item(System.Int32)">
+            <summary>
+            Gets or sets element at index specified.
+            </summary>
+            <param name="index">Index of an element to get or set.</param>
+            <returns>Element at index specified.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index specified is out of range of array.</exception>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.Get(System.Int32)">
+            <summary>
+            Gets element at index specified.
+            </summary>
+            <param name="index">Index of an element to get.</param>
+            <returns>Element at index specified.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index specified is out of range of array.</exception>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.Set(System.Int32,`0)">
+            <summary>
+            Sets element at index specified.
+            </summary>
+            <param name="index">Index of an element to set.</param>
+            <param name="value">Value to set at index specified.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Index specified is out of range of array.</exception>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.GetUnsafe(System.Int32)">
+            <summary>
+            Gets element at index specified without bound checks. Faster than regular <see cref="M:CoreExtensions.Native.NativeArray`1.Get(System.Int32)"/>,
+            but unsafe and can overflow length of the array. Does not throw.
+            </summary>
+            <param name="index">Index of an element to set.</param>
+            <returns>Element at index specified.</returns>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.SetUnsafe(System.Int32,`0)">
+            <summary>
+            Sets element at index specified without bound checks. Faster than regular <see cref="M:CoreExtensions.Native.NativeArray`1.Set(System.Int32,`0)"/>,
+            but unsafe and can overflow length of the array. Does not throw.
+            </summary>
+            <param name="index">Index of an element to set.</param>
+            <param name="value">Value to set at index specified.</param>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.GetPointer">
+            <summary>
+            Gets pointer of type <typeparamref name="T"/> to the beginning of allocated array.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreExtensions.Native.NativeArray`1.Free">
+            <summary>
+            Frees/releases this <see cref="T:CoreExtensions.Native.NativeArray`1"/> instance. This should be called when array
+            is not needed anymore or before it goes out of local range.
+            </summary>
+        </member>
         <member name="T:CoreExtensions.Native.NativeCallerX">
             <summary>
             Class with methods of calling native functions.
@@ -2173,140 +2122,6 @@
             </summary>
             <param name="value">A 16-byte floating point value to reverse (endian-swap).</param>
             <returns>Reversed (endian-swapped) 16-byte floating point value.</returns>
-        </member>
-        <member name="T:CoreExtensions.Numeric.IMatrix">
-            <summary>
-            Defines a rectangular array of numbers arranged in rows and columns.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.IMatrix.Columns">
-            <summary>
-            Number of columns in this <see cref="T:CoreExtensions.Numeric.IMatrix"/>.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.IMatrix.Entries">
-            <summary>
-            Number of entries in this <see cref="T:CoreExtensions.Numeric.IMatrix"/>. Equals <see cref="P:CoreExtensions.Numeric.IMatrix.Rows"/> times <see cref="P:CoreExtensions.Numeric.IMatrix.Columns"/>.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.IMatrix.Rows">
-            <summary>
-            Number of rows in this <see cref="T:CoreExtensions.Numeric.IMatrix"/>.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.IMatrix.ZeroMatrix">
-            <summary>
-            <see cref="T:CoreExtensions.Numeric.IMatrix"/> of the same type with all zero entries.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.IMatrix.Item(System.Int32)">
-            <summary>
-            Gets or sets value of an entry with index specified. Index is calculated with Row * Column - 1.
-            </summary>
-            <param name="index">Index of an entry to get or set.</param>
-        </member>
-        <member name="P:CoreExtensions.Numeric.IMatrix.Item(System.Int32,System.Int32)">
-            <summary>
-            Gets or sets value of an entry with row and column specified.
-            </summary>
-            <param name="row">Index of the row of an entry. Ranges 1 to <see cref="P:CoreExtensions.Numeric.IMatrix.Rows"/> count.</param>
-            <param name="column">Index of the column of an entry. Ranges 1 to <see cref="P:CoreExtensions.Numeric.IMatrix.Columns"/> count.</param>
-        </member>
-        <member name="M:CoreExtensions.Numeric.IMatrix.Transpose">
-            <summary>
-            Gets transpose of this <see cref="T:CoreExtensions.Numeric.IMatrix"/>. Transpose of a matrix is a matrix with rows and columns
-            switched.
-            </summary>
-            <example>
-            [a b c]T   [a d g]
-            [d e f]  = [b e h]
-            [g h i]    [c f i]
-            </example>
-            <returns></returns>
-        </member>
-        <member name="T:CoreExtensions.Numeric.ISquareMatrix">
-            <summary>
-            Defines an <see cref="T:CoreExtensions.Numeric.IMatrix"/> where number of rows equals number of columns.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.Determinant">
-            <summary>
-            Determinant value of this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/>. Determinant is a scalar value that 
-            can be computed from the elements of a square matrix and it encodes certain properties of 
-            the linear transformation described by the matrix.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IdentityMatrix">
-            <summary>
-            Gets identity matrix with the same number of rows and columns as this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/>.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsDiagonal">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is a diagonal matrix. Matrix is diagonal if all 
-            its entries besides main diagonal ones are 0.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsIdempotent">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is an idempotent matrix. Matrix A is idempotent
-            if A² = A, meaning if its square equals itself.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsIdentity">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is an identity matrix. Matrix is an identity matrix
-            if its main diagonal entries are 1 and all other entries are 0.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsInvertible">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is invertible. Matrix A is invertible if there 
-            exists matrix B such that AB = BA = I, meaning product of A and B equals identity matrix.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsLowerTriangular">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is a lower triangular matrix. Matrix is lower
-            triangular if all its entries above the main diagonal are zero.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsOrthogonal">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is orthogonal. Matrix is orthogonal if its
-            transpose equals its inverse. Requires matrix to be invertible, e.g. <see cref="P:CoreExtensions.Numeric.ISquareMatrix.IsInvertible"/>
-            = <see langword="true"/>.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsSkewSymmetric">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is skew-symmetric. Matrix A is skew-symmetric
-            if it equals negative reciprocal of its transpose, meaning Aᵀ = -A.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsSymmetric">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is symmetric. Matrix A is symmetric if it
-            equals its transpose, meaning A = Aᵀ.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.IsUpperTriangular">
-            <summary>
-            Checks whether this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is an upper triangular matrix. Matrix is upper
-            triangular if all its entries below the main diagonal are zero.
-            </summary>
-        </member>
-        <member name="P:CoreExtensions.Numeric.ISquareMatrix.Trace">
-            <summary>
-            Trace of a <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/> is a sum of its diagonal entries.
-            </summary>
-        </member>
-        <member name="M:CoreExtensions.Numeric.ISquareMatrix.Invert">
-            <summary>
-            Gets inverse of this <see cref="T:CoreExtensions.Numeric.ISquareMatrix"/>. If a matrix is invertible, its inverse is a 
-            matrix A⁻¹, such that AA⁻¹ = I, meaning product of a matrix with its inverse equals identity 
-            matrix. Requires <see cref="P:CoreExtensions.Numeric.ISquareMatrix.IsInvertible"/> = <see langword="true"/>.
-            </summary>
         </member>
         <member name="T:CoreExtensions.Reflection.PropertyInfoX">
             <summary>

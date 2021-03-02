@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 
 
@@ -60,5 +61,38 @@ namespace CoreExtensions.Conversions
         /// <returns>Casted value of type specified. If casting fails, exception will be thrown.</returns>
         public static TypeID StaticCast<TypeID>(this IConvertible value) where TypeID : IConvertible
             => (TypeID)Convert.ChangeType(value, typeof(TypeID));
+
+        /// <summary>
+        /// Reinterprets pointer to the unmanaged object passed and returns instance of new unmanaged 
+        /// type specified.
+        /// </summary>
+        /// <typeparam name="T">Unmanaged type to reinterpret.</typeparam>
+        /// <typeparam name="S">Unmanaged type to cast to.</typeparam>
+        /// <param name="value">Value to reinterpret.</param>
+        /// <returns>New unmanaged instance casted from object passed.</returns>
+        public static unsafe S ReinterpretCast<T, S>(T value)
+            where T : unmanaged
+            where S : unmanaged
+		{
+            return *(S*)&value;
+		}
+
+        /// <summary>
+        /// Reinterprests pointer to the managed object passed and returns instance of new managed
+        /// type specified.
+        /// </summary>
+        /// <typeparam name="T">Managed type to reinterpret.</typeparam>
+        /// <typeparam name="S">Managed type to cast to.</typeparam>
+        /// <param name="value">Value to reinterpret.</param>
+        /// <returns>New managed instance casted from object passed.</returns>
+        public static unsafe S CastManaged<T, S>(T value)
+		{
+            var array = new Native.NativeArray<byte>(Marshal.SizeOf<T>());
+            var pointer = (IntPtr)array.GetPointer();
+            Marshal.StructureToPtr(value, pointer, false);
+            S result = Marshal.PtrToStructure<S>(pointer);
+            array.Free();
+            return result;
+		}
     }
 }

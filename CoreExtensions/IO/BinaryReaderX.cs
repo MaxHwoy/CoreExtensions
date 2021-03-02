@@ -128,7 +128,7 @@ namespace CoreExtensions.IO
         /// <typeparam name="TypeID">Type of the <see cref="Enum"/> to read.</typeparam>
         /// <returns>Value of the <see cref="Enum"/> passed. If value could not be parsed, 
         /// or if the type passed is not Enum, exception might be thrown.</returns>
-        public static TypeID ReadEnum<TypeID>(this BinaryReader br) where TypeID : IConvertible
+        public static TypeID ReadEnum<TypeID>(this BinaryReader br) where TypeID : Enum
         {
             var t = typeof(TypeID);
             switch (Type.GetTypeCode(Enum.GetUnderlyingType(t)))
@@ -237,6 +237,18 @@ namespace CoreExtensions.IO
             catch (Exception) { return false; }
         }
 
+        public static TypeID ReadManaged<TypeID>(this BinaryReader br)
+		{
+            var arr = br.ReadBytes(Marshal.SizeOf<TypeID>());
+            unsafe
+            {
+                fixed (byte* ptr = &arr[0])
+                {
+                    return Marshal.PtrToStructure<TypeID>((IntPtr)ptr);
+                }
+            }
+        }
+
         /// <summary>
         /// Seeks position of the first occurence of the byte array provided.
         /// </summary>
@@ -305,5 +317,17 @@ namespace CoreExtensions.IO
             br.BaseStream.Position = pos;
             return result;
         }
+
+        /// <summary>
+        /// Reads unmanaged value type.
+        /// </summary>
+        /// <typeparam name="T">Unmanaged type to read.</typeparam>
+        /// <param name="br"></param>
+        /// <returns>Instance of unmanaged type provided.</returns>
+        public static unsafe T ReadUnmanaged<T>(this BinaryReader br) where T : unmanaged
+		{
+            var arr = br.ReadBytes(sizeof(T));
+            fixed (byte* ptr = arr) { return *(T*)ptr; }
+		}
     }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>CoreExtensionsAPI</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.1.5</Version>
     <Authors>MaxHwoy</Authors>
     <Company>MaxHwoy</Company>
     <Description>Library of useful extensions for System classes.</Description>
@@ -21,15 +21,15 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>C:\Users\Max\source\repos\CoreExtensions\CoreExtensions\CoreExtensions.xml</DocumentationFile>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>CoreExtensions.xml</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>C:\Users\Max\source\repos\CoreExtensions\CoreExtensions\CoreExtensions.xml</DocumentationFile>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>CoreExtensions.xml</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>

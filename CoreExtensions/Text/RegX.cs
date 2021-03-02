@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using CoreExtensions.Conversions;
 
 
 
@@ -21,14 +19,36 @@ namespace CoreExtensions.Text
 		/// <returns>True if string can be a hexadecimal digit; false otherwise.</returns>
 		public static bool IsHexString(this string value)
 		{
-			return new Regex(@"^0x[0-9a-fA-F]{1,}$").IsMatch(value ?? String.Empty);
-		}
+            if (value is null || value.Length < 3) return false;
+            if (value[0] != '0') return false;
+            if (value[1] != 'x' && value[1] != 'X') return false;
 
-		/// <summary>
-		/// Gets first quoted string from the given string.
-		/// </summary>
-		/// <returns>First quoted string.</returns>
-		public static string GetQuotedString(this string value)
+            for (int i = 2; i < value.Length; ++i)
+            {
+
+                char c = value[i];
+
+                if (('0' <= c && c <= '9') ||
+                    ('A' <= c && c <= 'F') ||
+                    ('a' <= c && c <= 'f'))
+                {
+
+                    continue;
+
+                }
+
+                return false;
+
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Gets first quoted string from the given string.
+        /// </summary>
+        /// <returns>First quoted string.</returns>
+        public static string GetQuotedString(this string value)
 		{
 			var match = new Regex("[\"]{1}[^\n]*[\"]{1}").Match(value ?? String.Empty);
             return match.Success ? match.Value.Trim('\"') : String.Empty;

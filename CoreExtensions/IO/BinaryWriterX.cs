@@ -201,10 +201,24 @@ namespace CoreExtensions.IO
 		/// Writes amount of bytes specified.
 		/// </summary>
 		/// <param name="bw"></param>
+		/// <param name="value">Byte value to write.</param>
 		/// <param name="count">Amount of bytes to write.</param>
-		public static void WriteBytes(this BinaryWriter bw, int count)
+		public static void WriteBytes(this BinaryWriter bw, byte value, int count)
 		{
-			for (int a1 = 0; a1 < count; ++a1) bw.Write((byte)0);
+			for (int a1 = 0; a1 < count; ++a1) bw.Write(value);
+		}
+
+		/// <summary>
+		/// Writes unmanaged value type.
+		/// </summary>
+		/// <typeparam name="T">Unmanaged type to write.</typeparam>
+		/// <param name="bw"></param>
+		/// <param name="value">Instance of unmanaged type to write.</param>
+		public static unsafe void WriteUnmanaged<T>(this BinaryWriter bw, T value) where T : unmanaged
+		{
+			var array = new byte[sizeof(T)];
+			fixed (byte* ptr = array) { *(T*)ptr = value; }
+			bw.Write(array);
 		}
 	}
 }
