@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace CoreExtensions.Text
 {
 	/// <summary>
-	/// Provides all major extensions for <see cref="Regex"/>.
+	/// Provides all major extensions for <see cref="Regex"/> and <see cref="String"/>.
 	/// </summary>
 	public static class RegX
 	{
@@ -42,6 +42,86 @@ namespace CoreExtensions.Text
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Attempts to convert hexadecimal string to an unsigned integer value. Hexadecimal
+        /// string should start with '0x' or '0X' value.
+        /// </summary>
+        /// <param name="value">String value to attempt to parse.</param>
+        /// <param name="result">Unsigned integer value converted from the string value passed.</param>
+        /// <returns>True if conversion was successful; false if string was not a hexadecimal
+        /// string and/or contained characters that could not be converted.</returns>
+        public static bool TryHexStringToUInt32(this string value, out uint result)
+        {
+            result = 0;
+
+            if (value is null || value.Length < 3) return false;
+            if (value[0] != '0') return false;
+            if (value[1] != 'x' && value[1] != 'X') return false;
+
+            for (int i = 2, k = value.Length - 3; i < value.Length; ++i, --k)
+            {
+                char c = value[i];
+                uint mult = (uint)(1 << (k << 2));
+
+                if ('0' <= c && c <= '9')
+                {
+                    result += (uint)(c - '0') * mult;
+                    continue;
+                }
+                if ('A' <= c && c <= 'F')
+                {
+                    result += (uint)(c - 'A' + 10) * mult;
+                    continue;
+                }
+                if ('a' <= c && c <= 'f')
+                {
+                    result += (uint)(c - 'a' + 10) * mult;
+                    continue;
+                }
+
+                result = 0;
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Converts unsigned integer passed to its hexadecimal string representation that
+        /// starts with '0x'. Faster than <see cref="UInt32.ToString()"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="toLower">True if all 'a'-'f' characters should be lowercase in the
+        /// string representation; false if all 'A'-'F' should be uppercase instead.</param>
+        /// <returns>Hexadecimal string representation of an unsigned integer value.</returns>
+        public static string FastToHexString(this uint value, bool toLower)
+        {
+            var array = new char[10] { '0', 'x', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0' };
+
+            if (toLower)
+            {
+                for (int i = 0, k = 9; i < 8; ++i, --k)
+                {
+                    var bit = (value >> (i << 2)) & 0x0F;
+
+                    if (bit < 10) array[k] = (char)(0x30 + bit);
+                    else array[k] = (char)(0x57 + bit);
+                }
+            }
+            else
+            {
+                for (int i = 0, k = 9; i < 8; ++i, --k)
+                {
+                    var bit = (value >> (i << 2)) & 0x0F;
+
+                    if (bit < 10) array[k] = (char)(0x30 + bit);
+                    else array[k] = (char)(0x37 + bit);
+                }
+            }
+
+            return new string(array);
         }
 
         /// <summary>

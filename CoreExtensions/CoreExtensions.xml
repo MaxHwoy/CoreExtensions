@@ -2243,7 +2243,7 @@
         </member>
         <member name="T:CoreExtensions.Text.RegX">
             <summary>
-            Provides all major extensions for <see cref="T:System.Text.RegularExpressions.Regex"/>.
+            Provides all major extensions for <see cref="T:System.Text.RegularExpressions.Regex"/> and <see cref="T:System.String"/>.
             </summary>
         </member>
         <member name="M:CoreExtensions.Text.RegX.IsHexString(System.String)">
@@ -2251,6 +2251,26 @@
             Determines whether given string can be a hexadecimal digit of type 0x[...].
             </summary>
             <returns>True if string can be a hexadecimal digit; false otherwise.</returns>
+        </member>
+        <member name="M:CoreExtensions.Text.RegX.TryHexStringToUInt32(System.String,System.UInt32@)">
+            <summary>
+            Attempts to convert hexadecimal string to an unsigned integer value. Hexadecimal
+            string should start with '0x' or '0X' value.
+            </summary>
+            <param name="value">String value to attempt to parse.</param>
+            <param name="result">Unsigned integer value converted from the string value passed.</param>
+            <returns>True if conversion was successful; false if string was not a hexadecimal
+            string and/or contained characters that could not be converted.</returns>
+        </member>
+        <member name="M:CoreExtensions.Text.RegX.FastToHexString(System.UInt32,System.Boolean)">
+            <summary>
+            Converts unsigned integer passed to its hexadecimal string representation that
+            starts with '0x'. Faster than <see cref="M:System.UInt32.ToString"/>.
+            </summary>
+            <param name="value">Value to convert.</param>
+            <param name="toLower">True if all 'a'-'f' characters should be lowercase in the
+            string representation; false if all 'A'-'F' should be uppercase instead.</param>
+            <returns>Hexadecimal string representation of an unsigned integer value.</returns>
         </member>
         <member name="M:CoreExtensions.Text.RegX.GetQuotedString(System.String)">
             <summary>
