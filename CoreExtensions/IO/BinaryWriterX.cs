@@ -159,33 +159,6 @@ namespace CoreExtensions.IO
 		}
 
 		/// <summary>
-		/// Attempts to write struct of type <typeparamref name="TypeID"/>. In order for struct 
-		/// to be read correctly, it should have a <see cref="StructLayoutAttribute"/>.
-		/// </summary>
-		/// <typeparam name="TypeID">Type of struct to read.</typeparam>
-		/// <param name="bw"></param>
-		/// <param name="value">Struct of type <typeparamref name="TypeID"/> to write.</param>
-		/// <returns>True on success; false otherwise.</returns>
-		public static bool WriteStruct<TypeID>(this BinaryWriter bw, TypeID value) where TypeID : struct
-		{
-			try
-			{
-				var size = Marshal.SizeOf(typeof(TypeID));
-				var arr = new byte[size];
-				unsafe
-				{
-					fixed (byte* ptr = &arr[0])
-					{
-						Marshal.StructureToPtr(value, (IntPtr)ptr, false);
-					}
-				}
-				bw.Write(arr);
-				return true;
-			}
-			catch (Exception) { return false; }
-		}
-
-		/// <summary>
 		/// Fills stream buffer till the certain padding is reached.
 		/// </summary>
 		/// <param name="bw"></param>
@@ -219,6 +192,25 @@ namespace CoreExtensions.IO
 			var array = new byte[sizeof(T)];
 			fixed (byte* ptr = array) { *(T*)ptr = value; }
 			bw.Write(array);
+		}
+
+		/// <summary>
+		/// Attempts to write struct of type <typeparamref name="T"/>. In order for struct
+		/// to be read correctly, it should have a <see cref="StructLayoutAttribute"/>.
+		/// </summary>
+		/// <typeparam name="T">Type of struct to write.</typeparam>
+		/// <param name="bw"></param>
+		/// <param name="value">Struct of type <typeparamref name="T"/> to write.</param>
+		public static void WriteStruct<T>(this BinaryWriter bw, T value) where T : struct
+		{
+			var size = Marshal.SizeOf<T>();
+			var array = new byte[size];
+
+			var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+			Marshal.StructureToPtr(value, handle.AddrOfPinnedObject(), false);
+
+			bw.Write(array);
+			handle.Free();
 		}
 	}
 }

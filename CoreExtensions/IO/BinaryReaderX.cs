@@ -211,45 +211,6 @@ namespace CoreExtensions.IO
         }
 
         /// <summary>
-        /// Attempts to read struct of type <typeparamref name="TypeID"/>. In order for struct 
-        /// to be read correctly, it should have a <see cref="StructLayoutAttribute"/>.
-        /// </summary>
-        /// <typeparam name="TypeID">Type of struct to read.</typeparam>
-        /// <param name="br"></param>
-        /// <param name="result">Result struct of type <typeparamref name="TypeID"/> that was read.</param>
-        /// <returns>True on success; false otherwise.</returns>
-        public static bool ReadStruct<TypeID>(this BinaryReader br, out TypeID result) where TypeID : struct
-        {
-            result = default;
-            try
-            {
-                var t = typeof(TypeID);
-                var arr = br.ReadBytes(Marshal.SizeOf(t));
-                unsafe
-                {
-                    fixed (byte* ptr = &arr[0])
-                    {
-                        result = (TypeID)Marshal.PtrToStructure((IntPtr)ptr, t);
-                        return true;
-                    }
-                }
-            }
-            catch (Exception) { return false; }
-        }
-
-        public static TypeID ReadManaged<TypeID>(this BinaryReader br)
-		{
-            var arr = br.ReadBytes(Marshal.SizeOf<TypeID>());
-            unsafe
-            {
-                fixed (byte* ptr = &arr[0])
-                {
-                    return Marshal.PtrToStructure<TypeID>((IntPtr)ptr);
-                }
-            }
-        }
-
-        /// <summary>
         /// Seeks position of the first occurence of the byte array provided.
         /// </summary>
         /// <param name="br"></param>
@@ -329,5 +290,23 @@ namespace CoreExtensions.IO
             var arr = br.ReadBytes(sizeof(T));
             fixed (byte* ptr = arr) { return *(T*)ptr; }
 		}
+
+        /// <summary>
+        /// Reads a structure of the given type from a binary reader.
+        /// </summary>
+        /// <param name="br">A <see cref="BinaryReader"/> instance to read data from.</param>
+        /// <typeparam name="T">The structure type. Must be a C# struct.</typeparam>
+        /// <returns>A new instance of <typeparamref name="T"/> with data read from <paramref name="br"/>.</returns>
+        public static T ReadStruct<T>(this BinaryReader br) where T : struct
+        {
+            var size = Marshal.SizeOf<T>();
+            var buffer = br.ReadBytes(size);
+
+            var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            var result = Marshal.PtrToStructure<T>(handle.AddrOfPinnedObject());
+            handle.Free();
+
+            return result;
+        }
     }
 }

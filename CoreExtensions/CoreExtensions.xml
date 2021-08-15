@@ -473,16 +473,6 @@
             <param name="length">Max length of the string to read.</param>
             <returns>String with UTF16 style encoding.</returns>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadStruct``1(System.IO.BinaryReader,``0@)">
-            <summary>
-            Attempts to read struct of type <typeparamref name="TypeID"/>. In order for struct 
-            to be read correctly, it should have a <see cref="T:System.Runtime.InteropServices.StructLayoutAttribute"/>.
-            </summary>
-            <typeparam name="TypeID">Type of struct to read.</typeparam>
-            <param name="br"></param>
-            <param name="result">Result struct of type <typeparamref name="TypeID"/> that was read.</param>
-            <returns>True on success; false otherwise.</returns>
-        </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.SeekArray(System.IO.BinaryReader,System.Byte[],System.Boolean)">
             <summary>
             Seeks position of the first occurence of the byte array provided.
@@ -514,6 +504,14 @@
             <typeparam name="T">Unmanaged type to read.</typeparam>
             <param name="br"></param>
             <returns>Instance of unmanaged type provided.</returns>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadStruct``1(System.IO.BinaryReader)">
+            <summary>
+            Reads a structure of the given type from a binary reader.
+            </summary>
+            <param name="br">A <see cref="T:System.IO.BinaryReader"/> instance to read data from.</param>
+            <typeparam name="T">The structure type. Must be a C# struct.</typeparam>
+            <returns>A new instance of <typeparamref name="T"/> with data read from <paramref name="br"/>.</returns>
         </member>
         <member name="T:CoreExtensions.IO.BinaryWriterX">
             <summary>
@@ -582,16 +580,6 @@
             <param name="length">Max length of the string to write; if length of the string 
             is less then length specified, padding will be added after it to fill buffer.</param>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteStruct``1(System.IO.BinaryWriter,``0)">
-            <summary>
-            Attempts to write struct of type <typeparamref name="TypeID"/>. In order for struct 
-            to be read correctly, it should have a <see cref="T:System.Runtime.InteropServices.StructLayoutAttribute"/>.
-            </summary>
-            <typeparam name="TypeID">Type of struct to read.</typeparam>
-            <param name="bw"></param>
-            <param name="value">Struct of type <typeparamref name="TypeID"/> to write.</param>
-            <returns>True on success; false otherwise.</returns>
-        </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.FillBuffer(System.IO.BinaryWriter,System.Int32)">
             <summary>
             Fills stream buffer till the certain padding is reached.
@@ -614,6 +602,15 @@
             <typeparam name="T">Unmanaged type to write.</typeparam>
             <param name="bw"></param>
             <param name="value">Instance of unmanaged type to write.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteStruct``1(System.IO.BinaryWriter,``0)">
+            <summary>
+            Attempts to write struct of type <typeparamref name="T"/>. In order for struct
+            to be read correctly, it should have a <see cref="T:System.Runtime.InteropServices.StructLayoutAttribute"/>.
+            </summary>
+            <typeparam name="T">Type of struct to write.</typeparam>
+            <param name="bw"></param>
+            <param name="value">Struct of type <typeparamref name="T"/> to write.</param>
         </member>
         <member name="T:CoreExtensions.IO.IniReader">
             <summary>
