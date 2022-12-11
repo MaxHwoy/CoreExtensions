@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-
-
+using System.Runtime.CompilerServices;
 
 namespace CoreExtensions.Conversions
 {
@@ -17,7 +15,9 @@ namespace CoreExtensions.Conversions
         /// <param name="dest">Type to be converted to.</param>
         /// <returns>Dynamically allocated object of type specified, if fails, returns null.</returns>
         public static dynamic DynamicCast(dynamic source, Type dest)
-            => Convert.ChangeType(source, dest);
+        {
+            return Convert.ChangeType(source, dest);
+        }
 
         /// <summary>
         /// Fast way to cast memory of one object to another. Does not guarantee to return exact copy.
@@ -26,21 +26,31 @@ namespace CoreExtensions.Conversions
         /// <param name="source">Object to be casted memory from.</param>
         public static void MemoryCast(this object result, object source)
         {
-            var SourceType = source.GetType(); // get type of the source object
-            var ResultType = result.GetType(); // get type of the result object
+            var sourceType = source.GetType();
+            var resultType = result.GetType();
 
-            foreach (var FieldInfo in SourceType.GetFields()) // for each register in source object
+            foreach (var fieldInfo in sourceType.GetFields())
             {
-                var ResultField = ResultType.GetField(FieldInfo.Name); // get field of result
-                if (ResultField == null) continue; // skip if a null field / nonexistent field
-                ResultField.SetValue(result, FieldInfo.GetValue(source)); // cast memory
+                var resultField = resultType.GetField(fieldInfo.Name);
+                
+                if (resultField == null)
+                {
+                    continue;
+                }
+                
+                resultField.SetValue(result, fieldInfo.GetValue(source));
             }
 
-            foreach (var PropertyInfo in SourceType.GetProperties()) // get property of source object
+            foreach (var propertyInfo in sourceType.GetProperties())
             {
-                var ResultProperty = ResultType.GetProperty(PropertyInfo.Name); // get property of result
-                if (ResultProperty == null) continue; // skip if a null property / nonexistent property
-                ResultProperty.SetValue(result, PropertyInfo.GetValue(source, null), null); // cast memory
+                var resultProperty = resultType.GetProperty(propertyInfo.Name);
+                
+                if (resultProperty == null)
+                {
+                    continue;
+                }
+                
+                resultProperty.SetValue(result, propertyInfo.GetValue(source, null), null);
             }
         }
 
@@ -51,7 +61,9 @@ namespace CoreExtensions.Conversions
         /// <param name="oftype">Primitive type to be converted to.</param>
         /// <returns>Casted value of the passed object.</returns>
         public static object ReinterpretCast(this object value, Type oftype)
-            => Convert.ChangeType(value, oftype);
+        {
+            return Convert.ChangeType(value, oftype);
+        }
 
         /// <summary>
         /// Casts any object to any type specified. Throws exception in case cast fails.
@@ -59,8 +71,10 @@ namespace CoreExtensions.Conversions
         /// <typeparam name="TypeID">Type to be converted to.</typeparam>
         /// <param name="value">Object passed to be casted.</param>
         /// <returns>Casted value of type specified. If casting fails, exception will be thrown.</returns>
-        public static TypeID StaticCast<TypeID>(this IConvertible value) where TypeID : IConvertible
-            => (TypeID)Convert.ChangeType(value, typeof(TypeID));
+        public static TypeID? StaticCast<TypeID>(this IConvertible? value) where TypeID : IConvertible
+        {
+            return (TypeID?)Convert.ChangeType(value, typeof(TypeID));
+        }
 
         /// <summary>
         /// Reinterprets pointer to the unmanaged object passed and returns instance of new unmanaged 
@@ -74,25 +88,7 @@ namespace CoreExtensions.Conversions
             where T : unmanaged
             where S : unmanaged
 		{
-            return *(S*)&value;
-		}
-
-        /// <summary>
-        /// Reinterprests pointer to the managed object passed and returns instance of new managed
-        /// type specified.
-        /// </summary>
-        /// <typeparam name="T">Managed type to reinterpret.</typeparam>
-        /// <typeparam name="S">Managed type to cast to.</typeparam>
-        /// <param name="value">Value to reinterpret.</param>
-        /// <returns>New managed instance casted from object passed.</returns>
-        public static unsafe S CastManaged<T, S>(T value)
-		{
-            var array = new Native.NativeArray<byte>(Marshal.SizeOf<T>());
-            var pointer = (IntPtr)array.GetPointer();
-            Marshal.StructureToPtr(value, pointer, false);
-            S result = Marshal.PtrToStructure<S>(pointer);
-            array.Free();
-            return result;
+            return Unsafe.As<T, S>(ref value);
 		}
     }
 }

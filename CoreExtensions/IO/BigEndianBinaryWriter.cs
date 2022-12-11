@@ -2,8 +2,6 @@
 using System.Text;
 using CoreExtensions.Native;
 
-
-
 namespace CoreExtensions.IO
 {
 	/// <summary>
@@ -35,8 +33,7 @@ namespace CoreExtensions.IO
 		/// <param name="encoding">The character encoding to use.</param>
 		/// <param name="leaveOpen">true to leave the stream open after the 
 		/// <see cref="BigEndianBinaryWriter"/> object is disposed; otherwise, false.</param>
-		public BigEndianBinaryWriter(Stream output, Encoding encoding, bool leaveOpen) :
-			base(output, encoding, leaveOpen) { }
+		public BigEndianBinaryWriter(Stream output, Encoding encoding, bool leaveOpen) : base(output, encoding, leaveOpen) { }
 
 		/// <summary>
 		/// Writes a two-byte signed integer to the current stream using big-endian encoding 

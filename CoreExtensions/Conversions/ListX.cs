@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 
-
-
 namespace CoreExtensions.Conversions
 {
 	/// <summary>
@@ -21,21 +19,18 @@ namespace CoreExtensions.Conversions
 		{
 			if (count <= 0)
 			{
-
 				list.Clear();
-
 			}
 			else if (count < list.Count)
 			{
-
 				list.RemoveRange(count, list.Count - count);
-
 			}
 			else
 			{
-
-				for (int a1 = list.Count; a1 < count; ++a1) list.Add(new TypeID());
-
+				for (int i = list.Count; i < count; ++i)
+                {
+					list.Add(new TypeID());
+				}
 			}
 		}
 
@@ -51,8 +46,15 @@ namespace CoreExtensions.Conversions
 		public static bool RemoveWith<TypeID>(this List<TypeID> list, Predicate<TypeID> predicate)
 		{
 			int index = list.FindIndex(predicate);
-			if (index != -1) { list.RemoveAt(index); return true; }
-			else return false;
+
+			if (index != -1)
+            {
+				list.RemoveAt(index);
+				
+				return true;
+			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -63,8 +65,7 @@ namespace CoreExtensions.Conversions
 		/// <returns>True if all elements are unique; false otherwise.</returns>
 		public static bool AllUnique<TypeID>(this List<TypeID> list)
 		{
-			var diffChecker = new HashSet<TypeID>();
-			return list.All(diffChecker.Add);
+			return list.All(new HashSet<TypeID>().Add);
 		}
 	}
 }

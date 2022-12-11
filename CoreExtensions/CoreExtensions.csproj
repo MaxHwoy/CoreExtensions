@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
     <PackageId>CoreExtensionsAPI</PackageId>
-    <Version>1.1.5</Version>
+    <Version>1.2.2</Version>
     <Authors>MaxHwoy</Authors>
     <Company>MaxHwoy</Company>
     <Description>Library of useful extensions for System classes.</Description>
-    <Copyright>Copyright © 2020 MaxHwoy</Copyright>
+    <Copyright>Copyright © 2023 MaxHwoy</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <RepositoryUrl>https://github.com/MaxHwoy/CoreExtensions</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

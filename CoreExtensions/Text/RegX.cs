@@ -4,8 +4,6 @@ using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-
-
 namespace CoreExtensions.Text
 {
 	/// <summary>
@@ -17,28 +15,35 @@ namespace CoreExtensions.Text
 		/// Determines whether given string can be a hexadecimal digit of type 0x[...].
 		/// </summary>
 		/// <returns>True if string can be a hexadecimal digit; false otherwise.</returns>
-		public static bool IsHexString(this string value)
+		public static bool IsHexString(this string? value)
 		{
-            if (value is null || value.Length < 3) return false;
-            if (value[0] != '0') return false;
-            if (value[1] != 'x' && value[1] != 'X') return false;
+            if (value is null || value.Length < 3)
+            {
+                return false;
+            }
+
+            if (value[0] != '0')
+            {
+                return false;
+            }
+
+            if (value[1] != 'x' && value[1] != 'X')
+            {
+                return false;
+            }
 
             for (int i = 2; i < value.Length; ++i)
             {
-
                 char c = value[i];
 
                 if (('0' <= c && c <= '9') ||
                     ('A' <= c && c <= 'F') ||
                     ('a' <= c && c <= 'f'))
                 {
-
                     continue;
-
                 }
 
                 return false;
-
             }
 
             return true;
@@ -52,13 +57,24 @@ namespace CoreExtensions.Text
         /// <param name="result">Unsigned integer value converted from the string value passed.</param>
         /// <returns>True if conversion was successful; false if string was not a hexadecimal
         /// string and/or contained characters that could not be converted.</returns>
-        public static bool TryHexStringToUInt32(this string value, out uint result)
+        public static bool TryHexStringToUInt32(this string? value, out uint result)
         {
             result = 0;
 
-            if (value is null || value.Length < 3) return false;
-            if (value[0] != '0') return false;
-            if (value[1] != 'x' && value[1] != 'X') return false;
+            if (value is null || value.Length < 3)
+            {
+                return false;
+            }
+
+            if (value[0] != '0')
+            {
+                return false;
+            }
+
+            if (value[1] != 'x' && value[1] != 'X')
+            {
+                return false;
+            }
 
             for (int i = 2, k = value.Length - 3; i < value.Length; ++i, --k)
             {
@@ -70,11 +86,13 @@ namespace CoreExtensions.Text
                     result += (uint)(c - '0') * mult;
                     continue;
                 }
+
                 if ('A' <= c && c <= 'F')
                 {
                     result += (uint)(c - 'A' + 10) * mult;
                     continue;
                 }
+
                 if ('a' <= c && c <= 'f')
                 {
                     result += (uint)(c - 'a' + 10) * mult;
@@ -106,8 +124,14 @@ namespace CoreExtensions.Text
                 {
                     var bit = (value >> (i << 2)) & 0x0F;
 
-                    if (bit < 10) array[k] = (char)(0x30 + bit);
-                    else array[k] = (char)(0x57 + bit);
+                    if (bit < 10)
+                    {
+                        array[k] = (char)(0x30 + bit);
+                    }
+                    else
+                    {
+                        array[k] = (char)(0x57 + bit);
+                    }
                 }
             }
             else
@@ -116,8 +140,14 @@ namespace CoreExtensions.Text
                 {
                     var bit = (value >> (i << 2)) & 0x0F;
 
-                    if (bit < 10) array[k] = (char)(0x30 + bit);
-                    else array[k] = (char)(0x37 + bit);
+                    if (bit < 10)
+                    {
+                        array[k] = (char)(0x30 + bit);
+                    }
+                    else
+                    {
+                        array[k] = (char)(0x37 + bit);
+                    }
                 }
             }
 
@@ -130,37 +160,102 @@ namespace CoreExtensions.Text
         /// <returns>First quoted string.</returns>
         public static string GetQuotedString(this string value)
 		{
-			var match = new Regex("[\"]{1}[^\n]*[\"]{1}").Match(value ?? String.Empty);
-            return match.Success ? match.Value.Trim('\"') : String.Empty;
+			for (int i = 0; i < value.Length; ++i)
+            {
+                if (value[i] == '"')
+                {
+                    for (int k = i + 1; k < value.Length; ++k)
+                    {
+                        if (value[k] == '"')
+                        {
+                            int length = k - i - 1;
+
+                            return length == 0
+                                ? String.Empty
+                                : value.Substring(i + 1, length);
+                        }
+                    }
+
+                    return String.Empty;
+                }
+            }
+
+            return String.Empty;
         }
 
-		/// <summary>
-		/// Splits string by whitespace and quotation marks.
-		/// </summary>
-		/// <returns><see cref="IEnumerable{T}"/> of strings.</returns>
-		public static IEnumerable<string> SmartSplitString(this string value)
-		{
-			if (String.IsNullOrWhiteSpace(value)) yield break;
-			var result = Regex.Split(value, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-			foreach (var str in result)
-			{
-
-                if (String.IsNullOrEmpty(str)) continue;
-                yield return str.StartsWith('\"') && str.EndsWith('\"') ? str[1..^1] : str;
-            
+        /// <summary>
+        /// Splits string by whitespace and quotation marks.
+        /// </summary>
+        /// <returns><see cref="IEnumerable{T}"/> of strings.</returns>
+        public static IEnumerable<string> SmartSplitString(this string value)
+        {
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                yield break;
             }
-		}
 
-		/// <summary>
-		/// Gets array of bytes of from the current string provided.
-		/// </summary>
+            bool inQuote = false;
+
+            int k = 0;
+
+            for (int i = 0; i < value.Length; ++i)
+            {
+                char v = value[i];
+
+                if (v == '"')
+                {
+                    int length = i - k;
+
+                    if (length > 0)
+                    {
+                        yield return value.Substring(k, length);
+                    }
+
+                    inQuote = !inQuote;
+
+                    k = i + 1;
+                }
+                else if (v == ' ' && !inQuote)
+                {
+                    int length = i - k;
+
+                    if (length > 0)
+                    {
+                        yield return value.Substring(k, length);
+                    }
+
+                    k = i + 1;
+                }
+            }
+
+            if (k < value.Length && !inQuote)
+            {
+                yield return value[k..];
+            }
+        }
+
+        /// <summary>
+        /// Gets array of bytes of from the current string provided.
+        /// </summary>
         /// <param name="value">String to convert to array of bytes.</param>
-		/// <returns>Array of bytes of the string.</returns>
-		public static byte[] GetBytes(this string value)
+        /// <returns>Array of bytes of the string.</returns>
+        public static byte[] GetBytes(this string? value)
 		{
-            var result = new byte[value.Length];
-            for (int i = 0; i < value.Length; ++i) result[i] = (byte)value[i];
-            return result;
+            if (String.IsNullOrEmpty(value))
+            {
+                return Array.Empty<byte>();
+            }
+            else
+            {
+                var result = new byte[value.Length];
+
+                for (int i = 0; i < value.Length; ++i)
+                {
+                    result[i] = (byte)value[i];
+                }
+
+                return result;
+            }
         }
 
         /// <summary>
@@ -168,11 +263,20 @@ namespace CoreExtensions.Text
         /// </summary>
         /// <param name="array">Array of bytes to convert to string.</param>
         /// <returns>String from array of bytes.</returns>
-        public static string GetString(this byte[] array)
+        public static string? GetString(this byte[]? array)
 		{
-            if (array == null) return null;
+            if (array is null)
+            {
+                return null;
+            }
+
             string result = String.Empty;
-            for (int i = 0; i < array.Length; ++i) result += (char)array[i];
+
+            for (int i = 0; i < array.Length; ++i)
+            {
+                result += (char)array[i];
+            }
+
             return result;
         }
 
@@ -181,15 +285,19 @@ namespace CoreExtensions.Text
         /// </summary>
         /// <param name="value"></param>
         /// <returns>HashCode of the string.</returns>
-        public static int GetSafeHashCode(this string value) =>
-            String.IsNullOrEmpty(value) ? String.Empty.GetHashCode() : value.GetHashCode();
+        public static int GetSafeHashCode(this string? value)
+        {
+            return String.IsNullOrEmpty(value)
+                ? String.Empty.GetHashCode()
+                : value.GetHashCode();
+        }
 
         /// <summary>
         /// Returns object of type <typeparamref name="TypeID"/> from the byte array provided.
         /// </summary>
         /// <param name="array">Array of bytes to convert.</param>
         /// <returns>Object of type <typeparamref name="TypeID"/>.</returns>
-        public static TypeID ToObject<TypeID>(this byte[] array) where TypeID : IConvertible
+        public static TypeID? ToObject<TypeID>(this byte[] array) where TypeID : IConvertible
         {
             return Type.GetTypeCode(typeof(TypeID)) switch
             {
@@ -215,7 +323,7 @@ namespace CoreExtensions.Text
         /// </summary>
         /// <param name="value">Value which memory should be returned.</param>
         /// <returns>Memory of the value passed as a byte array.</returns>
-        public static byte[] GetMemory(this IConvertible value)
+        public static byte[]? GetMemory(this IConvertible value)
         {
             return Type.GetTypeCode(value.GetType()) switch
             {
@@ -242,8 +350,9 @@ namespace CoreExtensions.Text
         /// <param name="str">This string to split.</param>
         /// <param name="size">Size of each splitted substring.</param>
         /// <returns><see cref="IEnumerable{T}"/> of substrings.</returns>
-        public static IEnumerable<string> SplitByLength(this string str, int size) =>
-            Enumerable.Range(0, str.Length / size)
-                .Select(i => str.Substring(i * size, size));
+        public static IEnumerable<string> SplitByLength(this string str, int size)
+        {
+            return Enumerable.Range(0, str.Length / size).Select(i => str.Substring(i * size, size));
+        }
     }
 }

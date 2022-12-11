@@ -20,16 +20,19 @@ namespace CoreExtensions.Reflection
             foreach (var inter in thistype.GetInterfaces())
             {
                 if (inter.IsGenericType && inter.GetGenericTypeDefinition() == intertype)
+                {
                     return true;
+                }
             }
 
             if (thistype.IsGenericType && thistype.GetGenericTypeDefinition() == intertype)
+            {
                 return true;
+            }
 
             var basetype = thistype.BaseType;
-            return basetype == null
-                ? false
-                : basetype.IsFromGenericInterface(intertype);
+
+            return basetype is not null && basetype.IsFromGenericInterface(intertype);
         }
 
         /// <summary>
@@ -43,11 +46,8 @@ namespace CoreExtensions.Reflection
         public static bool IsFromGenericClass(this Type thistype, Type classtype)
         {
             var basetype = thistype.BaseType;
-            return basetype == null
-                ? false
-                : basetype.IsGenericType && basetype.GetGenericTypeDefinition() == classtype
-                    ? true :
-                    IsFromGenericClass(basetype, classtype);
+
+            return basetype is not null && ((basetype.IsGenericType && basetype.GetGenericTypeDefinition() == classtype) || IsFromGenericClass(basetype, classtype));
         }
 
         /// <summary>
@@ -57,6 +57,8 @@ namespace CoreExtensions.Reflection
         /// <param name="generictype"><see cref="Type"/> of generic class to check.</param>
         /// <returns>True if given type is a generic definition itself; false otherwise.</returns>
         public static bool IsGenericItself(this Type giventype, Type generictype)
-            => giventype.IsGenericType && giventype.GetGenericTypeDefinition() == generictype;
+        {
+            return giventype.IsGenericType && giventype.GetGenericTypeDefinition() == generictype;
+        }
     }
 }

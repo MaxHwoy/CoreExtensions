@@ -3,8 +3,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-
-
 namespace CoreExtensions.Conversions
 {
 	/// <summary>
@@ -22,13 +20,19 @@ namespace CoreExtensions.Conversions
 		/// provided.</typeparam>
 		/// <param name="value"><see cref="IEnumerable{T}"/> to copy.</param>
 		/// <returns><see cref="IEnumerable{T}"/> of type <typeparamref name="T1"/>.</returns>
-		public static IEnumerable<T1> GetEnumerableCopy<T1, T2>(this IEnumerable<T2> value)
-			where T1 : IConvertible where T2 : IConvertible
+		public static IEnumerable<T1?> GetEnumerableCopy<T1, T2>(this IEnumerable<T2?>? value)
+			where T1 : IConvertible
+			where T2 : IConvertible
 		{
-			if (value is IEnumerable enumerator)
-			{
-				foreach (T2 obj in enumerator)
-					yield return obj.StaticCast<T1>();
+			if (value is not null)
+            {
+				if (value is IEnumerable enumerator)
+				{
+					foreach (T2 obj in enumerator)
+					{
+						yield return obj.StaticCast<T1>();
+					}
+				}
 			}
 		}
 
@@ -42,9 +46,12 @@ namespace CoreExtensions.Conversions
 		/// provided.</typeparam>
 		/// <param name="value"><see cref="IEnumerable{T}"/> to copy.</param>
 		/// <returns><see cref="List{T}"/> of type <typeparamref name="T1"/>.</returns>
-		public static List<T1> GetListCopy<T1, T2>(this IEnumerable<T2> value)
-			where T1 : IConvertible where T2 : IConvertible
-			=> value.GetEnumerableCopy<T1, T2>().ToList();
+		public static List<T1?> GetListCopy<T1, T2>(this IEnumerable<T2?>? value)
+			where T1 : IConvertible
+			where T2 : IConvertible
+        {
+			return value?.GetEnumerableCopy<T1, T2>().ToList() ?? new List<T1?>();
+		}
 
 		/// <summary>
 		/// Gets copy of <see cref="IEnumerable{T}"/> of type <typeparamref name="T2"/> 
@@ -56,9 +63,12 @@ namespace CoreExtensions.Conversions
 		/// provided.</typeparam>
 		/// <param name="value"><see cref="IEnumerable{T}"/> to copy.</param>
 		/// <returns>Array of type <typeparamref name="T1"/>.</returns>
-		public static T1[] GetArrayCopy<T1, T2>(this IEnumerable<T2> value)
-			where T1 : IConvertible where T2 : IConvertible
-			=> value.GetEnumerableCopy<T1, T2>().ToArray();
+		public static T1?[] GetArrayCopy<T1, T2>(this IEnumerable<T2?>? value)
+			where T1 : IConvertible
+			where T2 : IConvertible
+        {
+			return value?.GetEnumerableCopy<T1, T2>().ToArray() ?? Array.Empty<T1?>();
+		}
 
 		/// <summary>
 		/// Finds all strings in this <see cref="IEnumerable{T}"/> that contains substring provided.
@@ -66,11 +76,18 @@ namespace CoreExtensions.Conversions
 		/// <param name="e"></param>
 		/// <param name="match">String to match.</param>
 		/// <returns><see cref="IEnumerable{T}"/> of string that contain matching string.</returns>
-		public static IEnumerable<string> FindAllWithSubstring(this IEnumerable<string> e, string match)
+		public static IEnumerable<string> FindAllWithSubstring(this IEnumerable<string>? e, string? match)
 		{
-			foreach (var str in e)
-				if (str.Contains(match))
-					yield return str;
+			if (e is not null && match is not null)
+            {
+				foreach (var str in e)
+				{
+					if (str.Contains(match))
+					{
+						yield return str;
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -79,12 +96,16 @@ namespace CoreExtensions.Conversions
 		/// <typeparam name="TypeID"><see cref="Type"/> of the values.</typeparam>
 		/// <param name="value"></param>
 		/// <returns>Average of all values.</returns>
-		public static TypeID PrimitiveAverage<TypeID>(this IEnumerable<TypeID> value) 
-			where TypeID : IConvertible
+		public static TypeID PrimitiveAverage<TypeID>(this IEnumerable<TypeID>? value) where TypeID : IConvertible
 		{
 			decimal total = 0;
 			decimal count = 0;
-			if (value == null || value.Count() == 0) return default;
+
+			if (value is null || value.Any())
+            {
+				return default!;
+			}
+
 			switch (Type.GetTypeCode(typeof(TypeID)))
 			{
 				case TypeCode.Boolean:
@@ -95,7 +116,7 @@ namespace CoreExtensions.Conversions
 						++count;
 					}
 					bool boolresult = (total / count) >= (decimal)0.5;
-					return boolresult.StaticCast<TypeID>();
+					return boolresult.StaticCast<TypeID>()!;
 
 				case TypeCode.SByte:
 				case TypeCode.Byte:
@@ -114,10 +135,10 @@ namespace CoreExtensions.Conversions
 						++count;
 					}
 					decimal result = total / count;
-					return result.StaticCast<TypeID>();
+					return result.StaticCast<TypeID>()!;
 
 				default:
-					return default;
+					return default!;
 			}
 		}
 	}

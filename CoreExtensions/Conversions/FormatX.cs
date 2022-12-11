@@ -1,7 +1,5 @@
 ﻿using System;
 
-
-
 namespace CoreExtensions.Conversions
 {
     /// <summary>
@@ -16,7 +14,7 @@ namespace CoreExtensions.Conversions
         /// <param name="value">String from which to get format</param>
         /// <param name="format">Format to which parse the string and return the value.</param>
         /// <returns>String got from format of the value passed.</returns>
-        private static string GetFormattedString(string value, string format)
+        private static string? GetFormattedString(string value, string format)
         {
             try
             {
@@ -40,17 +38,20 @@ namespace CoreExtensions.Conversions
         /// <param name="format">Format to which parse the string and return the value.</param>
         /// <param name="result">Result value of type <see cref="IConvertible"/> passed.</param>
         /// <returns>Value got from format of the string passed.</returns>
-        public static bool GetFormattedValue<TypeID>(this string value, string format, out TypeID result)
-            where TypeID : IConvertible
+        public static bool GetFormattedValue<TypeID>(this string value, string format, out TypeID? result) where TypeID : IConvertible
         {
             result = default;
+
             try
             {
-                string str = GetFormattedString(value, format);
+                string str = GetFormattedString(value, format) ?? String.Empty;
                 result = str.StaticCast<TypeID>();
                 return true;
             }
-            catch (Exception) { return false; }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

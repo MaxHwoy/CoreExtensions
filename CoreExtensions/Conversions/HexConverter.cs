@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.ComponentModel;
-
-
+using CoreExtensions.Text;
 
 namespace CoreExtensions.Conversions
 {
@@ -34,8 +33,7 @@ namespace CoreExtensions.Conversions
 		/// <param name="culture">The <see cref="CultureInfo"/> to use as the current culture.</param>
 		/// <param name="value">The <see cref="Object"/> to convert.</param>
 		/// <returns>An <see cref="Object"/> that represents the converted value.</returns>
-		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, 
-            object value)
+		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
 			return value is string s
 				? Convert.ToUInt32(s, 16)
@@ -52,11 +50,10 @@ namespace CoreExtensions.Conversions
 		/// <param name="value">The <see cref="Object"/> to convert.</param>
 		/// <param name="destinationType">The <see cref="Type"/> to convert the value parameter to.</param>
 		/// <returns>An <see cref="Object"/> that represents the converted value.</returns>
-		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, 
-            object value, Type destinationType)
+		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
 			return destinationType == typeof(string)
-				? $"0x{(uint)value:X8}"
+				? ((uint)value).FastToHexString(false)
 				: base.ConvertTo(context, culture, value, destinationType);
 		}
 	}

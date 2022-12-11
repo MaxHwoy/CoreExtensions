@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
-
-
 namespace CoreExtensions.Native
 {
     /// <summary>
@@ -13,11 +11,13 @@ namespace CoreExtensions.Native
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [DebuggerDisplay("Length = {Length}")]
-    public struct NativeArray<T> where T : unmanaged
+    public unsafe struct NativeArray<T> where T : unmanaged
     {
-        private unsafe T* _pointer;
-        private bool _disposed;
-        public int Length { get; }
+        private readonly T* m_pointer;
+
+        private bool m_disposed;
+
+        public readonly int Length;
 
         /// <summary>
         /// Initializes new instance of <see cref="NativeArray{T}"/> with size and element type specified.
@@ -29,17 +29,15 @@ namespace CoreExtensions.Native
         /// equals zero.</exception>
         public NativeArray(int size)
         {
-            if (size <= 0) throw new ArgumentOutOfRangeException(nameof(size), "Size of allocated array should be bigger than 0");
-
-            unsafe
+            if (size <= 0)
             {
-
-                var len = sizeof(T);
-                this._pointer = (T*)Marshal.AllocHGlobal(len * size).ToPointer();
-                this.Length = size;
-                this._disposed = false;
-
+                throw new ArgumentOutOfRangeException(nameof(size), "Size of allocated array should be bigger than 0");
             }
+
+            var len = sizeof(T);
+            this.m_pointer = (T*)Marshal.AllocHGlobal(len * size).ToPointer();
+            this.Length = size;
+            this.m_disposed = false;
         }
 
         /// <summary>
@@ -48,10 +46,9 @@ namespace CoreExtensions.Native
         /// <param name="index">Index of an element to get or set.</param>
         /// <returns>Element at index specified.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Index specified is out of range of array.</exception>
-        public T this[int index]
+        public ref T this[int index]
         {
-            get => this.Get(index);
-            set => this.Set(index, value);
+            [MethodImpl(MethodImplOptions.AggressiveInlining)] get => ref this.m_pointer[index];
         }
 
         /// <summary>
@@ -61,10 +58,14 @@ namespace CoreExtensions.Native
         /// <returns>Element at index specified.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Index specified is out of range of array.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe T Get(int index)
+        public T Get(int index)
         {
-            if (index < 0 || index >= this.Length) throw new ArgumentOutOfRangeException(nameof(index));
-            return *(this._pointer + index);
+            if (index < 0 || index >= this.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index was out of range");
+            }
+
+            return *(this.m_pointer + index);
         }
 
         /// <summary>
@@ -74,10 +75,14 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to set at index specified.</param>
         /// <exception cref="ArgumentOutOfRangeException">Index specified is out of range of array.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe void Set(int index, T value)
+        public void Set(int index, T value)
         {
-            if (index < 0 || index >= this.Length) throw new ArgumentOutOfRangeException(nameof(index));
-            *(this._pointer + index) = value;
+            if (index < 0 || index >= this.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index was out of range");
+            }
+
+            *(this.m_pointer + index) = value;
         }
 
         /// <summary>
@@ -87,7 +92,7 @@ namespace CoreExtensions.Native
         /// <param name="index">Index of an element to set.</param>
         /// <returns>Element at index specified.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe T GetUnsafe(int index) => this._pointer[index];
+        public T GetUnsafe(int index) => this.m_pointer[index];
 
         /// <summary>
         /// Sets element at index specified without bound checks. Faster than regular <see cref="Set(int, T)"/>,
@@ -96,26 +101,25 @@ namespace CoreExtensions.Native
         /// <param name="index">Index of an element to set.</param>
         /// <param name="value">Value to set at index specified.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe void SetUnsafe(int index, T value) => this._pointer[index] = value;
+        public void SetUnsafe(int index, T value) => this.m_pointer[index] = value;
 
         /// <summary>
         /// Gets pointer of type <typeparamref name="T"/> to the beginning of allocated array.
         /// </summary>
         /// <returns></returns>
-        public unsafe T* GetPointer() => this._pointer;
+        public T* GetPointer() => this.m_pointer;
 
         /// <summary>
         /// Frees/releases this <see cref="NativeArray{T}"/> instance. This should be called when array
         /// is not needed anymore or before it goes out of local range.
         /// </summary>
-        public unsafe void Free()
+        public void Free()
         {
-            if (!this._disposed)
+            if (!this.m_disposed)
             {
-
-                Marshal.FreeHGlobal(new IntPtr(this._pointer));
-                this._disposed = true;
-
+                Marshal.FreeHGlobal(new IntPtr(this.m_pointer));
+                
+                this.m_disposed = true;
             }
         }
     }

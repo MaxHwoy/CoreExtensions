@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-
 namespace CoreExtensions.Native
 {
     /// <summary>
@@ -98,7 +96,7 @@ namespace CoreExtensions.Native
         /// <summary>
         /// ASM code.
         /// </summary>
-        private List<byte> _asm;
+        private readonly List<byte> m_asm;
 
         /// <summary>
         /// Initializes new instance of <see cref="ASMBuilder"/> with default capacity 0x100.
@@ -112,63 +110,67 @@ namespace CoreExtensions.Native
         /// If the number is zero or negative, capacity will be defaulted to 0x100.</param>
         public ASMBuilder(int capacity)
         {
-            if (capacity <= 0) capacity = 0x100;
-            this._asm = new List<byte>(capacity);
+            if (capacity <= 0)
+            {
+                capacity = 0x100;
+            }
+
+            this.m_asm = new List<byte>(capacity);
         }
 
         /// <summary>
         /// Writes ASM assembly.
         /// </summary>
         /// <param name="asm">ASM to write.</param>
-        public void Write(byte[] asm) => this._asm.AddRange(asm);
+        public void Write(byte[] asm) => this.m_asm.AddRange(asm);
 
         /// <summary>
         /// Gets generated ASM code.
         /// </summary>
         /// <returns>ASM as a byte array of opcodes.</returns>
-        public byte[] Get() => this._asm.ToArray();
+        public byte[] Get() => this.m_asm.ToArray();
 
         #region Increment Registers
 
         /// <summary>
         /// Increments value at EAX registry.
         /// </summary>
-        public void IncEAX() => this._asm.Add(ASMInstr.INC_EAX);
+        public void IncEAX() => this.m_asm.Add(ASMInstr.INC_EAX);
 
         /// <summary>
         /// Increments value at ECX registry.
         /// </summary>
-        public void IncECX() => this._asm.Add(ASMInstr.INC_ECX);
+        public void IncECX() => this.m_asm.Add(ASMInstr.INC_ECX);
 
         /// <summary>
         /// Increments value at EDX registry.
         /// </summary>
-        public void IncEDX() => this._asm.Add(ASMInstr.INC_EDX);
+        public void IncEDX() => this.m_asm.Add(ASMInstr.INC_EDX);
 
         /// <summary>
         /// Increments value at EBX registry.
         /// </summary>
-        public void IncEBX() => this._asm.Add(ASMInstr.INC_EBX);
+        public void IncEBX() => this.m_asm.Add(ASMInstr.INC_EBX);
 
         /// <summary>
         /// Increments value at ESP registry.
         /// </summary>
-        public void IncESP() => this._asm.Add(ASMInstr.INC_ESP);
+        public void IncESP() => this.m_asm.Add(ASMInstr.INC_ESP);
 
         /// <summary>
         /// Increments value at EBP registry.
         /// </summary>
-        public void IncEBP() => this._asm.Add(ASMInstr.INC_EBP);
+        public void IncEBP() => this.m_asm.Add(ASMInstr.INC_EBP);
 
         /// <summary>
         /// Increments value at ESI registry.
         /// </summary>
-        public void IncESI() => this._asm.Add(ASMInstr.INC_ESI);
+        public void IncESI() => this.m_asm.Add(ASMInstr.INC_ESI);
 
         /// <summary>
         /// Increments value at EDI registry.
         /// </summary>
-        public void IncEDI() => this._asm.Add(ASMInstr.INC_EDI);
+        public void IncEDI() => this.m_asm.Add(ASMInstr.INC_EDI);
 
         #endregion
 
@@ -177,42 +179,42 @@ namespace CoreExtensions.Native
         /// <summary>
         /// Decrements value at EAX registry.
         /// </summary>
-        public void DecEAX() => this._asm.Add(ASMInstr.DEC_EAX);
+        public void DecEAX() => this.m_asm.Add(ASMInstr.DEC_EAX);
 
         /// <summary>
         /// Decrements value at ECX registry.
         /// </summary>
-        public void DecECX() => this._asm.Add(ASMInstr.DEC_ECX);
+        public void DecECX() => this.m_asm.Add(ASMInstr.DEC_ECX);
 
         /// <summary>
         /// Decrements value at EDX registry.
         /// </summary>
-        public void DecEDX() => this._asm.Add(ASMInstr.DEC_EDX);
+        public void DecEDX() => this.m_asm.Add(ASMInstr.DEC_EDX);
 
         /// <summary>
         /// Decrements value at EBX registry.
         /// </summary>
-        public void DecEBX() => this._asm.Add(ASMInstr.DEC_EBX);
+        public void DecEBX() => this.m_asm.Add(ASMInstr.DEC_EBX);
 
         /// <summary>
         /// Decrements value at ESP registry.
         /// </summary>
-        public void DecESP() => this._asm.Add(ASMInstr.DEC_ESP);
+        public void DecESP() => this.m_asm.Add(ASMInstr.DEC_ESP);
 
         /// <summary>
         /// Decrements value at EBP registry.
         /// </summary>
-        public void DecEBP() => this._asm.Add(ASMInstr.DEC_EBP);
+        public void DecEBP() => this.m_asm.Add(ASMInstr.DEC_EBP);
 
         /// <summary>
         /// Decrements value at ESI registry.
         /// </summary>
-        public void DecESI() => this._asm.Add(ASMInstr.DEC_ESI);
+        public void DecESI() => this.m_asm.Add(ASMInstr.DEC_ESI);
 
         /// <summary>
         /// Decrements value at EDI registry.
         /// </summary>
-        public void DecEDI() => this._asm.Add(ASMInstr.DEC_EDI);
+        public void DecEDI() => this.m_asm.Add(ASMInstr.DEC_EDI);
 
         #endregion
 
@@ -221,42 +223,42 @@ namespace CoreExtensions.Native
         /// <summary>
         /// Push ESI to the stack.
         /// </summary>
-        public void PushEAX() => this._asm.Add(ASMInstr.PUSH_EAX);
+        public void PushEAX() => this.m_asm.Add(ASMInstr.PUSH_EAX);
 
         /// <summary>
         /// Push ECX to the stack.
         /// </summary>
-        public void PushECX() => this._asm.Add(ASMInstr.PUSH_ECX);
+        public void PushECX() => this.m_asm.Add(ASMInstr.PUSH_ECX);
 
         /// <summary>
         /// Push EDX to the stack.
         /// </summary>
-        public void PushEDX() => this._asm.Add(ASMInstr.PUSH_EDX);
+        public void PushEDX() => this.m_asm.Add(ASMInstr.PUSH_EDX);
 
         /// <summary>
         /// Push EBX to the stack.
         /// </summary>
-        public void PushEBX() => this._asm.Add(ASMInstr.PUSH_EBX);
+        public void PushEBX() => this.m_asm.Add(ASMInstr.PUSH_EBX);
 
         /// <summary>
         /// Push ESP to the stack.
         /// </summary>
-        public void PushESP() => this._asm.Add(ASMInstr.PUSH_ESP);
+        public void PushESP() => this.m_asm.Add(ASMInstr.PUSH_ESP);
 
         /// <summary>
         /// Push EBP to the stack.
         /// </summary>
-        public void PushEBP() => this._asm.Add(ASMInstr.PUSH_EBP);
+        public void PushEBP() => this.m_asm.Add(ASMInstr.PUSH_EBP);
 
         /// <summary>
         /// Push ESI to the stack.
         /// </summary>
-        public void PushESI() => this._asm.Add(ASMInstr.PUSH_ESI);
+        public void PushESI() => this.m_asm.Add(ASMInstr.PUSH_ESI);
 
         /// <summary>
         /// Push EDI to the stack.
         /// </summary>
-        public void PushEDI() => this._asm.Add(ASMInstr.PUSH_EDI);
+        public void PushEDI() => this.m_asm.Add(ASMInstr.PUSH_EDI);
 
         #endregion
 
@@ -265,42 +267,42 @@ namespace CoreExtensions.Native
         /// <summary>
         /// Pop ESI to the stack.
         /// </summary>
-        public void PopEAX() => this._asm.Add(ASMInstr.POP_EAX);
+        public void PopEAX() => this.m_asm.Add(ASMInstr.POP_EAX);
 
         /// <summary>
         /// Pop ECX to the stack.
         /// </summary>
-        public void PopECX() => this._asm.Add(ASMInstr.POP_ECX);
+        public void PopECX() => this.m_asm.Add(ASMInstr.POP_ECX);
 
         /// <summary>
         /// Pop EDX to the stack.
         /// </summary>
-        public void PopEDX() => this._asm.Add(ASMInstr.POP_EDX);
+        public void PopEDX() => this.m_asm.Add(ASMInstr.POP_EDX);
 
         /// <summary>
         /// Pop EBX to the stack.
         /// </summary>
-        public void PopEBX() => this._asm.Add(ASMInstr.POP_EBX);
+        public void PopEBX() => this.m_asm.Add(ASMInstr.POP_EBX);
 
         /// <summary>
         /// Pop ESP to the stack.
         /// </summary>
-        public void PopESP() => this._asm.Add(ASMInstr.POP_ESP);
+        public void PopESP() => this.m_asm.Add(ASMInstr.POP_ESP);
 
         /// <summary>
         /// Pop EBP to the stack.
         /// </summary>
-        public void PopEBP() => this._asm.Add(ASMInstr.POP_EBP);
+        public void PopEBP() => this.m_asm.Add(ASMInstr.POP_EBP);
 
         /// <summary>
         /// Pop ESI to the stack.
         /// </summary>
-        public void PopESI() => this._asm.Add(ASMInstr.POP_ESI);
+        public void PopESI() => this.m_asm.Add(ASMInstr.POP_ESI);
 
         /// <summary>
         /// Pop EDI to the stack.
         /// </summary>
-        public void PopEDI() => this._asm.Add(ASMInstr.POP_EDI);
+        public void PopEDI() => this.m_asm.Add(ASMInstr.POP_EDI);
 
         #endregion
 
@@ -310,13 +312,13 @@ namespace CoreExtensions.Native
         /// Pushes byte to the stack.
         /// </summary>
         /// <param name="value">Value to push.</param>
-        public void PushBYTE(byte value) => this._asm.AddRange(new byte[] { ASMInstr.PUSH_BYTE, value });
+        public void PushBYTE(byte value) => this.m_asm.AddRange(new byte[] { ASMInstr.PUSH_BYTE, value });
 
         /// <summary>
         /// Pushes sbyte to the stack.
         /// </summary>
         /// <param name="value">Value to push.</param>
-        public void PushBYTE(sbyte value) => this._asm.AddRange(new byte[] { ASMInstr.PUSH_BYTE, (byte)value });
+        public void PushBYTE(sbyte value) => this.m_asm.AddRange(new byte[] { ASMInstr.PUSH_BYTE, (byte)value });
 
         /// <summary>
         /// Pushes short to the stack.
@@ -330,8 +332,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to push.</param>
         public void PushWORD(ushort value)
         {
-            this._asm.Add(ASMInstr.PUSH_WORD);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.PUSH_WORD);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -346,8 +348,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to push.</param>
         public void PushDWORD(uint value)
         {
-            this._asm.Add(ASMInstr.PUSH_WORD);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.PUSH_WORD);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -356,8 +358,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to push.</param>
         public void PushDWORD(float value)
         {
-            this._asm.Add(ASMInstr.PUSH_WORD);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.PUSH_WORD);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -366,8 +368,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to push.</param>
         public void PushQWORD(double value)
         {
-            this._asm.Add(ASMInstr.PUSH_WORD);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.PUSH_WORD);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         #endregion
@@ -386,8 +388,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToAL(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_AL);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_AL);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -402,8 +404,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToCL(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_CL);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_CL);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -418,8 +420,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToDL(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_DL);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_DL);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -434,8 +436,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToBL(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_BL);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_BL);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -450,8 +452,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToAH(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_AH);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_AH);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -466,8 +468,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToCH(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_CH);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_CH);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -482,8 +484,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToDH(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_DH);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_DH);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -498,8 +500,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToBH(byte value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_BH);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_BH);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         #endregion
@@ -518,8 +520,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToEAX(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_EAX);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_EAX);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -534,8 +536,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToECX(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_ECX);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_ECX);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -550,8 +552,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToEDX(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_EDX);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_EDX);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -566,8 +568,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToEBX(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_EBX);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_EBX);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -582,8 +584,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToESP(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_ESP);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_ESP);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -598,8 +600,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToEBP(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_EBP);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_EBP);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -614,8 +616,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToESI(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_ESI);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_ESI);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -630,8 +632,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to move.</param>
         public void MovToEDI(uint value)
         {
-            this._asm.Add(ASMInstr.MOV_TO_EDI);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.MOV_TO_EDI);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
 		#endregion
@@ -641,7 +643,7 @@ namespace CoreExtensions.Native
 		/// <summary>
 		/// Calls EAX registry.
 		/// </summary>
-		public void CallEAX() => this._asm.AddRange(ASMInstr.CALL_EAX);
+		public void CallEAX() => this.m_asm.AddRange(ASMInstr.CALL_EAX);
 
         /// <summary>
         /// Pushes word value to PTR_DS.
@@ -655,8 +657,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to push.</param>
         public void PushWORDPTRDS(uint value)
         {
-            this._asm.AddRange(ASMInstr.PUSH_WORD_PTR_DS);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.AddRange(ASMInstr.PUSH_WORD_PTR_DS);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
         /// <summary>
@@ -665,8 +667,8 @@ namespace CoreExtensions.Native
         /// <param name="address"></param>
         public void MovEAXToAddress(uint address)
         {
-            this._asm.Add(0xA3);
-            this._asm.AddRange(BitConverter.GetBytes(address));
+            this.m_asm.Add(0xA3);
+            this.m_asm.AddRange(BitConverter.GetBytes(address));
         }
 
         /// <summary>
@@ -675,8 +677,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to add.</param>
         public void AddToESP(int value)
         {
-            this._asm.AddRange(ASMInstr.ADD_TO_ESP);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.AddRange(ASMInstr.ADD_TO_ESP);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
 		#endregion
@@ -690,8 +692,13 @@ namespace CoreExtensions.Native
 		public void NOP(int size)
         {
             var arr = new byte[size];
-            for (int a1 = 0; a1 < size; ++a1) arr[a1] = ASMInstr.NOP;
-            this._asm.AddRange(arr);
+
+            for (int a1 = 0; a1 < size; ++a1)
+            {
+                arr[a1] = ASMInstr.NOP;
+            }
+
+            this.m_asm.AddRange(arr);
         }
 
         /// <summary>
@@ -706,15 +713,15 @@ namespace CoreExtensions.Native
         /// <param name="address">Address to jump to.</param>
         public void JMP(uint address)
         {
-            this._asm.Add(0xE9);
-            this._asm.AddRange(BitConverter.GetBytes(address));
+            this.m_asm.Add(0xE9);
+            this.m_asm.AddRange(BitConverter.GetBytes(address));
         }
 
         /// <summary>
         /// Calls retn.
         /// </summary>
         /// <returns></returns>
-        public void Return() => this._asm.Add(ASMInstr.RET_N);
+        public void Return() => this.m_asm.Add(ASMInstr.RET_N);
 
         /// <summary>
         /// Calls return based on word passed.
@@ -728,8 +735,8 @@ namespace CoreExtensions.Native
         /// <param name="value">Value to make return based on.</param>
         public void RetWORD(ushort value)
         {
-            this._asm.Add(ASMInstr.RET_WORD);
-            this._asm.AddRange(BitConverter.GetBytes(value));
+            this.m_asm.Add(ASMInstr.RET_WORD);
+            this.m_asm.AddRange(BitConverter.GetBytes(value));
         }
 
 		#endregion

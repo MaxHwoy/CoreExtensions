@@ -1,7 +1,5 @@
 ﻿using System;
 
-
-
 namespace CoreExtensions.Management
 {
 	/// <summary>
@@ -16,7 +14,11 @@ namespace CoreExtensions.Management
 		/// <returns>Innermost exception message as a string.</returns>
 		public static string GetLowestMessage(this Exception e)
 		{
-			while (e.InnerException != null) e = e.InnerException;
+			while (e.InnerException is not null)
+            {
+				e = e.InnerException;
+			}
+
 			return e.Message;
 		}
 
@@ -27,7 +29,11 @@ namespace CoreExtensions.Management
 		/// <returns>Innermost exception HResult as a 4-byte integer.</returns>
 		public static int GetLowestHResult(this Exception e)
 		{
-			while (e.InnerException != null) e = e.InnerException;
+			while (e.InnerException is not null)
+            {
+				e = e.InnerException;
+			}
+
 			return e.HResult;
 		}
 
@@ -36,9 +42,13 @@ namespace CoreExtensions.Management
 		/// </summary>
 		/// <param name="e"><see cref="Exception"/> to analyze.</param>
 		/// <returns>Innermost exception StackTrace as a string.</returns>
-		public static string GetLowestStackTrace(this Exception e)
+		public static string? GetLowestStackTrace(this Exception e)
 		{
-			while (e.InnerException != null) e = e.InnerException;
+			while (e.InnerException is not null)
+            {
+				e = e.InnerException;
+			}
+
 			return e.StackTrace;
 		}
 	}

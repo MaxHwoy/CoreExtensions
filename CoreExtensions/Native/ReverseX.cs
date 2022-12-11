@@ -1,4 +1,6 @@
-﻿namespace CoreExtensions.Native
+﻿using System.Runtime.CompilerServices;
+
+namespace CoreExtensions.Native
 {
 	/// <summary>
 	/// Provides all major extensions for reversing (endian-swapping) primitive values.
@@ -68,12 +70,11 @@
 		/// <returns>Reversed (endian-swapped) 4-byte floating point value.</returns>
 		public static float Reverse(this float value)
 		{
-			unsafe
-			{
-				var ptr = (byte*)&value;
-				var arr = new byte[4] { ptr[3], ptr[2], ptr[1], ptr[0] };
-				fixed (byte* _ = &arr[0]) { return *(float*)_; }
-			}
+			uint temp = Unsafe.As<float, uint>(ref value);
+
+			temp = temp.Reverse();
+
+			return Unsafe.As<uint, float>(ref temp);
 		}
 
 		/// <summary>

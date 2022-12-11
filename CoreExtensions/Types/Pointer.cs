@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-
-
 
 namespace CoreExtensions.Types
 {
@@ -12,8 +9,8 @@ namespace CoreExtensions.Types
 	/// </summary>
 	public struct Pointer : ISerializable
 	{
-		private readonly unsafe void* _ptr;
-		private unsafe int Address => (int)this._ptr;
+		private readonly unsafe void* m_ptr;
+		private unsafe int Address => (int)this.m_ptr;
 
 		/// <summary>
 		/// A <see langword="static"/> <see cref="Pointer"/> value with address 0.
@@ -36,119 +33,119 @@ namespace CoreExtensions.Types
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to an unspecified type.</param>
-		public unsafe Pointer(void* ptr) => this._ptr = ptr;
+		public unsafe Pointer(void* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to an boolean type.</param>
-		public unsafe Pointer(bool* ptr) => this._ptr = ptr;
+		public unsafe Pointer(bool* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to an unsigned 8-bit integer type.</param>
-		public unsafe Pointer(byte* ptr) => this._ptr = ptr;
+		public unsafe Pointer(byte* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a signed 8-bit integer type.</param>
-		public unsafe Pointer(sbyte* ptr) => this._ptr = ptr;
+		public unsafe Pointer(sbyte* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a signed 16-bit integer type.</param>
-		public unsafe Pointer(short* ptr) => this._ptr = ptr;
+		public unsafe Pointer(short* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to an unsigned 16-bit integer type.</param>
-		public unsafe Pointer(ushort* ptr) => this._ptr = ptr;
+		public unsafe Pointer(ushort* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a signed 32-bit integer type.</param>
-		public unsafe Pointer(int* ptr) => this._ptr = ptr;
+		public unsafe Pointer(int* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to an unsigned 32-bit integer type.</param>
-		public unsafe Pointer(uint* ptr) => this._ptr = ptr;
+		public unsafe Pointer(uint* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a signed 64-bit integer type.</param>
-		public unsafe Pointer(long* ptr) => this._ptr = ptr;
+		public unsafe Pointer(long* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to an unsigned 64-bit integer type.</param>
-		public unsafe Pointer(ulong* ptr) => this._ptr = ptr;
+		public unsafe Pointer(ulong* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a 32-bit floating point type.</param>
-		public unsafe Pointer(float* ptr) => this._ptr = ptr;
+		public unsafe Pointer(float* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a 64-bit floating point type.</param>
-		public unsafe Pointer(double* ptr) => this._ptr = ptr;
+		public unsafe Pointer(double* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the pointer specified.
 		/// </summary>
 		/// <param name="ptr">A pointer to a 128-bit floating point type.</param>
-		public unsafe Pointer(decimal* ptr) => this._ptr = ptr;
+		public unsafe Pointer(decimal* ptr) => this.m_ptr = ptr;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the <see cref="IntPtr"/> specified.
 		/// </summary>
 		/// <param name="ptr"><see cref="IntPtr"/> to initialize with.</param>
-		public unsafe Pointer(IntPtr ptr) => this._ptr = ptr.ToPointer();
+		public unsafe Pointer(IntPtr ptr) => this.m_ptr = ptr.ToPointer();
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the <see cref="UIntPtr"/> specified.
 		/// </summary>
 		/// <param name="ptr"><see cref="UIntPtr"/> to initialize with.</param>
-		public unsafe Pointer(UIntPtr ptr) => this._ptr = ptr.ToPointer();
+		public unsafe Pointer(UIntPtr ptr) => this.m_ptr = ptr.ToPointer();
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the specified 32-bit 
 		/// signed pointer or handle.
 		/// </summary>
 		/// <param name="address">A pointer or handle contained in a 32-bit signed integer.</param>
-		public unsafe Pointer(int address) => this._ptr = (void*)address;
+		public unsafe Pointer(int address) => this.m_ptr = (void*)address;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the specified 32-bit 
 		/// unsigned pointer or handle.
 		/// </summary>
 		/// <param name="address">A pointer or handle contained in a 32-bit unsigned integer.</param>
-		public unsafe Pointer(uint address) => this._ptr = (void*)address;
+		public unsafe Pointer(uint address) => this.m_ptr = (void*)address;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the specified 64-bit 
 		/// signed pointer or handle.
 		/// </summary>
 		/// <param name="address">A pointer or handle contained in a 64-bit signed integer.</param>
-		public unsafe Pointer(long address) => this._ptr = (void*)address;
+		public unsafe Pointer(long address) => this.m_ptr = (void*)address;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Pointer"/> using the specified 64-bit 
 		/// unsigned pointer or handle.
 		/// </summary>
 		/// <param name="address">A pointer or handle contained in a 64-bit unsigned integer.</param>
-		public unsafe Pointer(ulong address) => this._ptr = (void*)address;
+		public unsafe Pointer(ulong address) => this.m_ptr = (void*)address;
 
 		/// <summary>
 		/// Populates a <see cref="SerializationInfo"/> object with the data needed to serialize 
@@ -161,12 +158,10 @@ namespace CoreExtensions.Types
 		{
 			if (info == null)
 			{
-
 				throw new ArgumentNullException(nameof(info));
-
 			}
 
-			info.AddValue("value", (int)this._ptr);
+			info.AddValue("value", (int)this.m_ptr);
 		}
 
 		/// <summary>
@@ -175,7 +170,7 @@ namespace CoreExtensions.Types
 		/// <param name="obj">An object to compare with this instance or <see langword="null" />.</param>
 		/// <returns><see langword="true"/> if object is an instance of <see cref="Pointer"/> 
 		/// and equals the value of this instance; otherwise, <see langword="false"/>.</returns>
-		public override unsafe bool Equals(object obj) => obj is Pointer ptr && ptr._ptr == this._ptr;
+		public override unsafe bool Equals(object? obj) => obj is Pointer ptr && ptr.m_ptr == this.m_ptr;
 
 		/// <summary>
 		/// Returns the hash code for this instance.
@@ -203,163 +198,163 @@ namespace CoreExtensions.Types
 		/// Converts this <see cref="Pointer"/> instance to a pointer of unspecified type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator void*(Pointer ptr) => ptr._ptr;
+		public static unsafe implicit operator void*(Pointer ptr) => ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of boolean type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator bool*(Pointer ptr) => (bool*)ptr._ptr;
+		public static unsafe implicit operator bool*(Pointer ptr) => (bool*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 8-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator byte*(Pointer ptr) => (byte*)ptr._ptr;
+		public static unsafe implicit operator byte*(Pointer ptr) => (byte*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 8-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator sbyte*(Pointer ptr) => (sbyte*)ptr._ptr;
+		public static unsafe implicit operator sbyte*(Pointer ptr) => (sbyte*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 16-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator short*(Pointer ptr) => (short*)ptr._ptr;
+		public static unsafe implicit operator short*(Pointer ptr) => (short*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 16-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator ushort*(Pointer ptr) => (ushort*)ptr._ptr;
+		public static unsafe implicit operator ushort*(Pointer ptr) => (ushort*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 32-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator int*(Pointer ptr) => (int*)ptr._ptr;
+		public static unsafe implicit operator int*(Pointer ptr) => (int*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 32-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator uint*(Pointer ptr) => (uint*)ptr._ptr;
+		public static unsafe implicit operator uint*(Pointer ptr) => (uint*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 64-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator long*(Pointer ptr) => (long*)ptr._ptr;
+		public static unsafe implicit operator long*(Pointer ptr) => (long*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 64-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator ulong*(Pointer ptr) => (ulong*)ptr._ptr;
+		public static unsafe implicit operator ulong*(Pointer ptr) => (ulong*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 32-bit floating point type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator float*(Pointer ptr) => (float*)ptr._ptr;
+		public static unsafe implicit operator float*(Pointer ptr) => (float*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 64-bit floating point type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator double*(Pointer ptr) => (double*)ptr._ptr;
+		public static unsafe implicit operator double*(Pointer ptr) => (double*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a pointer of 128-bit floating point type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator decimal*(Pointer ptr) => (decimal*)ptr._ptr;
+		public static unsafe implicit operator decimal*(Pointer ptr) => (decimal*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a boolean type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator bool(Pointer ptr) => *(bool*)ptr._ptr;
+		public static unsafe implicit operator bool(Pointer ptr) => *(bool*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to an 8-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator byte(Pointer ptr) => *(byte*)ptr._ptr;
+		public static unsafe implicit operator byte(Pointer ptr) => *(byte*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to an 8-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator sbyte(Pointer ptr) => *(sbyte*)ptr._ptr;
+		public static unsafe implicit operator sbyte(Pointer ptr) => *(sbyte*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 16-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator short(Pointer ptr) => *(short*)ptr._ptr;
+		public static unsafe implicit operator short(Pointer ptr) => *(short*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 16-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator ushort(Pointer ptr) => *(ushort*)ptr._ptr;
+		public static unsafe implicit operator ushort(Pointer ptr) => *(ushort*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 32-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator int(Pointer ptr) => *(int*)ptr._ptr;
+		public static unsafe implicit operator int(Pointer ptr) => *(int*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 32-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator uint(Pointer ptr) => *(uint*)ptr._ptr;
+		public static unsafe implicit operator uint(Pointer ptr) => *(uint*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 64-bit signed integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator long(Pointer ptr) => *(long*)ptr._ptr;
+		public static unsafe implicit operator long(Pointer ptr) => *(long*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 64-bit unsigned integer type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator ulong(Pointer ptr) => *(ulong*)ptr._ptr;
+		public static unsafe implicit operator ulong(Pointer ptr) => *(ulong*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 32-bit floating point type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator float(Pointer ptr) => *(float*)ptr._ptr;
+		public static unsafe implicit operator float(Pointer ptr) => *(float*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 64-bit floating point type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator double(Pointer ptr) => *(double*)ptr._ptr;
+		public static unsafe implicit operator double(Pointer ptr) => *(double*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> instance to a 128-bit floating point type.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator decimal(Pointer ptr) => *(decimal*)ptr._ptr;
+		public static unsafe implicit operator decimal(Pointer ptr) => *(decimal*)ptr.m_ptr;
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> to a <see cref="IntPtr"/> instance.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator IntPtr(Pointer ptr) => new IntPtr(ptr._ptr);
+		public static unsafe implicit operator IntPtr(Pointer ptr) => new IntPtr(ptr.m_ptr);
 
 		/// <summary>
 		/// Converts this <see cref="Pointer"/> to a <see cref="UIntPtr"/> instance.
 		/// </summary>
 		/// <param name="ptr"><see cref="Pointer"/> to convert.</param>
-		public static unsafe implicit operator UIntPtr(Pointer ptr) => new UIntPtr(ptr._ptr);
+		public static unsafe implicit operator UIntPtr(Pointer ptr) => new UIntPtr(ptr.m_ptr);
 
 		/// <summary>
 		/// Converts pointer to an unspecified type to a <see cref="Pointer"/> instance.
@@ -482,7 +477,7 @@ namespace CoreExtensions.Types
 		/// <param name="ptr2">The second pointer or handle to compare.</param>
 		/// <returns><see langword="true"/> if first pointer equals second pointer; 
 		/// otherwise, <see langword="false" />.</returns>
-		public static unsafe bool operator ==(Pointer ptr1, Pointer ptr2) => ptr1._ptr == ptr2._ptr;
+		public static unsafe bool operator ==(Pointer ptr1, Pointer ptr2) => ptr1.m_ptr == ptr2.m_ptr;
 
 		/// <summary>
 		/// Determines whether two specified instances of <see cref="Pointer"/> are not equal.
@@ -491,7 +486,7 @@ namespace CoreExtensions.Types
 		/// <param name="ptr2">The second pointer or handle to compare.</param>
 		/// <returns><see langword="true"/> if first pointer does not equal second pointer; 
 		/// otherwise, <see langword="false" />.</returns>
-		public static unsafe bool operator !=(Pointer ptr1, Pointer ptr2) => ptr1._ptr != ptr2._ptr;
+		public static unsafe bool operator !=(Pointer ptr1, Pointer ptr2) => ptr1.m_ptr != ptr2.m_ptr;
 
 		/// <summary>
 		/// Adds an offset to the value of a pointer.

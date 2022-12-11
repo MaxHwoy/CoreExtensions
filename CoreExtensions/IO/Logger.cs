@@ -2,8 +2,6 @@
 using System.IO;
 using CoreExtensions.Management;
 
-
-
 namespace CoreExtensions.IO
 {
 	/// <summary>
@@ -11,7 +9,7 @@ namespace CoreExtensions.IO
 	/// </summary>
 	public class Logger : IDisposable
 	{
-		private StreamWriter _writer;
+		private StreamWriter? m_writer;
 
 		/// <summary>
 		/// Initializes new instance of <see cref="Logger"/> that writes to a file specified.
@@ -19,7 +17,7 @@ namespace CoreExtensions.IO
 		/// <param name="file">File to write to.</param>
 		public Logger(string file)
 		{
-			this._writer = File.Exists(file)
+			this.m_writer = File.Exists(file)
 				? new StreamWriter(File.Open(file, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
 				: new StreamWriter(File.Open(file, FileMode.Create, FileAccess.Write, FileShare.ReadWrite));
 		}
@@ -39,42 +37,72 @@ namespace CoreExtensions.IO
 		/// <param name="file">File to write to.</param>
 		/// <param name="intro">Introductory string to write on file opening.</param>
 		/// <param name="writedate">True if write date to a file; false otherwise.</param>
-		public Logger(string file, string intro, bool writedate)
+		public Logger(string file, string? intro, bool writedate)
 		{
 			string space = String.Empty;
-			for (int loop = 0; loop < intro.Length; ++loop) space += "-";
+
+			for (int loop = 0; loop < intro?.Length; ++loop)
+            {
+				space += "-";
+			}
 
 			if (File.Exists(file))
 			{
+				this.m_writer = new StreamWriter(File.Open(file, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
 
-				this._writer = new StreamWriter(File.Open(file, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
-				this._writer.WriteLine();
-				this._writer.WriteLine();
-				this._writer.WriteLine();
-				this._writer.WriteLine(intro);
-				if (writedate) this._writer.WriteLine(DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
-				this._writer.WriteLine(space);
+				this.m_writer.WriteLine();
+				this.m_writer.WriteLine();
+				this.m_writer.WriteLine();
+				this.m_writer.WriteLine(intro);
 
+				if (writedate)
+                {
+					this.m_writer.WriteLine(DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
+				}
+
+				this.m_writer.WriteLine(space);
 			}
 			else
 			{
 
-				this._writer = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite));
-				this._writer.WriteLine(intro);
-				if (writedate) this._writer.WriteLine(DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
-				this._writer.WriteLine(space);
+				this.m_writer = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite));
+
+				this.m_writer.WriteLine(intro);
+
+				if (writedate)
+                {
+					this.m_writer.WriteLine(DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
+				}
+
+				this.m_writer.WriteLine(space);
 
 			}
 		}
 
 		/// <summary>
+		/// Finalizer for <see cref="Logger"/>. Called by <see cref="GC"/> in case <see cref="Dispose"/> was not called.
+		/// </summary>
+		~Logger()
+        {
+			this.InternalDispose();
+        }
+
+		/// <summary>
 		/// Writes a string to a file.
 		/// </summary>
 		/// <param name="value">String value to write.</param>
-		public void Write(string value)
+		public void Write(string? value)
 		{
-			try { this._writer.Write(value); }
-			catch { }
+			if (this.m_writer is not null)
+            {
+				try
+				{
+					this.m_writer.Write(value);
+				}
+				catch
+				{
+				}
+			}
 		}
 	
 		/// <summary>
@@ -83,17 +111,20 @@ namespace CoreExtensions.IO
 		/// <param name="exception"><see cref="Exception"/> to write.</param>
 		public void WriteException(Exception exception)
 		{
-			try
-			{
-
-				this._writer.WriteLine($"Exception: {exception.GetLowestMessage()}");
-				this._writer.WriteLine($"HResult: {exception.GetLowestHResult()}");
-				this._writer.WriteLine($"StackTrace: {exception.GetLowestStackTrace()}");
-				this._writer.WriteLine($"TargetSite: {exception.TargetSite}");
-				this._writer.WriteLine($"Source: {exception.Source}");
-
+			if (this.m_writer is not null)
+            {
+				try
+				{
+					this.m_writer.WriteLine($"Exception: {exception.GetLowestMessage()}");
+					this.m_writer.WriteLine($"HResult: {exception.GetLowestHResult()}");
+					this.m_writer.WriteLine($"StackTrace: {exception.GetLowestStackTrace()}");
+					this.m_writer.WriteLine($"TargetSite: {exception.TargetSite}");
+					this.m_writer.WriteLine($"Source: {exception.Source}");
+				}
+				catch
+				{
+				}
 			}
-			catch { }
 		}
 
 		/// <summary>
@@ -103,14 +134,17 @@ namespace CoreExtensions.IO
 		/// <param name="stream"><see cref="Stream"/> which position should be written.</param>
 		public void WriteException(Exception exception, Stream stream)
 		{
-			try
-			{
-
-				this.WriteException(exception);
-				this._writer.WriteLine($"Stream position: {stream.Position}");
-
+			if (this.m_writer is not null)
+            {
+				try
+				{
+					this.WriteException(exception);
+					this.m_writer.WriteLine($"Stream position: {stream.Position}");
+				}
+				catch
+				{
+				}
 			}
-			catch { }
 		}
 
 		/// <summary>
@@ -120,15 +154,18 @@ namespace CoreExtensions.IO
 		/// <param name="delegate"><see cref="Delegate"/> which information should be written.</param>
 		public void WriteException(Exception exception, Delegate @delegate)
 		{
-			try
-			{
-
-				this.WriteException(exception);
-				this._writer.WriteLine($"Target: {@delegate.Target}");
-				this._writer.WriteLine($"Method: {@delegate.Method}");
-
+			if (this.m_writer is not null)
+            {
+				try
+				{
+					this.WriteException(exception);
+					this.m_writer.WriteLine($"Target: {@delegate.Target}");
+					this.m_writer.WriteLine($"Method: {@delegate.Method}");
+				}
+				catch
+				{
+				}
 			}
-			catch { }
 		}
 
 		/// <summary>
@@ -140,42 +177,57 @@ namespace CoreExtensions.IO
 		/// <param name="stream"><see cref="Stream"/> which position should be written.</param>
 		public void WriteException(Exception exception, Delegate @delegate, Stream stream)
 		{
-			try
-			{
-
-				this.WriteException(exception, @delegate);
-				this._writer.WriteLine($"Stream position: {stream.Position}");
-
+			if (this.m_writer is not null)
+            {
+				try
+				{
+					this.WriteException(exception, @delegate);
+					this.m_writer.WriteLine($"Stream position: {stream.Position}");
+				}
+				catch
+				{
+				}
 			}
-			catch { }
 		}
 
 		/// <summary>
 		/// Writes string value to a file and appends a newline to the end.
 		/// </summary>
 		/// <param name="value">String value to write.</param>
-		public void WriteLine(string value)
+		public void WriteLine(string? value)
 		{
-			try { this._writer.WriteLine(value); }
-			catch { }
+			if (this.m_writer is not null)
+            {
+				try
+				{
+					this.m_writer.WriteLine(value);
+				}
+				catch
+				{
+				}
+			}
 		}
 
 		/// <summary>
 		/// Releases all resources used by the current instance of the <see cref="IniReader"/>.
 		/// </summary>
-		public void Dispose() => this.Dispose(true);
+		public void Dispose()
+        {
+			this.InternalDispose();
+			GC.SuppressFinalize(this);
+		}
 
 		/// <summary>
 		/// Releases the unmanaged resources used by the <see cref="IniReader"/>.
 		/// </summary>
-		/// <param name="disposing">True if release both managed and unmanaged resources; false 
-		/// if release unmanaged only.</param>
-		protected void Dispose(bool disposing)
+		protected void InternalDispose()
 		{
-			if (disposing) this._writer.Close();
-
-			this._writer.Dispose();
-			this._writer = null;
+			if (this.m_writer is not null)
+            {
+				this.m_writer.Flush();
+				this.m_writer.Dispose();
+				this.m_writer = null;
+			}
 		}
 	}
 }

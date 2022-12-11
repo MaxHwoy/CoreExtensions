@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Threading;
 
-
-
 namespace CoreExtensions.Native
 {
 	/// <summary>

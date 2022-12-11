@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
-
 namespace CoreExtensions.Native
 {
     internal static class NativeCall
