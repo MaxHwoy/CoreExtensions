@@ -8,6 +8,47 @@ namespace CoreExtensions.Reflection
 	public static class TypeX
 	{
         /// <summary>
+        /// Returns default value for a <see cref="TypeCode"/> given.
+        /// </summary>
+        /// <param name="typeCode"><see cref="TypeCode"/> to return default value of.</param>
+        /// <returns>Default value of <see cref="TypeCode"/> as an <see cref="Object"/>.</returns>
+        public static object? GetDefaultValue(TypeCode typeCode)
+        {
+            return typeCode switch
+            {
+                TypeCode.Empty => null,
+                TypeCode.Object => new object(),
+                TypeCode.DBNull => DBNull.Value,
+                TypeCode.Boolean => false,
+                TypeCode.Char => '\0',
+                TypeCode.SByte => (sbyte)0,
+                TypeCode.Byte => Byte.MinValue,
+                TypeCode.Int16 => (short)0,
+                TypeCode.UInt16 => UInt16.MinValue,
+                TypeCode.Int32 => 0,
+                TypeCode.UInt32 => UInt32.MinValue,
+                TypeCode.Int64 => 0L,
+                TypeCode.UInt64 => UInt64.MinValue,
+                TypeCode.Single => 0.0f,
+                TypeCode.Double => 0.0,
+                TypeCode.Decimal => Decimal.Zero,
+                TypeCode.DateTime => new DateTime(),
+                TypeCode.String => String.Empty,
+                _ => null,
+            };
+        }
+
+        /// <summary>
+        /// Retrieves an array of the values of the constants in a specified enumeration.
+        /// </summary>
+        /// <typeparam name="T"><see cref="Enum"/> type to get values of.</typeparam>
+        /// <returns>Array of enum values.</returns>
+        public static T[]? GetEnumValues<T>() where T : Enum
+        {
+            return Enum.GetValues(typeof(T)) as T[];
+        }
+
+        /// <summary>
         /// Check whether given <see cref="Type"/> is inherited from specified generic 
         /// interface.
         /// </summary>

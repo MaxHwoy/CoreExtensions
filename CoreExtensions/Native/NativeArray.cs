@@ -17,6 +17,9 @@ namespace CoreExtensions.Native
 
         private bool m_disposed;
 
+        /// <summary>
+        /// Length of the array.
+        /// </summary>
         public readonly int Length;
 
         /// <summary>

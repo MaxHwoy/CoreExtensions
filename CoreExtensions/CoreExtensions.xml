@@ -50,16 +50,6 @@
             <param name="value">Value to reinterpret.</param>
             <returns>New unmanaged instance casted from object passed.</returns>
         </member>
-        <member name="M:CoreExtensions.Conversions.CastX.CastManaged``2(``0)">
-            <summary>
-            Reinterprests pointer to the managed object passed and returns instance of new managed
-            type specified.
-            </summary>
-            <typeparam name="T">Managed type to reinterpret.</typeparam>
-            <typeparam name="S">Managed type to cast to.</typeparam>
-            <param name="value">Value to reinterpret.</param>
-            <returns>New managed instance casted from object passed.</returns>
-        </member>
         <member name="T:CoreExtensions.Conversions.EnumerableX">
             <summary>
             Provides all major extensions for <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
@@ -405,25 +395,12 @@
             Provides all major extensions for <see cref="T:System.IO.BinaryReader"/>
             </summary>
         </member>
-        <member name="F:CoreExtensions.IO.BinaryReaderX._type_code_to_reader">
+        <member name="M:CoreExtensions.IO.BinaryReaderX.AlignReaderPow2(System.IO.BinaryReader,System.Int32)">
             <summary>
-            Represents <see cref="T:System.Collections.Generic.Dictionary`2"/> of <see cref="T:System.TypeCode"/> and 
-            <see cref="T:System.IO.BinaryReader"/> reading methods.
+            Aligns reader to the alignment of power of 2 specified.
             </summary>
-        </member>
-        <member name="M:CoreExtensions.IO.BinaryReaderX.IntPosition(System.IO.BinaryReader)">
-            <summary>
-            Position in the current stream as a 4-byte signed integer.
-            </summary>
-            <param name="br">This <see cref="T:System.IO.BinaryReader"/>.</param>
-            <returns>Position of the stream as a 4-byte signed integer.</returns>
-        </member>
-        <member name="M:CoreExtensions.IO.BinaryReaderX.IntLength(System.IO.BinaryReader)">
-            <summary>
-            Length in the current stream as a 4-byte signed integer.
-            </summary>
-            <param name="br">This <see cref="T:System.IO.BinaryReader"/>.</param>
-            <returns>Length of the stream as a 4-byte signed integer.</returns>
+            <param name="br"></param>
+            <param name="alignment">Alignment to which the reader should be aligned (is a power of 2).</param>
         </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.ReadReversedBytes(System.IO.BinaryReader,System.Int32)">
             <summary>
@@ -438,18 +415,17 @@
         </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.ReadEnum``1(System.IO.BinaryReader)">
             <summary>
-            Reads the <see cref="T:System.Enum"/> of type <typeparamref name="TypeID"/> and advances 
+            Reads the <see cref="T:System.Enum"/> of type <typeparamref name="T"/> and advances 
             the current position by the size of the underlying type of the <see cref="T:System.Enum"/>.
             </summary>
-            <typeparam name="TypeID">Type of the <see cref="T:System.Enum"/> to read.</typeparam>
-            <returns>Value of the <see cref="T:System.Enum"/> passed. If value could not be parsed, 
-            or if the type passed is not Enum, exception might be thrown.</returns>
+            <typeparam name="T">Type of the <see cref="T:System.Enum"/> to read.</typeparam>
+            <returns>Value of the <see cref="T:System.Enum"/> passed.</returns>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadNullTermUTF8(System.IO.BinaryReader)">
+        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadNullTermASCII(System.IO.BinaryReader)">
             <summary>
-            Reads a C-Style null-terminated string that using UTF8 encoding.
+            Reads a C-Style null-terminated string that using ASCII encoding.
             </summary>
-            <returns>String with UTF8 style encoding.</returns>
+            <returns>String with ASCII style encoding.</returns>
         </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.ReadNullTermUTF16(System.IO.BinaryReader)">
             <summary>
@@ -457,20 +433,20 @@
             </summary>
             <returns>String with UTF16 style encoding.</returns>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadNullTermUTF8(System.IO.BinaryReader,System.Int32)">
+        <member name="M:CoreExtensions.IO.BinaryReaderX.ReadNullTermASCII(System.IO.BinaryReader,System.Int32)">
             <summary>
-            Reads a C-Style null-terminated string that using UTF8 encoding.
+            Reads a C-Style null-terminated string that using ASCII encoding.
             </summary>
             <param name="br"></param>
-            <param name="length">Max length of the string to read.</param>
-            <returns>String with UTF8 style encoding.</returns>
+            <param name="maxLength">Max length of the string to read.</param>
+            <returns>String with ASCII style encoding.</returns>
         </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.ReadNullTermUTF16(System.IO.BinaryReader,System.Int32)">
             <summary>
             Reads a C-Style null-terminated string that using UTF16 encoding.
             </summary>
             <param name="br"></param>
-            <param name="length">Max length of the string to read.</param>
+            <param name="maxLength">Max length of the string to read.</param>
             <returns>String with UTF16 style encoding.</returns>
         </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.SeekArray(System.IO.BinaryReader,System.Byte[],System.Boolean)">
@@ -482,19 +458,6 @@
             <param name="fromstart">True if begin seeking from the start of the stream; 
             false otherwise.</param>
             <returns>Position of the first occurence of the byte array. If array was not 
-            found, returns -1.</returns>
-        </member>
-        <member name="M:CoreExtensions.IO.BinaryReaderX.SeekValue``1(System.IO.BinaryReader,``0,System.Boolean)">
-            <summary>
-            Seeks position of the first occurence of the convertible value provided (value cannot 
-            be string).
-            </summary>
-            <typeparam name="TypeID">Type of the value to find.</typeparam>
-            <param name="br"></param>
-            <param name="value">Value to find.</param>
-            <param name="fromstart">True if begin seeking from the start of the stream; 
-            false otherwise.</param>
-            <returns>Position of the first occurence of the value provided.. If array was not 
             found, returns -1.</returns>
         </member>
         <member name="M:CoreExtensions.IO.BinaryReaderX.ReadUnmanaged``1(System.IO.BinaryReader)">
@@ -518,19 +481,21 @@
             Provides all major extensions for <see cref="T:System.IO.BinaryWriter"/>
             </summary>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryWriterX.IntPosition(System.IO.BinaryWriter)">
+        <member name="M:CoreExtensions.IO.BinaryWriterX.AlignBuffer(System.IO.BinaryWriter,System.Int32,System.Byte)">
             <summary>
-            Position in the current stream as a 4-byte signed integer.
+            Fills stream buffer till the certain padding is reached.
             </summary>
-            <param name="bw">This <see cref="T:System.IO.BinaryWriter"/>.</param>
-            <returns>Position of the stream as a 4-byte signed integer.</returns>
+            <param name="bw"></param>
+            <param name="alignment">Align to fill the stream buffer to.</param>
+            <param name="alignValue">The alignment byte value to writer.</param>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryWriterX.IntLength(System.IO.BinaryWriter)">
+        <member name="M:CoreExtensions.IO.BinaryWriterX.AlignWriterPow2(System.IO.BinaryWriter,System.Int32,System.Byte)">
             <summary>
-            Length in the current stream as a 4-byte signed integer.
+            Aligns writer to the alignment of power of 2 specified.
             </summary>
-            <param name="bw">This <see cref="T:System.IO.BinaryWriter"/>.</param>
-            <returns>Length of the stream as a 4-byte signed integer.</returns>
+            <param name="bw"></param>
+            <param name="alignment">Alignment to which the writer should be aligned (is a power of 2).</param>
+            <param name="alignValue">The alignment byte value to writer.</param>
         </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.WriteReversedBytes(System.IO.BinaryWriter,System.Byte[])">
             <summary>
@@ -541,16 +506,16 @@
         </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.WriteEnum``1(System.IO.BinaryWriter,``0)">
             <summary>
-            Writes the <see cref="T:System.Enum"/> of type <typeparamref name="TypeID"/> and advances 
+            Writes the <see cref="T:System.Enum"/> of type <typeparamref name="T"/> and advances 
             the current position by the size of the underlying type of the <see cref="T:System.Enum"/>.
             </summary>
-            <typeparam name="TypeID">Type of the <see cref="T:System.Enum"/> to read.</typeparam>
+            <typeparam name="T">Type of the <see cref="T:System.Enum"/> to read.</typeparam>
             <param name="bw"></param>
             <param name="value"><see cref="T:System.Enum"/> value to write.</param>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteNullTermUTF8(System.IO.BinaryWriter,System.String)">
+        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteNullTermASCII(System.IO.BinaryWriter,System.String)">
             <summary>
-            Writes a C-Style null-terminated string that using UTF8 encoding.
+            Writes a C-Style null-terminated string that using ASCII encoding.
             </summary>
             <param name="bw"></param>
             <param name="value">String value to write.</param>
@@ -562,13 +527,13 @@
             <param name="bw"></param>
             <param name="value">String value to write.</param>
         </member>
-        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteNullTermUTF8(System.IO.BinaryWriter,System.String,System.Int32)">
+        <member name="M:CoreExtensions.IO.BinaryWriterX.WriteNullTermASCII(System.IO.BinaryWriter,System.String,System.Int32)">
             <summary>
-            Writes a C-Style null-terminated string that using UTF8 encoding.
+            Writes a C-Style null-terminated string that using ASCII encoding.
             </summary>
             <param name="bw"></param>
             <param name="value">String value to write.</param>
-            <param name="length">Max length of the string to write; if length of the string 
+            <param name="maxLength">Max length of the string to write; if length of the string 
             is less then length specified, padding will be added after it to fill buffer.</param>
         </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.WriteNullTermUTF16(System.IO.BinaryWriter,System.String,System.Int32)">
@@ -577,7 +542,7 @@
             </summary>
             <param name="bw"></param>
             <param name="value">String value to write.</param>
-            <param name="length">Max length of the string to write; if length of the string 
+            <param name="maxLength">Max length of the string to write; if length of the string 
             is less then length specified, padding will be added after it to fill buffer.</param>
         </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.FillBuffer(System.IO.BinaryWriter,System.Int32)">
@@ -585,7 +550,14 @@
             Fills stream buffer till the certain padding is reached.
             </summary>
             <param name="bw"></param>
-            <param name="align">Align to fill the stream buffer to.</param>
+            <param name="alignment">Align to fill the stream buffer to.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.BinaryWriterX.FillBufferPow2(System.IO.BinaryWriter,System.Int32)">
+            <summary>
+            Fills stream buffer till the certain padding is reached (power of 2).
+            </summary>
+            <param name="bw"></param>
+            <param name="alignment">Align to fill the stream buffer to (power of 2).</param>
         </member>
         <member name="M:CoreExtensions.IO.BinaryWriterX.WriteBytes(System.IO.BinaryWriter,System.Byte,System.Int32)">
             <summary>
@@ -650,6 +622,11 @@
             </summary>
             <param name="reader"><see cref="T:System.IO.StreamReader"/> with opened file to read.</param>
         </member>
+        <member name="M:CoreExtensions.IO.IniReader.Finalize">
+            <summary>
+            Finalizer for <see cref="T:CoreExtensions.IO.IniReader"/>. Called by <see cref="T:System.GC"/> in case <see cref="M:CoreExtensions.IO.IniReader.Dispose"/> was not called.
+            </summary>
+        </member>
         <member name="M:CoreExtensions.IO.IniReader.ReadLine">
             <summary>
             Reads a line from the stream.
@@ -683,12 +660,10 @@
             Releases all resources used by the current instance of the <see cref="T:CoreExtensions.IO.IniReader"/>.
             </summary>
         </member>
-        <member name="M:CoreExtensions.IO.IniReader.Dispose(System.Boolean)">
+        <member name="M:CoreExtensions.IO.IniReader.InternalDispose">
             <summary>
             Releases the unmanaged resources used by the <see cref="T:CoreExtensions.IO.IniReader"/>.
             </summary>
-            <param name="disposing">True if release both managed and unmanaged resources; false 
-            if release unmanaged only.</param>
         </member>
         <member name="T:CoreExtensions.IO.Logger">
             <summary>
@@ -717,6 +692,11 @@
             <param name="file">File to write to.</param>
             <param name="intro">Introductory string to write on file opening.</param>
             <param name="writedate">True if write date to a file; false otherwise.</param>
+        </member>
+        <member name="M:CoreExtensions.IO.Logger.Finalize">
+            <summary>
+            Finalizer for <see cref="T:CoreExtensions.IO.Logger"/>. Called by <see cref="T:System.GC"/> in case <see cref="M:CoreExtensions.IO.Logger.Dispose"/> was not called.
+            </summary>
         </member>
         <member name="M:CoreExtensions.IO.Logger.Write(System.String)">
             <summary>
@@ -764,67 +744,10 @@
             Releases all resources used by the current instance of the <see cref="T:CoreExtensions.IO.IniReader"/>.
             </summary>
         </member>
-        <member name="M:CoreExtensions.IO.Logger.Dispose(System.Boolean)">
+        <member name="M:CoreExtensions.IO.Logger.InternalDispose">
             <summary>
             Releases the unmanaged resources used by the <see cref="T:CoreExtensions.IO.IniReader"/>.
             </summary>
-            <param name="disposing">True if release both managed and unmanaged resources; false 
-            if release unmanaged only.</param>
-        </member>
-        <member name="T:CoreExtensions.IO.MemoryStreamX">
-            <summary>
-            Helper extensions for <see cref="T:System.IO.MemoryStream"/> and <see cref="T:System.IO.Stream"/> classes.
-            </summary>
-        </member>
-        <member name="M:CoreExtensions.IO.MemoryStreamX.ReadBytes(CoreExtensions.Types.Pointer,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="pointer"></param>
-            <param name="numBytes"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalArray``1(CoreExtensions.Types.Pointer,System.Int32)">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="pointer"></param>
-            <param name="length"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalArray``1(CoreExtensions.Types.Pointer,System.Int32,System.Boolean)">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="pointer"></param>
-            <param name="length"></param>
-            <param name="doubleIndirection"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalStructure``1(CoreExtensions.Types.Pointer)">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="ptr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.IO.MemoryStreamX.MarshalClass``1(CoreExtensions.Types.Pointer)">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="ptr"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CoreExtensions.IO.MemoryStreamX.GetBuffer(System.IO.Stream)">
-            <summary>
-            
-            </summary>
-            <param name="stream"></param>
-            <returns></returns>
         </member>
         <member name="T:CoreExtensions.Management.eRoundType">
             <summary>
@@ -929,7 +852,7 @@
             Class with all main opcodes used in ASM.
             </summary>
         </member>
-        <member name="F:CoreExtensions.Native.ASMBuilder._asm">
+        <member name="F:CoreExtensions.Native.ASMBuilder.m_asm">
             <summary>
             ASM code.
             </summary>
@@ -1669,6 +1592,11 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="F:CoreExtensions.Native.NativeArray`1.Length">
+            <summary>
+            Length of the array.
+            </summary>
+        </member>
         <member name="M:CoreExtensions.Native.NativeArray`1.#ctor(System.Int32)">
             <summary>
             Initializes new instance of <see cref="T:CoreExtensions.Native.NativeArray`1"/> with size and element type specified.
@@ -2120,6 +2048,40 @@
             <param name="value">A 16-byte floating point value to reverse (endian-swap).</param>
             <returns>Reversed (endian-swapped) 16-byte floating point value.</returns>
         </member>
+        <member name="T:CoreExtensions.Reflection.PrecompiledConstructor`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PrecompiledConstructor`1.#ctor(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PrecompiledConstructor`1.#ctor(System.Type,System.Type[])">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <param name="constructorArgTypes"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PrecompiledConstructor`1.#ctor(System.Reflection.ConstructorInfo)">
+            <summary>
+            
+            </summary>
+            <param name="constructor"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CoreExtensions.Reflection.PrecompiledConstructor`1.Invoke(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:CoreExtensions.Reflection.PropertyInfoX">
             <summary>
             Provides all major extensions for <see cref="T:System.Reflection.PropertyInfo"/>.
@@ -2209,6 +2171,20 @@
             <summary>
             Provides all major extensions for <see cref="T:System.Type"/>.
             </summary>
+        </member>
+        <member name="M:CoreExtensions.Reflection.TypeX.GetDefaultValue(System.TypeCode)">
+            <summary>
+            Returns default value for a <see cref="T:System.TypeCode"/> given.
+            </summary>
+            <param name="typeCode"><see cref="T:System.TypeCode"/> to return default value of.</param>
+            <returns>Default value of <see cref="T:System.TypeCode"/> as an <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:CoreExtensions.Reflection.TypeX.GetEnumValues``1">
+            <summary>
+            Retrieves an array of the values of the constants in a specified enumeration.
+            </summary>
+            <typeparam name="T"><see cref="T:System.Enum"/> type to get values of.</typeparam>
+            <returns>Array of enum values.</returns>
         </member>
         <member name="M:CoreExtensions.Reflection.TypeX.IsFromGenericInterface(System.Type,System.Type)">
             <summary>

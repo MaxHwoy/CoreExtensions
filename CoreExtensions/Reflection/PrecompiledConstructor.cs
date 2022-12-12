@@ -4,15 +4,29 @@ using System.Linq.Expressions;
 
 namespace CoreExtensions.Reflection
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PrecompiledConstructor<T>
     {
         private delegate S ConstructorActivator<out S>(params object[] args);
         private readonly ConstructorActivator<T> m_activator;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
         public PrecompiledConstructor(Type type) : this(type, null)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="constructorArgTypes"></param>
+        /// <exception cref="Exception"></exception>
         public PrecompiledConstructor(Type type, Type[]? constructorArgTypes)
         {
             if (constructorArgTypes is null || constructorArgTypes.Length == 0)
@@ -41,6 +55,11 @@ namespace CoreExtensions.Reflection
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="constructor"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public PrecompiledConstructor(ConstructorInfo? constructor)
         {
             if (constructor is null)
@@ -84,6 +103,11 @@ namespace CoreExtensions.Reflection
             return Expression.Lambda<ConstructorActivator<T>>(invoker, parameter).Compile();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public T Invoke(params object[] args) => this.m_activator(args);
     }
 }
